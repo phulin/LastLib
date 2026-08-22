@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter08.Dependencies
+import LastLib.Book03RamificationTheory.Chapter07.Section03TheDerivativeFormula
 
 namespace LastLib.Book03RamificationTheory.Chapter08
 
@@ -300,7 +301,23 @@ theorem chapter08_proper_order_has_nonunit_index
     (O : Subalgebra A B) (bO : Module.Basis ι A O) (bB : Module.Basis ι A B)
     (hproper : chapter08ProperOrder A B O) :
     ¬ IsUnit (chapter08OrderIndexDeterminant A B O bO bB) := by
-  sorry
+  intro hunit
+  change IsUnit (bB.det (fun i => (bO i : B))) at hunit
+  have hbasis :
+      LinearIndependent A (fun i => (bO i : B)) ∧
+        Submodule.span A (Set.range (fun i => (bO i : B))) = ⊤ :=
+    (bB.is_basis_iff_det).mpr hunit
+  have hspan :
+      Submodule.span A (Set.range (fun i => (bO i : B))) ≤ O.toSubmodule := by
+    rw [Submodule.span_le]
+    rintro x ⟨i, rfl⟩
+    exact (bO i).property
+  have htop : (⊤ : Submodule A B) ≤ O.toSubmodule := by
+    rw [← hbasis.2]
+    exact hspan
+  have hO : O.toSubmodule = (⊤ : Submodule A B) := top_unique htop
+  apply hproper
+  exact Subalgebra.toSubmodule_injective hO
 
 /- The polynomial discriminant is the order discriminant when the power basis
    is integral and spans the full order. -/
@@ -324,7 +341,7 @@ theorem chapter08_binomial_derivative_eval
     (e : ℕ) (πK : A) (πL : L) :
     aeval πL (derivative (chapter08BinomialPolynomial A e πK)) =
       (e : L) * πL ^ (e - 1) := by
-  sorry
+  simp [chapter08BinomialPolynomial, derivative_sub, derivative_X_pow]
 
 theorem chapter08_tame_binomial_different_exponent
     (A B K L : Type*) [CommRing A] [IsDomain A] [CommRing B]
@@ -341,15 +358,210 @@ theorem chapter08_tame_binomial_different_exponent
     (hπ : Ideal.span ({πK} : Set A) = IsLocalRing.maximalIdeal A)
     (hE : LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
       πK (chapter08BinomialPolynomial A e πK))
-    (hroot : aeval (algebraMap B L πL)
+    (_hroot : aeval (algebraMap B L πL)
       (chapter08BinomialPolynomial A e πK) = 0)
     (hgen : Algebra.adjoin K ({algebraMap B L πL} : Set L) = ⊤)
-    (hdegree : Module.finrank K L = e) (hcoprime : Nat.Coprime e p)
+    (_hdegree : Module.finrank K L = e) (hcoprime : Nat.Coprime e p)
     (hD : ∃! d : ℕ,
       chapter08DifferentIdeal A B = (IsLocalRing.maximalIdeal B) ^ d) :
     chapter08UniqueIdealExponent (IsLocalRing.maximalIdeal B)
         (chapter08DifferentIdeal A B) hD = e - 1 := by
-  sorry
+  let f : A[X] := chapter08BinomialPolynomial A e πK
+  have hspan : Ideal.span ({πK} : Set A) = IsLocalRing.maximalIdeal A := hE.2.2.2.2
+  let _ : (Ideal.span ({πK} : Set A)).IsPrime := by
+    rw [hspan]
+    infer_instance
+  have hE_f : f.IsEisensteinAt (Ideal.span ({πK} : Set A)) := by
+    apply hE.1.isEisensteinAt_of_mem_of_notMem
+    · rw [hspan]
+      exact (IsLocalRing.maximalIdeal.isMaximal A).ne_top
+    · intro i hi
+      exact hE.2.2.1 i hi
+    · simpa [Ideal.span_singleton_pow] using hE.2.2.2.1
+  have hdegree_f : f.natDegree = e := by
+    change (X ^ e - C πK).natDegree = e
+    exact natDegree_X_pow_sub_C
+  have hrootB : aeval πL f = 0 := by
+    apply IsFractionRing.injective B L
+    rw [aeval_def, hom_eval₂]
+    change eval₂ ((algebraMap B L).comp (algebraMap A B))
+      (algebraMap B L πL) f = (algebraMap B L) 0
+    rw [← IsScalarTower.algebraMap_eq A B L]
+    simpa [aeval_def] using _hroot
+  have hclosure :
+      (integralClosure A L : Set L) =
+        (Algebra.adjoin A ({algebraMap B L πL} : Set L) : Set L) :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.eisenstein_integral_closure_is_root_order
+        πK f (algebraMap B L πL)
+        hE (by simpa [f] using _hroot) hdegree_f hgen
+  have hgenA : Algebra.adjoin A ({πL} : Set B) = ⊤ := by
+    apply top_unique
+    intro b hb
+    have hbL : algebraMap B L b ∈
+        Algebra.adjoin A ({algebraMap B L πL} : Set L) := by
+      change algebraMap B L b ∈
+        (Algebra.adjoin A ({algebraMap B L πL} : Set L) : Set L)
+      have hbint : IsIntegral A (algebraMap B L b) :=
+        (IsIntegralClosure.isIntegral_iff (R := A) (A := B) (B := L)).mpr
+          ⟨b, rfl⟩
+      rw [← hclosure]
+      exact hbint
+    have hmap_adjoin :
+        (Algebra.adjoin A ({πL} : Set B)).map
+            (IsScalarTower.toAlgHom A B L) =
+          Algebra.adjoin A ({algebraMap B L πL} : Set L) := by
+      rw [AlgHom.map_adjoin]
+      simp
+    have hbmap : algebraMap B L b ∈
+        (Algebra.adjoin A ({πL} : Set B)).map
+          (IsScalarTower.toAlgHom A B L) := by
+      rw [hmap_adjoin]
+      exact hbL
+    rcases hbmap with ⟨c, hc, hcb⟩
+    have hcb' : c = b :=
+      IsIntegralClosure.algebraMap_injective B A L hcb
+    simpa [hcb'] using hc
+  have hPiIntegral : IsIntegral A πL := ⟨f, hE.1, hrootB⟩
+  have hirrA : Irreducible f :=
+    hE_f.irreducible inferInstance hE.1.isPrimitive hE.2.1
+  have hprimitive : f.IsPrimitive := hE.1.isPrimitive
+  have hirrK : Irreducible (f.map (algebraMap A K)) :=
+    (hprimitive.irreducible_iff_irreducible_map_fraction_map).mp hirrA
+  have hrootK : aeval (algebraMap B L πL) (f.map (algebraMap A K)) = 0 := by
+    simpa only [aeval_map_algebraMap, IsScalarTower.algebraMap_eq A K L] using _hroot
+  have hminK : f.map (algebraMap A K) =
+      minpoly K (algebraMap B L πL) :=
+    minpoly.eq_of_irreducible_of_monic hirrK hrootK
+      (hE.1.map (algebraMap A K))
+  have hmono : LastLib.Book03RamificationTheory.Chapter07.chapter07MonogenicPresentation
+      A B K L πL f :=
+    ⟨hPiIntegral, hgenA, hE.1, hrootB, hminK⟩
+  let hmap : A[X] →ₐ[A] B := aeval πL
+  have hsurj : Function.Surjective hmap := by
+    apply (AlgHom.range_eq_top hmap).mp
+    rw [← Algebra.adjoin_singleton_eq_range_aeval]
+    exact hgenA
+  have hker : RingHom.ker hmap = Ideal.span ({f} : Set A[X]) := by
+    ext q
+    rw [RingHom.mem_ker, Ideal.mem_span_singleton]
+    constructor
+    · intro hq
+      have hqL : aeval (algebraMap B L πL)
+          (q.map (algebraMap A K)) = 0 := by
+        rw [Polynomial.aeval_map_algebraMap,
+          Polynomial.aeval_algebraMap_apply L πL q, hq, map_zero]
+      have hdiv := minpoly.dvd K (algebraMap B L πL) hqL
+      rw [← hminK] at hdiv
+      exact (Polynomial.map_dvd_map (algebraMap A K)
+        (FaithfulSMul.algebraMap_injective A K) hE.1).mp hdiv
+    · rintro ⟨r, rfl⟩
+      rw [map_mul]
+      have hf0 : hmap f = 0 := by
+        simpa [hmap] using hrootB
+      rw [hf0, zero_mul]
+  let har : IsAdjoinRootMonic B f :=
+    { map := hmap
+      map_surjective := hsurj
+      ker_map := hker
+      monic := hE.1 }
+  have hdiff : chapter08DifferentIdeal A B =
+      Ideal.span ({aeval πL (derivative f)} : Set B) :=
+    LastLib.Book03RamificationTheory.Chapter07.chapter07_different_eq_derivative_ideal
+      A B K L πL f hmono
+  have hpow : πL ^ e = algebraMap A B πK := by
+    have h := hrootB
+    simp [f, chapter08BinomialPolynomial, aeval_def] at h
+    exact sub_eq_zero.mp h
+  have hπKmemA : πK ∈ IsLocalRing.maximalIdeal A := by
+    rw [← hπ]
+    exact Ideal.mem_span_singleton_self πK
+  let _ : IsLocalHom (algebraMap A B) := inferInstance
+  have hπKmemB : algebraMap A B πK ∈ IsLocalRing.maximalIdeal B := by
+    rw [← Ideal.mem_comap, IsLocalRing.maximalIdeal_comap]
+    exact hπKmemA
+  have heunitA : IsUnit (e : A) := by
+    apply (IsLocalRing.notMem_maximalIdeal).mp
+    intro hem
+    have hezero : (e : IsLocalRing.ResidueField A) = 0 := by
+      exact (IsLocalRing.residue_eq_zero_iff _).mpr hem
+    have hcop : IsCoprime (e : IsLocalRing.ResidueField A)
+        (p : IsLocalRing.ResidueField A) := hcoprime.cast
+    have hpzero : (p : IsLocalRing.ResidueField A) = 0 :=
+      CharP.cast_eq_zero (IsLocalRing.ResidueField A) p
+    have hcopzero : IsCoprime (e : IsLocalRing.ResidueField A) 0 := by
+      simpa [hpzero] using hcop
+    exact (isCoprime_zero_right.mp hcopzero).ne_zero hezero
+  have heunitB : IsUnit (e : B) := by
+    simpa only [map_natCast] using heunitA.map (algebraMap A B)
+  have hpowmem : πL ^ e ∈ IsLocalRing.maximalIdeal B := by
+    rw [hpow]
+    exact hπKmemB
+  have hπLmem : πL ∈ IsLocalRing.maximalIdeal B := by
+    exact (show (IsLocalRing.maximalIdeal B).IsPrime from inferInstance).mem_of_pow_mem
+      e hpowmem
+  have hepos : 0 < e := by
+    rw [← hdegree_f]
+    exact hE.2.1
+  have hspanL : Ideal.span ({πL} : Set B) = IsLocalRing.maximalIdeal B := by
+    apply le_antisymm
+    · exact Ideal.span_le.2 (by simpa using hπLmem)
+    · intro b hb
+      let q : A[X] := har.modByMonicHom b
+      have hqdiv : X ∣ q - C (q.coeff 0) := by
+        rw [Polynomial.X_dvd_iff]
+        simp
+      rcases hqdiv with ⟨r, hr⟩
+      have hqdecomp : q = C (q.coeff 0) + X * r := by
+        have hq' := (sub_eq_iff_eq_add).mp hr
+        simpa [add_comm] using hq'
+      have hbq : b = algebraMap A B (q.coeff 0) + πL * hmap r := by
+        calc
+          b = har.map q := (har.map_modByMonicHom b).symm
+          _ = algebraMap A B (q.coeff 0) + πL * hmap r := by
+            rw [hqdecomp]
+            simp [har, hmap]
+      have hterm : πL * hmap r ∈ IsLocalRing.maximalIdeal B :=
+        by simpa [mul_comm] using
+          (Ideal.mul_mem_left (IsLocalRing.maximalIdeal B) (hmap r) hπLmem)
+      have hcmemB : algebraMap A B (q.coeff 0) ∈
+          IsLocalRing.maximalIdeal B := by
+        have hsub : b - πL * hmap r ∈ IsLocalRing.maximalIdeal B :=
+          (IsLocalRing.maximalIdeal B).sub_mem hb hterm
+        simpa [hbq] using hsub
+      have hcmemA : q.coeff 0 ∈ IsLocalRing.maximalIdeal A := by
+        have hcmemB' : q.coeff 0 ∈
+            (IsLocalRing.maximalIdeal B).comap (algebraMap A B) := hcmemB
+        rw [IsLocalRing.maximalIdeal_comap] at hcmemB'
+        exact hcmemB'
+      have hcspan : q.coeff 0 ∈ Ideal.span ({πK} : Set A) := by
+        rw [hπ]
+        exact hcmemA
+      rcases (Ideal.mem_span_singleton.mp hcspan) with ⟨d, hd⟩
+      have hpowmem' : πL ^ e ∈ Ideal.span ({πL} : Set B) := by
+        rw [show e = (e - 1) + 1 by omega, pow_succ]
+        exact Ideal.mul_mem_left _ (πL ^ (e - 1))
+          (Ideal.mem_span_singleton_self πL)
+      have hcmap : algebraMap A B (q.coeff 0) ∈
+          Ideal.span ({πL} : Set B) := by
+        rw [hd, map_mul, ← hpow]
+        simpa [mul_comm] using
+          (Ideal.mul_mem_left (Ideal.span ({πL} : Set B))
+            (algebraMap A B d) hpowmem')
+      have hterm' : πL * hmap r ∈ Ideal.span ({πL} : Set B) := by
+        simpa [mul_comm] using
+          (Ideal.mul_mem_left (Ideal.span ({πL} : Set B)) (hmap r)
+            (Ideal.mem_span_singleton_self πL))
+      rw [hbq]
+      exact add_mem hcmap hterm'
+  have hderiv : aeval πL (derivative f) = (e : B) * πL ^ (e - 1) := by
+    simpa [f] using chapter08_binomial_derivative_eval A B e πK πL
+  have htarget : chapter08DifferentIdeal A B =
+      (IsLocalRing.maximalIdeal B) ^ (e - 1) := by
+    rw [hdiff, hderiv, ← Ideal.span_singleton_mul_span_singleton]
+    rw [Ideal.span_singleton_eq_top.mpr heunitB, top_mul]
+    rw [← Ideal.span_singleton_pow, hspanL]
+  exact (hD.unique htarget (chapter08UniqueIdealExponent_spec
+    (IsLocalRing.maximalIdeal B) (chapter08DifferentIdeal A B) hD)).symm
 
 /- A concrete dyadic polynomial and the valuation statements used in the
    `Q₂(√2)` example. -/
@@ -358,24 +570,32 @@ def chapter08SqrtTwoPolynomial : (ℚ_[2])[X] :=
 
 theorem chapter08_sqrt_two_polynomial_derivative :
     derivative chapter08SqrtTwoPolynomial = (C (2 : ℚ_[2]) : (ℚ_[2])[X]) * X := by
-  sorry
+  norm_num [chapter08SqrtTwoPolynomial, chapter08BinomialPolynomial, derivative_sub,
+    derivative_X_pow]
 
 theorem chapter08_sqrt_two_derivative_value
     (L : Type*) [Field L] [Algebra ℚ_[2] L]
     (α : L) (vL : AddValuation L (WithTop ℤ))
-    (hroot : α ^ 2 = algebraMap ℚ_[2] L (2 : ℚ_[2]))
+    (_hroot : α ^ 2 = algebraMap ℚ_[2] L (2 : ℚ_[2]))
     (hα : vL α = (1 : WithTop ℤ))
     (h2 : vL (algebraMap ℚ_[2] L (2 : ℚ_[2])) = (2 : WithTop ℤ)) :
     vL (aeval α (derivative chapter08SqrtTwoPolynomial)) =
       (3 : WithTop ℤ) := by
-  sorry
+  norm_num [chapter08_sqrt_two_polynomial_derivative, aeval_def, eval₂_at_apply,
+    eval₂_mul, eval₂_C, eval₂_X, AddValuation.map_mul, h2, hα]
 
 noncomputable def chapter08SqrtTwoPolynomialDiscriminant : ℚ_[2] :=
   Polynomial.discr chapter08SqrtTwoPolynomial
 
 theorem chapter08_sqrt_two_polynomial_discriminant_is_eight :
     chapter08SqrtTwoPolynomialDiscriminant = (8 : ℚ_[2]) := by
-  sorry
+  change (X ^ 2 - C (2 : ℚ_[2])).discr = (8 : ℚ_[2])
+  rw [Polynomial.discr_of_degree_eq_two]
+  · norm_num
+  · apply (degree_eq_iff_natDegree_eq
+      (monic_X_pow_sub_C (R := ℚ_[2]) (2 : ℚ_[2]) (n := 2) (by norm_num)).ne_zero).2
+    exact
+      (natDegree_X_pow_sub_C (R := ℚ_[2]) (n := 2) (r := (2 : ℚ_[2])))
 
 theorem chapter08_sqrt_two_polynomial_discr_is_eight :
     Polynomial.discr chapter08SqrtTwoPolynomial = (8 : ℚ_[2]) := by
