@@ -1157,7 +1157,6 @@ theorem chapter10_henselian_valuation_ring_has_unique_prime_above
       intro x y hxy
       apply e.symm.injective
       apply hmap_inj
-      change algebraMap A B (e.symm x) = algebraMap A B (e.symm y)
       change algebraMap A B (e.symm x) = algebraMap A B (e.symm y) at hxy
       exact hxy
     let _ : Module.IsTorsionFree vK.valuationSubring B :=
@@ -1296,7 +1295,7 @@ theorem chapter10_henselian_valuation_ring_has_unique_prime_above
     have hqne : q ≠ 1 := by
       intro hq1
       rw [hq1] at hqroot
-      simpa using hqroot
+      simp at hqroot
     have hqnonunit : ¬ IsUnit q := by
       intro hunit
       exact hqne (hq.eq_one_of_isUnit hunit)
