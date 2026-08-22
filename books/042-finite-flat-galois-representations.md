@@ -1031,8 +1031,7 @@ Finite-flat exact sequences, coefficient actions, Cartier duals, and products al
 
 In particular, for $M'\subset M$ the two natural models after restriction agree:
 
-# $$\left(\overline{\mathcal E_K(M')}^{\,\mathcal G}\right)_{R_L}
-
+$$\left(\overline{\mathcal E_K(M')}^{\,\mathcal G}\right)_{R_L}
 \overline{\mathcal E_L(M'|_{G_L})}^{\,\mathcal G_{R_L}}.
 $$
 

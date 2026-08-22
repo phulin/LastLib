@@ -894,8 +894,7 @@ multiplicative, mixed, and local--local groups uniformly.
 $y\in\mathcal G^D(\overline K_0)$, compatibility of (6.2) with the
 crystalline Cartier pairing gives
 
-# $$\log_{\mathrm{PD}}\langle x,y\rangle_{\mathrm{Cart}}
-
+$$\log_{\mathrm{PD}}\langle x,y\rangle_{\mathrm{Cart}}
 \bigl\langle\operatorname{per}_{\mathcal G}(x),
 \operatorname{per}_{\mathcal G^D}(y)\bigr\rangle_{\mathrm{FL}}
 =0.

@@ -2435,8 +2435,7 @@ Thus the local class is literally the restriction of the global class.
 
 **Proposition (localization of obstructions).** For every $v\in S$,
 
-# $$\operatorname{res}_v\operatorname{ob}_G(\rho_A,A'/A)
-
+$$\operatorname{res}_v\operatorname{ob}_G(\rho_A,A'/A)
 \operatorname{ob}_{G_v}(\rho_A|_{G_v},A'/A).
 $$
 
