@@ -72,7 +72,8 @@ theorem chapter09_lower_group_succ_le
     {G : Type*} [Group G] [Finite G]
     (D : Chapter05RamificationFiltration G) (i : ℕ) :
     chapter09LowerGroup D (i + 1) ≤ chapter09LowerGroup D i := by
-  sorry
+  apply D.lower_antitone
+  norm_num
 
 def chapter09UpperGroup
     {G : Type*} [Group G] [Finite G]

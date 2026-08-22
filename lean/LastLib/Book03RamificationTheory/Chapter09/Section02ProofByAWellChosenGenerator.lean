@@ -45,7 +45,40 @@ theorem chapter09_residue_moving_displacement_zero
     (θ : w.toValuation.valuationSubring)
     (hmove : chapter09ResidueMoving w σ θ) :
     chapter09DisplacementValue w σ θ = 0 := by
-  sorry
+  change w ((σ : Gal(L / F)) (θ : L) - (θ : L)) = 0
+  have hresdiff :
+      IsLocalRing.residue w.toValuation.valuationSubring ((σ • θ) - θ) ≠ 0 := by
+    intro hzero
+    apply hmove
+    apply sub_eq_zero.mp
+    simpa only [map_sub] using hzero
+  have hunit : IsUnit ((σ • θ) - θ) :=
+    (IsLocalRing.residue_ne_zero_iff_isUnit ((σ • θ) - θ)).mp hresdiff
+  have hcast :
+      (((σ • θ) - θ : w.toValuation.valuationSubring) : L) =
+        (σ : Gal(L / F)) (θ : L) - (θ : L) := by
+    rfl
+  have hval_sub :
+      w.toValuation (((σ • θ) - θ : w.toValuation.valuationSubring) : L) = 1 := by
+    exact (Valuation.Integers.isUnit_iff_valuation_eq_one
+      (Valuation.valuationSubring.integers w.toValuation)).mp hunit
+  have hval :
+      w.toValuation ((σ : Gal(L / F)) (θ : L) - (θ : L)) = 1 := by
+    rw [← hcast]
+    exact hval_sub
+  have hval' :
+      Multiplicative.ofAdd (OrderDual.toDual
+        (w ((σ : Gal(L / F)) (θ : L) - (θ : L)))) =
+        1 := by
+    simpa only [AddValuation.toValuation_apply] using hval
+  have hdual :
+      OrderDual.toDual
+          (w ((σ : Gal(L / F)) (θ : L) - (θ : L))) =
+        OrderDual.toDual (0 : WithTop ℤ) := by
+    apply Multiplicative.ofAdd.injective
+    simpa using hval'
+  change w ((σ : Gal(L / F)) (θ : L) - (θ : L)) = 0 at hdual
+  exact hdual
 
 theorem chapter09_inertial_mixed_displacement
     {F L : Type*} [Field F] [Field L] [Algebra F L]
