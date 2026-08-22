@@ -1137,7 +1137,7 @@ $$
 =\left(\frac{c_1(L)^g}{g!}\right)^2. \tag{12.1}
 $$
 
-When $L$ is ample this hypothesis holds, and the right side is positive. Thus a principal polarization is not just an abstract self-duality. It is a positive self-duality with volume one. An arbitrary isomorphism $A\simeq A^\vee$ need not be a polarization.
+When $L$ is ample this hypothesis holds, and the right side is positive. _Standing input:_ the abelian Riemann--Roch formula behind (12.1) is part of the abelian intersection-theory package in preparation as a continuation of Book 35; it is not yet proved in any book $\leq 36$, and (12.1) is used here conditionally on that package. Thus a principal polarization is not just an abstract self-duality. It is a positive self-duality with volume one. An arbitrary isomorphism $A\simeq A^\vee$ need not be a polarization.
 
 Polarizations also control complements and adjoints. They turn a map into a transpose with respect to a positive geometric form, exactly as an inner product does in linear algebra, although the construction remains algebraic over every field.
 
@@ -1199,6 +1199,8 @@ $$
 
 of ranks $N+d+1-g$ and $N$. Its kernel at $[L]$ is $H^0(C_\Omega,L)$. Hence $W_d$, with its Abel-image scheme structure, is the locus where (12.5) has rank at most $N+d-g$. It has the expected codimension $g-d$: the Abel map $C^{(d)}\to W_d$ is generically one-to-one because a general effective divisor of degree at most $g-1$ has only its canonical section.
 
+_Standing input:_ the degeneracy-locus formula computing $[W_d]$ by the Chern classes of $-Rp_*\mathcal L$, and the curve Riemann--Roch calculation of those classes that follows, belong to the abelian/relative intersection-theory package in preparation as a continuation of Book 35; they are used here conditionally on it.
+
 The maximal-minor resolution of (12.5) computes the degeneracy cycle as
 
 $$
@@ -1238,7 +1240,7 @@ $$
 c_1(\Theta_M)^g=g![0]. \tag{12.7}
 $$
 
-An effective divisor on an abelian variety is nef: translate it away from a chosen curve and compute a nonnegative intersection. A nef line bundle has zero top self-intersection when its connected translation stabilizer is positive-dimensional, because its numerical class then descends to a quotient of smaller dimension. Equation (12.7) therefore makes the stabilizer finite. The abelian Nakai criterion makes $\mathcal O(\Theta_M)$ ample, so $\lambda_C$ is an isogeny. Abelian Riemann--Roch gives
+An effective divisor on an abelian variety is nef: translate it away from a chosen curve and compute a nonnegative intersection. A nef line bundle has zero top self-intersection when its connected translation stabilizer is positive-dimensional, because its numerical class then descends to a quotient of smaller dimension. Equation (12.7) therefore makes the stabilizer finite. _Standing input:_ the abelian Nakai criterion and the abelian Riemann--Roch formula used in the next two sentences belong to the same in-preparation continuation of Book 35 and are used here conditionally on it. The abelian Nakai criterion makes $\mathcal O(\Theta_M)$ ample, so $\lambda_C$ is an isogeny. Abelian Riemann--Roch gives
 
 $$
 \chi(\mathcal O(\Theta_M))
