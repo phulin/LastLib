@@ -443,7 +443,11 @@ theorem chapter04_valuation_product_basis_has_independence_and_expansion
     (B : Chapter04ValuationProductBasis K D e f) :
     LinearIndependent K B.basis ∧
       ∀ z : D, z ∈ Submodule.span K (Set.range B.basis) := by
-  sorry
+  constructor
+  · exact B.basis.linearIndependent
+  · intro z
+    rw [B.basis.span_eq]
+    trivial
 
 structure Chapter04ResidueConjugationData
     (K D k barD : Type*) [Field K] [Ring D] [Field k] [Field barD]
@@ -478,7 +482,23 @@ theorem chapter04_residue_conjugation_is_surjective
     [IsGalois k barD]
     (C : Chapter04ResidueConjugationData K D k barD) :
     Function.Surjective C.conjugation := by
-  sorry
+  let domain :=
+    chapter04ValueGroup C.value ⧸ chapter04ValueGroupModInteger C.value
+  let codomain := Gal(barD / k)
+  let domainFintype : Fintype domain :=
+    @Fintype.ofFinite domain C.quotient_finite
+  let codomainFintype : Fintype codomain :=
+    Fintype.ofFinite codomain
+  have hcard : @Fintype.card domain domainFintype =
+      @Fintype.card codomain codomainFintype := by
+    rw [← @Nat.card_eq_fintype_card domain domainFintype,
+      ← @Nat.card_eq_fintype_card codomain codomainFintype]
+    exact C.quotient_card_eq_galois_card
+  have hbij : Function.Bijective C.conjugation :=
+    (@Fintype.bijective_iff_injective_and_card domain codomain
+      domainFintype codomainFintype C.conjugation).2
+      ⟨C.conjugation_injective, hcard⟩
+  exact hbij.2
 
 theorem chapter04_division_indices_are_the_degree
     {K D k barD : Type*} [Field K] [Ring D] [Field k] [Field barD]
@@ -501,12 +521,29 @@ theorem chapter04_division_indices_are_the_degree
       chapter04RamificationIndex V.unitValue * chapter04ResidueDegree k barD) :
     chapter04RamificationIndex V.unitValue = chapter04ResidueDegree k barD ∧
       chapter04ResidueDegree k barD = d := by
-  sorry
+  have _hdegree := hdegree
+  have _hπ := hπ
+  have _hvalue := hvalue
+  have _hbound := hbound
+  let e := chapter04RamificationIndex V.unitValue
+  let f := chapter04ResidueDegree k barD
+  have he : e ≤ d := by
+    simpa [e, chapter04RamificationIndex] using hvalue_card
+  have hf : f ≤ d := by
+    exact hresidue_degree_le
+  have hprod : d ^ 2 = e * f := by
+    simpa [e, f] using hdimension
+  have heq : e = d := by
+    nlinarith
+  have hfeq : f = d := by
+    nlinarith
+  exact ⟨heq.trans hfeq.symm, hfeq⟩
 
 theorem chapter04_value_group_contains_integer_lattice
     {D : Type*} [Monoid D] (w : Dˣ → ℚ) (π : Dˣ) (hπ : w π = 1) :
     chapter04IntegerValueLattice ≤ chapter04ValueGroup w := by
-  sorry
+  rw [chapter04IntegerValueLattice, chapter04ValueGroup]
+  exact (AddSubgroup.zmultiples_le).2 (AddSubgroup.subset_closure ⟨π, hπ⟩)
 
 /- A bundled witness records the Hensel-lifted unramified maximal field.  The
   field and extension instances are part of the witness, so later statements
