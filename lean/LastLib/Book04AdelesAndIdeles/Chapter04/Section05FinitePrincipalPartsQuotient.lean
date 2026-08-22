@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter04.Section01TheFiniteAdeleRing
+import LastLib.Book04AdelesAndIdeles.Chapter04.Section03NeighborhoodsAsLocalSpecifications
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter04
 
@@ -6,7 +7,10 @@ noncomputable section
 
 open Set Filter
 open NumberField IsDedekindDomain
+open LastLib.Book04AdelesAndIdeles.Chapter01
+open MonoidWithZeroHom MonoidWithZeroHom.ValueGroup₀ Valued
 open scoped BigOperators Topology RestrictedProduct
+open scoped WithZero
 
 /-! ### 4.5 The finite principal-parts quotient -/
 
@@ -247,7 +251,80 @@ abbrev chapter04GlobalDiagonalSubspaceTopology
 theorem chapter04_global_diagonal_is_dense
     (K : Type*) [Field K] [NumberField K] :
     DenseRange (IsDedekindDomain.FiniteAdeleRing.algebraMap (𝓞 K) K) := by
-  sorry
+  rw [denseRange_iff_closure_range]
+  apply Set.eq_univ_of_forall
+  intro x
+  rw [mem_closure_iff_nhds]
+  intro U hU
+  rcases chapter04_finiteAdele_has_local_specification_basis K x U hU with
+    ⟨S, W, hSW, hxW, hsub⟩
+  have hxW' := hxW
+  rw [chapter04_mem_finiteBasicNeighborhood_iff] at hxW'
+  let Sfin : Finset (Chapter04FinitePlace K) := hSW.1.toFinset
+  have hSfin (v : Chapter04FinitePlace K) : v ∈ Sfin ↔ v ∈ S := by
+    dsimp [Sfin]
+    exact hSW.1.mem_toFinset
+  have hWlocal : ∀ v : Chapter04FinitePlace K, v ∈ S →
+      ∃ n : ℤ, ∀ z : Chapter04FiniteLocalField K v,
+        chapter01LocallyClose v (x v) z n → z ∈ W v := by
+    intro v hv
+    have hmem : W v ∈ 𝓝 (x v) := (hSW.2 v hv).mem_nhds (hxW'.1 v hv)
+    rcases Valued.mem_nhds.mp hmem with ⟨γ, hγ⟩
+    let γ' : ℤᵐ⁰ := MonoidWithZeroHom.ValueGroup₀.embedding γ.1
+    refine ⟨-(WithZero.log γ' - 1), ?_⟩
+    intro z hz
+    apply hγ
+    change Valued.v.restrict (z - x v) < γ.1
+    rw [Valued.v.restrict_lt_iff_lt_embedding]
+    have hz' : Valued.v (x v - z) ≤
+        WithZero.exp (-(-(WithZero.log γ' - 1))) := by
+      change Valued.v (x v - z) ≤ WithZero.exp (-(-(WithZero.log γ' - 1))) at hz
+      exact hz
+    rw [Valuation.map_sub_swap] at hz'
+    have hγ'ne : γ' ≠ 0 := by
+      exact MonoidWithZeroHom.ValueGroup₀.embedding_unit_ne_zero γ
+    change Valued.v (z - x v) < γ'
+    rw [← WithZero.exp_log hγ'ne]
+    apply lt_of_le_of_lt hz'
+    rw [WithZero.exp_lt_exp]
+    omega
+  let m : ∀ v : Chapter04FinitePlace K, v ∈ Sfin → ℤ := fun v hv =>
+    Classical.choose (hWlocal v ((hSfin v).1 hv))
+  have hm (v : Chapter04FinitePlace K) (hv : v ∈ Sfin) :
+      ∀ z : Chapter04FiniteLocalField K v,
+        chapter01LocallyClose v (x v) z (m v hv) → z ∈ W v := by
+    exact Classical.choose_spec (hWlocal v ((hSfin v).1 hv))
+  obtain ⟨a, haS, haout⟩ :=
+    LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_finite_approximation K Sfin
+      (fun v _ => x v) m
+  refine ⟨chapter04GlobalToFiniteAdeleAdditiveMap K a, ?_, ⟨a, rfl⟩⟩
+  apply hsub
+  rw [chapter04_mem_finiteBasicNeighborhood_iff]
+  constructor
+  · intro v hv
+    have hvfin : v ∈ Sfin := (hSfin v).2 hv
+    have hcoe : (chapter04GlobalToFiniteAdeleAdditiveMap K a) v =
+        (a : v.adicCompletion K) := by
+      exact IsDedekindDomain.FiniteAdeleRing.algebraMap_apply (𝓞 K) K a v
+    rw [hcoe]
+    exact hm v hvfin _ (by simpa using haS v hvfin)
+  · intro v hv
+    have hvfin : v ∉ Sfin := by
+      intro hvfin
+      exact hv ((hSfin v).1 hvfin)
+    change (a : v.adicCompletion K) ∈ v.adicCompletionIntegers K
+    apply (IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers
+      (𝓞 K) K v).2
+    rw [chapter01_completion_valuation_agrees_with_global]
+    by_cases ha0 : a = 0
+    · simp [ha0]
+    · have hval : v.valuation K a = WithZero.exp (-(chapter01Order v a)) := by
+        simpa [chapter01Order,
+          LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.dedekindExponent] using
+          (LastLib.Book01ValuationsDVRsAndCompletions.Chapter01.dedekindExponent_valuation
+            v ha0)
+      rw [hval, ← WithZero.exp_zero, WithZero.exp_le_exp]
+      exact neg_nonpos.mpr (haout v hvfin)
 
 abbrev chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology
     (K : Type*) [Field K] [NumberField K] :
@@ -259,22 +336,162 @@ abbrev chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology
 theorem chapter04_global_diagonal_subspace_is_not_discrete
     (K : Type*) [Field K] [NumberField K] :
     ¬ @DiscreteTopology K (chapter04GlobalDiagonalSubspaceTopology K) := by
-  sorry
+  let d := IsDedekindDomain.FiniteAdeleRing.algebraMap (𝓞 K) K
+  have hfa_not_discrete :
+      ¬ @DiscreteTopology (Chapter04FiniteAdeleRing K) inferInstance := by
+    intro hdisc
+    letI : DiscreteTopology (Chapter04FiniteAdeleRing K) := hdisc
+    let g : 𝓞 K → Chapter04FiniteIntegralAdeleAddSubgroup K := fun r =>
+      ⟨d (algebraMap (𝓞 K) K r), by
+        apply (chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral K _).2
+        intro v
+        change algebraMap K (v.adicCompletion K) (algebraMap (𝓞 K) K r) ∈
+          v.adicCompletionIntegers K
+        rw [← IsScalarTower.algebraMap_apply (𝓞 K) K (v.adicCompletion K) r]
+        exact IsDedekindDomain.HeightOneSpectrum.coe_mem_adicCompletionIntegers
+          (R := 𝓞 K) (K := K) v r⟩
+    have hg : Function.Injective g := by
+      intro r s hrs
+      apply (IsFractionRing.injective (𝓞 K) K)
+      have hadele : d (algebraMap (𝓞 K) K r) = d (algebraMap (𝓞 K) K s) :=
+        congrArg (fun z : Chapter04FiniteIntegralAdeleAddSubgroup K =>
+          (z : Chapter04FiniteAdeleRing K)) hrs
+      have hnonempty : Nonempty (Chapter04FinitePlace K) := by
+        obtain ⟨I, hI⟩ := Ideal.exists_maximal (𝓞 K)
+        exact ⟨(IsDedekindDomain.HeightOneSpectrum.equivMaximalSpectrum
+          (RingOfIntegers.not_isField K)).symm ⟨I, hI⟩⟩
+      obtain ⟨v⟩ := hnonempty
+      apply FaithfulSMul.algebraMap_injective K (v.adicCompletion K)
+      have hv := congrArg (fun z : Chapter04FiniteAdeleRing K => z v) hadele
+      change algebraMap K (v.adicCompletion K) (algebraMap (𝓞 K) K r) =
+        algebraMap K (v.adicCompletion K) (algebraMap (𝓞 K) K s) at hv
+      rw [← IsScalarTower.algebraMap_apply (𝓞 K) K (v.adicCompletion K) r,
+        ← IsScalarTower.algebraMap_apply (𝓞 K) K (v.adicCompletion K) s] at hv
+      exact hv
+    letI : Infinite (Chapter04FiniteIntegralAdeleAddSubgroup K) :=
+      Infinite.of_injective g hg
+    letI : CompactSpace (Chapter04FiniteIntegralAdeleAddSubgroup K) :=
+      isCompact_iff_compactSpace.mp (chapter04_finiteIntegralAdele_is_compact_open K).1
+    letI : Finite (Chapter04FiniteIntegralAdeleAddSubgroup K) :=
+      finite_of_compact_of_discrete
+    exact not_finite (Chapter04FiniteIntegralAdeleAddSubgroup K)
+  letI : ∀ v : Chapter04FinitePlace K,
+      T2Space (Chapter04FiniteLocalField K v) := fun _ => inferInstance
+  letI : T2Space (Chapter04FiniteAdeleRing K) := by
+    change T2Space
+      (Πʳ v : Chapter04FinitePlace K,
+        [Chapter04FiniteLocalField K v, chapter04FiniteLocalIntegerSet K v]_[Filter.cofinite])
+    exact RestrictedProduct.instT2Space
+  letI : ∀ v : Chapter04FinitePlace K,
+      T1Space (Chapter04FiniteLocalField K v) := fun _ => inferInstance
+  letI : T1Space (Chapter04FiniteAdeleRing K) := T2Space.t1Space
+  letI : TopologicalSpace K := chapter04GlobalDiagonalSubspaceTopology K
+  intro hdisc
+  letI : DiscreteTopology K := hdisc
+  have hzero : IsOpen ({0} : Set K) := isOpen_discrete _
+  rcases (isOpen_induced_iff.mp hzero) with ⟨U, hU, hpre⟩
+  have hzero_mem : (0 : Chapter04FiniteAdeleRing K) ∈ U := by
+    have hmem : (0 : K) ∈ d ⁻¹' U := by
+      rw [hpre]
+      simp
+    exact hmem
+  by_cases hne : (U \ ({0} : Set (Chapter04FiniteAdeleRing K))).Nonempty
+  · have hdiff : IsOpen (U \ ({0} : Set (Chapter04FiniteAdeleRing K))) :=
+      hU.sdiff isClosed_singleton
+    obtain ⟨a, hz⟩ :=
+      (chapter04_global_diagonal_is_dense K).exists_mem_open hdiff hne
+    have ha : a ∈ d ⁻¹' U := hz.1
+    rw [hpre] at ha
+    have ha0 : a = 0 := by simpa using ha
+    apply hz.2
+    simp [ha0]
+  · have hsub : U ⊆ ({0} : Set (Chapter04FiniteAdeleRing K)) := by
+      intro z hz
+      by_contra hz0
+      exact hne ⟨z, hz, hz0⟩
+    have hUeq : U = ({0} : Set (Chapter04FiniteAdeleRing K)) :=
+      Set.Subset.antisymm hsub (singleton_subset_iff.mpr hzero_mem)
+    exact hfa_not_discrete (discreteTopology_of_isOpen_singleton_zero
+      (hUeq ▸ hU))
 
 theorem chapter04_global_dense_subspace_quotient_is_discrete
     (K : Type*) [Field K] [NumberField K] :
     @DiscreteTopology (Chapter04GlobalPrincipalPartsQuotient K)
       (chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K) := by
-  sorry
+  let d := IsDedekindDomain.FiniteAdeleRing.algebraMap (𝓞 K) K
+  have hd_mem (c : K) : d c ∈ Chapter04FiniteIntegralAdeleAddSubgroup K ↔
+      c ∈ Chapter04RingOfIntegersAddSubgroup K := by
+    constructor
+    · intro hc
+      apply IsDedekindDomain.HeightOneSpectrum.mem_integers_of_valuation_le_one
+        (R := 𝓞 K) (K := K) c
+      intro v
+      have hcoord :=
+        (chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral K (d c)).1 hc v
+      change algebraMap K (v.adicCompletion K) c ∈ v.adicCompletionIntegers K at hcoord
+      rw [← IsDedekindDomain.HeightOneSpectrum.valuedAdicCompletion_eq_valuation' v]
+      exact (IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers
+        (𝓞 K) K v).1 hcoord
+    · rintro ⟨r, rfl⟩
+      apply (chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral K _).2
+      intro v
+      change algebraMap K (v.adicCompletion K) (algebraMap (𝓞 K) K r) ∈
+        v.adicCompletionIntegers K
+      rw [← IsScalarTower.algebraMap_apply (𝓞 K) K (v.adicCompletion K) r]
+      exact IsDedekindDomain.HeightOneSpectrum.coe_mem_adicCompletionIntegers
+        (R := 𝓞 K) (K := K) v r
+  letI : TopologicalSpace (Chapter04GlobalPrincipalPartsQuotient K) :=
+    chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K
+  refine ⟨?_⟩
+  apply eq_bot_of_singletons_open
+  intro y
+  obtain ⟨a, rfl⟩ := QuotientAddGroup.mk'_surjective
+    (Chapter04RingOfIntegersAddSubgroup K) y
+  change IsOpen[
+    TopologicalSpace.coinduced
+      (QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K))
+      (chapter04GlobalDiagonalSubspaceTopology K)]
+    ({QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K) a} :
+      Set (Chapter04GlobalPrincipalPartsQuotient K))
+  change IsOpen[chapter04GlobalDiagonalSubspaceTopology K]
+    ((QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K)) ⁻¹'
+      {QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K) a})
+  change IsOpen[TopologicalSpace.induced d inferInstance]
+    ((QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K)) ⁻¹'
+      {QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K) a})
+  change ∃ t : Set (Chapter04FiniteAdeleRing K), IsOpen t ∧ d ⁻¹' t =
+    (QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K)) ⁻¹'
+      {QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K) a}
+  let H : Set (Chapter04FiniteAdeleRing K) :=
+    Chapter04FiniteIntegralAdeleAddSubgroup K
+  let t : Set (Chapter04FiniteAdeleRing K) :=
+    {z | z - d a ∈ H}
+  have ht : IsOpen t := by
+    change IsOpen ((fun z : Chapter04FiniteAdeleRing K => z - d a) ⁻¹' H)
+    exact (continuous_id.sub continuous_const).isOpen_preimage _
+      (chapter04_finiteIntegralAdele_is_compact_open K).2
+  refine ⟨t, ht, ?_⟩
+  ext b
+  change d b - d a ∈ H ↔
+    QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K) b =
+      QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K) a
+  rw [← map_sub]
+  constructor
+  · intro h
+    apply (QuotientAddGroup.eq_iff_sub_mem).2
+    exact (hd_mem (b - a)).1 (by simpa [H] using h)
+  · intro h
+    have hmem : b - a ∈ Chapter04RingOfIntegersAddSubgroup K :=
+      (QuotientAddGroup.eq_iff_sub_mem).1 h
+    exact (by simpa [H] using (hd_mem (b - a)).2 hmem)
 
 theorem chapter04_principalParts_transport_is_the_dense_subspace_quotient_topology
     (K : Type*) [Field K] [NumberField K] :
     chapter04PrincipalPartsTransportedDiscreteTopology K =
       chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K := by
-  /- PRIOR ATTEMPT: the preceding proof asserted that the dense-subspace
-     quotient was non-discrete.  Since the integral subgroup is open in the
-     induced finite-adele topology, that assertion was mathematically false. -/
-  sorry
+  have hleft := chapter04_principalParts_transport_is_discrete K
+  have hright := chapter04_global_dense_subspace_quotient_is_discrete K
+  exact hleft.eq_bot.trans hright.eq_bot.symm
 
 theorem chapter04_principalParts_quotient_is_a_topological_additive_group_isomorphism
     (K : Type*) [Field K] [NumberField K] :
@@ -286,7 +503,18 @@ theorem chapter04_principalParts_quotient_is_a_topological_additive_group_isomor
         (Chapter04GlobalPrincipalPartsQuotient K)
         inferInstance (chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K)
         (chapter04PrincipalPartsEquiv K).symm := by
-  sorry
+  constructor
+  · letI : TopologicalSpace (Chapter04GlobalPrincipalPartsQuotient K) :=
+      chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K
+    letI : DiscreteTopology (Chapter04GlobalPrincipalPartsQuotient K) :=
+      chapter04_global_dense_subspace_quotient_is_discrete K
+    exact continuous_of_discreteTopology
+  · letI : TopologicalSpace (Chapter04FinitePrincipalPartsQuotient K) := inferInstance
+    letI : DiscreteTopology (Chapter04FinitePrincipalPartsQuotient K) :=
+      chapter04_finitePrincipalPartsQuotient_is_discrete K
+    letI : TopologicalSpace (Chapter04GlobalPrincipalPartsQuotient K) :=
+      chapter04GlobalPrincipalPartsDenseSubspaceQuotientTopology K
+    exact continuous_of_discreteTopology
 
 def chapter04FiniteAdeleSingleCoordinate
     (K : Type*) [Field K] [NumberField K]
@@ -294,7 +522,9 @@ def chapter04FiniteAdeleSingleCoordinate
     Chapter04FiniteAdeleRing K := by
   classical
   exact ⟨fun v => if h : v = v₀ then h ▸ z else 0, by
-    sorry⟩
+    filter_upwards [eventually_cofinite_ne v₀] with v hv
+    simp only [dif_neg hv]
+    exact (v.adicCompletionIntegers K).zero_mem⟩
 
 @[simp]
 theorem chapter04FiniteAdeleSingleCoordinate_apply_same
