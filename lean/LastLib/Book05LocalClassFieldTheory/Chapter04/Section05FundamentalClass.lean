@@ -213,7 +213,7 @@ theorem chapter04_relative_h2_is_cyclic_of_degree
     (R : Chapter04BrauerRestrictionData K L)
     (C : Chapter04RelativeBrauerCohomologyData K L R)
     (n : ℕ) (hdegree : Module.finrank K L = n)
-    Nonempty (Chapter04RelativeH2CyclicData K L) := by
+    : Nonempty (Chapter04RelativeH2CyclicData K L) := by
   sorry
 
 def chapter04CohomologyInvariant

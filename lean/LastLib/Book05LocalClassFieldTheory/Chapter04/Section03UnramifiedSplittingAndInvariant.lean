@@ -154,7 +154,7 @@ structure Chapter04UnramifiedTowerData
   degree_factor : U'.degree = m * U.degree
   uniformizer_eq : U'.uniformizer = U.uniformizer
   frobenius_restricts : ∀ x : L,
-    U'.arithmeticFrobenius ^ m (algebraMap L M x) =
+    (U'.arithmeticFrobenius ^ m) (algebraMap L M x) =
       algebraMap L M (U.arithmeticFrobenius x)
 
 theorem chapter04_unramified_cyclic_brauer_denominator_change
