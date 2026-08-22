@@ -53,15 +53,6 @@ theorem chapter07FloorDiv_eq_floor (n d : ℤ) (e : ℕ) (he : 0 < e) :
     chapter07FloorDiv n d e = ⌊(n + d : ℚ) / e⌋ := by
   sorry
 
-/-- The canonical generalized power of a maximal ideal, with negative powers
-    interpreted in the fractional-ideal group. -/
-abbrev chapter07FractionalIdealPower
-    (R K : Type*) [CommRing R] [IsDomain R] [Field K]
-    [Algebra R K] [IsFractionRing R K]
-    (m : Ideal R) (n : ℤ) : FractionalIdeal R⁰ K :=
-  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
-    R K m n
-
 end
 
 end LastLib.Book03RamificationTheory.Chapter07

@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter07.Section06TameAndWildDerivativeBounds
+import LastLib.Book03RamificationTheory.Chapter03.Section07SameDegreeArbitrarilyDifferentDepth
 
 namespace LastLib.Book03RamificationTheory.Chapter07
 
@@ -45,20 +46,28 @@ theorem chapter07_cyclotomic_degree_and_tameness
 
 theorem chapter07_cyclotomic_lambda_is_uniformizer_and_root
     (p : ℕ) [Fact (Nat.Prime p)]
+    (hpodd : 2 < p)
     {L : Type*} [Field L] [Algebra (ℚ_[p]) L]
     [FiniteDimensional (ℚ_[p]) L]
     (vL : AddValuation L (WithTop ℤ))
-    (ζ lambda : L) (_hζ : IsPrimitiveRoot ζ p) (hlambda : lambda = ζ - 1)
-    (_hdegree : Module.finrank (ℚ_[p]) L = p - 1)
-    (hroot : aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0)
-    (_hvalue : chapter07IsUniformizer vL lambda) :
-    lambda = ζ - 1 ∧ aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0 := by
-  exact ⟨hlambda, hroot⟩
+    (ζ lambda : L) (hζ : IsPrimitiveRoot ζ p) (hlambda : lambda = ζ - 1)
+    (hdegree : Module.finrank (ℚ_[p]) L = p - 1)
+    (huniformizer : chapter07IsUniformizer vL lambda) :
+    lambda = ζ - 1 ∧
+      Module.finrank (ℚ_[p]) L = p - 1 ∧
+      chapter07IsUniformizer vL lambda ∧
+      aeval lambda (chapter07CyclotomicPolynomial (ℚ_[p]) p) = 0 := by
+  /- PRIOR ATTEMPT (before repairing the interface):
+     exact ⟨hlambda, hroot⟩
+     The repaired statement no longer assumes the root equation and exposes
+     the degree and uniformizer assertions from the source. -/
+  sorry
 
 /- The valuation calculation is separated from the choice of a generator of
    the normalized extension valuation. -/
 theorem chapter07_cyclotomic_derivative_valuation
     (p : ℕ) [Fact (Nat.Prime p)]
+    (hpodd : 2 < p)
     {L : Type*} [Field L] [Algebra (ℚ_[p]) L]
     [FiniteDimensional (ℚ_[p]) L]
     (vL : AddValuation L (WithTop ℤ)) (ζ lambda : L)
@@ -75,6 +84,7 @@ theorem chapter07_cyclotomic_derivative_valuation
 
 theorem chapter07_cyclotomic_different_exponent
     (p : ℕ) [Fact (Nat.Prime p)]
+    (hpodd : 2 < p)
     {L : Type*} [Field L] [Algebra (ℚ_[p]) L]
     [FiniteDimensional (ℚ_[p]) L]
     (vL : AddValuation L (WithTop ℤ)) (ζ lambda : L) (d : ℕ)
@@ -105,7 +115,6 @@ theorem chapter07_prime_radical_derivative_valuation
     (p : ℕ) [Fact (Nat.Prime p)]
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     (vL : AddValuation L (WithTop ℤ)) (a : K) (α : L)
-    (hroot : α ^ p = algebraMap K L a)
     (hvalp : vL (algebraMap K L (p : K)) =
       (p * (p - 1) : WithTop ℤ))
     (hvalpha : vL α = (1 : WithTop ℤ)) :
@@ -126,12 +135,6 @@ theorem chapter07_prime_radical_different_exponent
     d = p ^ 2 - 1 := by
   sorry
 
-/- The Artin--Schreier coordinate in the displayed equation is deliberately
-   kept separate from an integral generator. -/
-def chapter07ArtinSchreierEquation
-    (K : Type*) [Field K] (p m : ℕ) (t y : K) : Prop :=
-  y ^ p - y = t ^ (-(m : ℤ))
-
 def chapter07ArtinSchreierHilbertExponent (p m : ℕ) : ℕ :=
   (m + 1) * (p - 1)
 
@@ -151,14 +154,13 @@ theorem chapter07_artin_schreier_coordinate_not_integral
   have hnonnegative : 0 ≤ v y := (hintegral y).mp h
   exact (not_le_of_gt hy) hnonnegative
 
-def chapter07ArtinSchreierHilbertData (p m d : ℕ) : Prop :=
-  d = Finset.sum (Finset.range (m + 1)) (fun _i => p - 1)
-
 theorem chapter07_artin_schreier_hilbert_different_formula
-    (p m d : ℕ) (hdata : chapter07ArtinSchreierHilbertData p m d) :
-    d = chapter07ArtinSchreierHilbertExponent p m := by
-  change d = Finset.sum (Finset.range (m + 1)) (fun _i => p - 1) at hdata
-  exact hdata.trans (chapter07_artin_schreier_hilbert_sum p m)
+    (p m : ℕ) :
+    (LastLib.Book03RamificationTheory.Chapter03.chapter03ArtinSchreierNumericalProfile
+      p m).differentExponent =
+      chapter07ArtinSchreierHilbertExponent p m := by
+  change (m + 1) * (p - 1) = chapter07ArtinSchreierHilbertExponent p m
+  rfl
 
 end
 

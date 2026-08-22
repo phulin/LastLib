@@ -116,8 +116,7 @@ theorem chapter07_tame_leading_term_has_value_e_sub_one
 theorem chapter07_tame_different_exponent_eq_e_sub_one
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     (vK : AddValuation K (WithTop ℤ))
-    (vL : AddValuation L (WithTop ℤ)) (e p d : ℕ) (π : L) (z : L)
-    (htame : chapter07TameAtResidueCharacteristic e p)
+    (vL : AddValuation L (WithTop ℤ)) (e d : ℕ) (π : L) (z : L)
     (hvalue : chapter07DifferentExponentValuation vL z d)
     (hπ : vL π = (1 : WithTop ℤ))
     (hscale : ∀ x : K, x ≠ 0 →
@@ -147,7 +146,8 @@ theorem chapter07_equal_characteristic_wild_leading_term_zero
 theorem chapter07_mixed_characteristic_wild_leading_term_lower_bound
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     (vK : AddValuation K (WithTop ℤ))
-    (vL : AddValuation L (WithTop ℤ)) (p e : ℕ) (π : L)
+    (vL : AddValuation L (WithTop ℤ)) (p e : ℕ) [Fact (Nat.Prime p)] (π : L)
+    (hdiv : p ∣ e)
     (hscale : ∀ x : K, x ≠ 0 →
       vL (algebraMap K L x) = (e : WithTop ℤ) * vK x)
     (hπ : vL π = (1 : WithTop ℤ))
@@ -173,7 +173,6 @@ theorem chapter07_wild_different_exponent_ge_e
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     (vL : AddValuation L (WithTop ℤ)) (e d : ℕ) (z : L)
     (hvalue : chapter07DifferentExponentValuation vL z d)
-    (hseparable : z ≠ 0)
     (hwild_terms : vL z ≥ (e : WithTop ℤ)) :
     e ≤ d := by
   sorry

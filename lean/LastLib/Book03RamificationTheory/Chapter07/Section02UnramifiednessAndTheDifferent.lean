@@ -72,13 +72,14 @@ theorem chapter07_perfect_trace_pairing_has_unit_trace_determinant
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L]
     {ι : Type*} [Fintype ι] [DecidableEq ι]
-    (b : ι → B) (tr : B →ₗ[A] A)
+    (tr : B →ₗ[A] A)
     (hperfect : chapter07IntegralTracePairingPerfect A B K L)
     (hbasis : Module.Basis ι A B)
     (htrace : ∀ x y : B,
       algebraMap A K (tr (x * y)) =
         Algebra.trace K L (algebraMap B L x * algebraMap B L y)) :
-    IsUnit (Matrix.det (chapter07IntegralTraceMatrix A B tr b)) := by
+    IsUnit (Matrix.det
+      (chapter07IntegralTraceMatrix A B tr (fun i => hbasis i))) := by
   sorry
 
 /- The trace pairing on a finite algebra over a field is represented by the
@@ -132,11 +133,13 @@ theorem chapter07_zero_different_implies_unramified
     (hmB : mB = IsLocalRing.maximalIdeal B)
     (hpower :
       (Ideal.map (algebraMap A B) mA : FractionalIdeal B⁰ L) =
-        chapter07FractionalIdealPower B L mB (e : ℤ))
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+          B L mB (e : ℤ))
     (hzero : chapter07DifferentIdeal A B = ⊤)
-    (hquotient_reduced : IsReduced (B ⧸ Ideal.map (algebraMap A B) mA))
+    (hquotient_reduced : chapter07DifferentIdeal A B = ⊤ →
+      IsReduced (B ⧸ Ideal.map (algebraMap A B) mA))
     (hresidue : Nonempty ((B ⧸ mB) ≃+* l))
-    (htrace_nondegenerate :
+    (htrace_nondegenerate : chapter07DifferentIdeal A B = ⊤ →
       chapter07TracePairingNondegenerate l k
         (chapter07FiniteAlgebraTracePairing k l)) :
     chapter07UnramifiedProfile e k l := by
@@ -147,7 +150,8 @@ theorem chapter07_different_zero_iff_unramified
     [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L] [Field k] [Field l]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [Algebra k l] [IsScalarTower A K L] [IsScalarTower A B L]
+    [Algebra k l] [FiniteDimensional k l] [IsScalarTower A K L]
+    [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
     [IsIntegrallyClosed A]
@@ -158,8 +162,16 @@ theorem chapter07_different_zero_iff_unramified
     (hmB : mB = IsLocalRing.maximalIdeal B)
     (hpower :
       (Ideal.map (algebraMap A B) mA : FractionalIdeal B⁰ L) =
-        chapter07FractionalIdealPower B L mB (e : ℤ))
-    (hresidue : Nonempty ((B ⧸ mB) ≃+* l)) :
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+          B L mB (e : ℤ))
+    (hdegree : Module.finrank K L = Module.finrank k l)
+    (hresidue_model : Nonempty ((A ⧸ mA) ≃+* k) ∧
+      Nonempty ((B ⧸ mB) ≃+* l))
+    (hquotient_reduced : chapter07DifferentIdeal A B = ⊤ →
+      IsReduced (B ⧸ Ideal.map (algebraMap A B) mA))
+    (htrace_nondegenerate : chapter07DifferentIdeal A B = ⊤ →
+      chapter07TracePairingNondegenerate l k
+        (chapter07FiniteAlgebraTracePairing k l)) :
     chapter07DifferentIdeal A B = ⊤ ↔
       chapter07UnramifiedProfile e k l := by
   sorry
@@ -171,7 +183,8 @@ theorem chapter07_e_one_inseparable_residue_forces_nontrivial_different
     [IsDiscreteValuationRing A] [CommRing B] [IsDedekindDomain B]
     [IsDiscreteValuationRing B] [Field K] [Field L] [Field k] [Field l]
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
-    [Algebra k l] [IsScalarTower A K L] [IsScalarTower A B L]
+    [Algebra k l] [FiniteDimensional k l] [IsScalarTower A K L]
+    [IsScalarTower A B L]
     [IsFractionRing A K] [IsFractionRing B L] [FiniteDimensional K L]
     [Algebra.IsSeparable K L] [IsIntegralClosure B A L]
     [IsIntegrallyClosed A]
@@ -182,8 +195,16 @@ theorem chapter07_e_one_inseparable_residue_forces_nontrivial_different
     (hmB : mB = IsLocalRing.maximalIdeal B)
     (hpower :
       (Ideal.map (algebraMap A B) mA : FractionalIdeal B⁰ L) =
-        chapter07FractionalIdealPower B L mB (1 : ℤ))
-    (hresidue : Nonempty ((B ⧸ mB) ≃+* l))
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+          B L mB (1 : ℤ))
+    (hdegree : Module.finrank K L = Module.finrank k l)
+    (hresidue_model : Nonempty ((A ⧸ mA) ≃+* k) ∧
+      Nonempty ((B ⧸ mB) ≃+* l))
+    (hquotient_reduced : chapter07DifferentIdeal A B = ⊤ →
+      IsReduced (B ⧸ Ideal.map (algebraMap A B) mA))
+    (htrace_nondegenerate : chapter07DifferentIdeal A B = ⊤ →
+      chapter07TracePairingNondegenerate l k
+        (chapter07FiniteAlgebraTracePairing k l))
     (hinsep : ¬Algebra.IsSeparable k l) :
     chapter07DifferentIdeal A B ≠ ⊤ := by
   sorry

@@ -186,13 +186,13 @@ theorem chapter07_eisenstein_different_exponent_eq_derivative_valuation
     [Algebra.IsIntegral A B]
     (vL : AddValuation L (WithTop ℤ)) (mB : Ideal B) (d : ℕ)
     (πL : B) (f : A[X])
-    (_hmono : chapter07MonogenicPresentation A B K L πL f)
-    (_hD : chapter07DifferentIdeal A B = mB ^ d)
-    (hvalue : vL (algebraMap B L
-        (chapter07DerivativeAt A B f πL)) = (d : WithTop ℤ)) :
+    (hmono : chapter07MonogenicPresentation A B K L πL f)
+    (hD : chapter07DifferentIdeal A B = mB ^ d)
+    (hmB : mB = IsLocalRing.maximalIdeal B)
+    (hπL : chapter07IsUniformizer vL (algebraMap B L πL)) :
     vL (algebraMap B L (chapter07DerivativeAt A B f πL)) =
       (d : WithTop ℤ) := by
-  exact hvalue
+  sorry
 
 end
 

@@ -52,11 +52,14 @@ theorem chapter07_trace_fractional_power_formula
     (he : 0 < e)
     (hmap :
       (Ideal.map (algebraMap A B) mA : FractionalIdeal B⁰ L) =
-        chapter07FractionalIdealPower B L mB (e : ℤ))
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+          B L mB (e : ℤ))
     (hD : chapter07DifferentIdeal A B = mB ^ d) (n : ℤ) :
     chapter07TraceImage A B K L
-        (chapter07FractionalIdealPower B L mB n) =
-      (chapter07FractionalIdealPower A K mA
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+          B L mB n) =
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+        A K mA
         (chapter07TraceImageExponent n d e) : Set K) := by
   sorry
 
@@ -77,11 +80,14 @@ theorem chapter07_trace_fractional_power_contained_iff
     (he : 0 < e)
     (hmap :
       (Ideal.map (algebraMap A B) mA : FractionalIdeal B⁰ L) =
-        chapter07FractionalIdealPower B L mB (e : ℤ))
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+          B L mB (e : ℤ))
     (hD : chapter07DifferentIdeal A B = mB ^ d) (n r : ℤ) :
     chapter07TraceImage A B K L
-        (chapter07FractionalIdealPower B L mB n) ⊆
-      (chapter07FractionalIdealPower A K mA r : Set K) ↔
+        (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+          B L mB n) ⊆
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+        A K mA r : Set K) ↔
         r ≤ chapter07TraceImageExponent n d e := by
   sorry
 
@@ -110,7 +116,8 @@ theorem chapter07_unramified_exact_integral_trace
     (hmB : mB = IsLocalRing.maximalIdeal B)
     (hmap :
       (Ideal.map (algebraMap A B) mA : FractionalIdeal B⁰ L) =
-        chapter07FractionalIdealPower B L mB (1 : ℤ))
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+          B L mB (1 : ℤ))
     (hD : chapter07DifferentIdeal A B = mB ^ 0) :
     Algebra.trace K L '' chapter07IntegralRingSet B L =
         Set.range (algebraMap A K) ∧
@@ -135,7 +142,8 @@ theorem chapter07_tame_exact_integral_and_maximal_trace
     (he : 0 < e)
     (hmap :
       (Ideal.map (algebraMap A B) mA : FractionalIdeal B⁰ L) =
-        chapter07FractionalIdealPower B L mB (e : ℤ))
+        LastLib.Book02FiniteExtensionsOfLocalFields.Chapter04.chapter04FractionalIdealPower
+          B L mB (e : ℤ))
     (hD : chapter07DifferentIdeal A B = mB ^ (e - 1)) :
     Algebra.trace K L '' chapter07IntegralRingSet B L =
         Set.range (algebraMap A K) ∧
@@ -170,10 +178,7 @@ theorem chapter07_sqrt_two_integral_trace_is_two_adic
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] (sqrtTwo : L)
     (hmodel : chapter07QuadraticTraceModel K L sqrtTwo)
-    (hsquare : sqrtTwo ^ 2 = algebraMap K L 2)
-    (_hintegral_trace : ∀ a : K, ∃ x : K,
-      Algebra.trace K L (algebraMap K L a +
-        algebraMap K L 0 * sqrtTwo) = 2 * x) :
+    (hsquare : sqrtTwo ^ 2 = algebraMap K L 2) :
     ∀ a b : K,
       Algebra.trace K L (algebraMap K L a + algebraMap K L b * sqrtTwo) =
         2 * a := by
