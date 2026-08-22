@@ -210,7 +210,9 @@ quotients by regular sequences remain Cohen–Macaulay and equidimensional; the 
 differentials
 $\Omega_{B/A}$ together with the two fundamental exact sequences and its behaviour under
 localization and base change; Serre's criterion that a noetherian ring is normal exactly when it
-satisfies $R_1$ and $S_2$; and the functor $\operatorname{Tor}$ with its balancing property and
+satisfies $R_1$ and $S_2$; the field-theoretic fact that every finite field extension becomes
+separable after a finite purely inseparable extension of the base field; and the functor
+$\operatorname{Tor}$ with its balancing property and
 long exact sequences. Book 1, Chapter 13, supplies everything about complete local rings that we
 need, and is cited by number where used.
 
@@ -450,6 +452,102 @@ $\mathfrak q$ is minimal over $J_r$, then localizing at $\mathfrak q$ the quotie
 $(A/J_r)_{\mathfrak q}$ is zero-dimensional, so $\mathfrak q$'s height satisfies
 $r\leq\operatorname{ht}\mathfrak q\leq r$ by the same two bounds: the chain from the
 construction gives at least $r$ and Lemma 1.2C.2 at most $r$. $\square$
+
+### 1.2D The inseparability reduction
+
+The third load-bearing item of the standing list is field-theoretic: every finite field extension
+becomes separable after a finite purely inseparable extension of the base field. It is what lets
+Lemma 9.3 separate an arbitrary finite extension of fraction fields into a purely inseparable step,
+handled directly, followed by a separable step, to which the trace argument applies. The proof is a
+short piece of Artin–Galois bookkeeping, recorded here so that nothing downstream rests on an
+unproved declaration. All fields in this subsection lie in a fixed algebraic closure $\bar K$ of
+the base field $K$, and $\operatorname{Aut}(M/K)$ denotes the group of $K$-automorphisms of a
+field $M$ with $K\subseteq M\subseteq\bar K$.
+
+**Lemma 1.2D.1 (Artin).** Let $M$ be a field and $G$ a finite subgroup of $\operatorname{Aut}(M)$.
+Then $M/F$ is finite and separable, where $F=M^G=\{a\in M:\sigma a=a\text{ for all }\sigma\in G\}$
+is the fixed field. More precisely, for $x\in M$ with stabilizer $H=\{\sigma\in G:\sigma x=x\}$,
+the minimal polynomial of $x$ over $F$ has degree $|G|/|H|$ and is, up to a scalar,
+$$\prod_{i=1}^{o}(T-\sigma_i x),$$
+
+where $\sigma_1H,\ldots,\sigma_oH$ are the cosets of $H$ in $G$.
+
+_Proof._ Set $o=|G|/|H|$ and choose representatives $\sigma_1,\ldots,\sigma_o$ with
+$\sigma_1=\operatorname{id}$, so that $\sigma_1x=x$. Put
+$$Q(T)=\prod_{i=1}^{o}(T-\sigma_ix).$$
+
+Any $\tau\in G$ sends $\sigma_ix$ to $(\tau\sigma_i)x$, which depends only on the coset
+$\tau\sigma_iH$; since left multiplication by $\tau$ permutes $G/H$, the list
+$\sigma_1x,\ldots,\sigma_o x$ is permuted by $\tau$. Hence $\tau$ fixes each coefficient of $Q$,
+and as this holds for all $\tau$, the coefficients lie in $F$: $Q\in F[T]$, and $Q(x)=0$ by the
+choice of $\sigma_1$, so the minimal polynomial $P$ of $x$ over $F$ divides $Q$. Conversely each
+$\sigma x$ is a root of $P$: applying $\sigma$ to $P(x)=0$ gives $P(\sigma x)=0$ because $\sigma$
+fixes the coefficients of $P$ pointwise. The values $\sigma x$ take exactly $o$ distinct values,
+since $\sigma x=\sigma'x$ if and only if $\sigma^{-1}\sigma'\in H$ if and only if
+$\sigma'H=\sigma H$. Thus $P$ has at least $o$ distinct roots while dividing the polynomial $Q$ of
+degree $o$; therefore $P=Q$ up to a unit, $\deg P=o$, and the roots of $P$ are simple. Each element
+of $M$ is thus separable and of finite degree at most $|G|$ over $F$, so $M/F$ is finite and
+separable — finitely many generators of $M$ over its prime field serve as generators over $F$, and
+each has finite degree over $F$. $\square$
+
+**Lemma 1.2D.2.** Let $K\subseteq M\subseteq\bar K$ with $M/K$ finite, and suppose $M$ is normal
+over $K$ in the sense that every irreducible polynomial over $K$ having one root in $M$ splits
+into linear factors over $M$. Let $F=M^{\operatorname{Aut}(M/K)}$. Then every $a\in F$ satisfies
+$a^q\in K$ for some power $q=p^n$ ($n=0$ allowed) if $\operatorname{char}K=p>0$, and $a\in K$ if
+$\operatorname{char}K=0$. In particular $F/K$ is finite purely inseparable.
+
+_Proof._ First, a $K$-embedding $\varphi:E\to M$ defined on an intermediate field
+$K\subseteq E\subseteq M$ extends to a $K$-automorphism of $M$. Since $M/K$ is finite, it suffices
+to extend across one generator at a time: given $\theta\in M\setminus E$, let $g$ be the minimal
+polynomial of $\theta$ over $E$ and $h$ that of $\theta$ over $K$. Then $g$ divides $h$, and
+applying $\varphi$, which fixes the coefficients of $h\in K[T]$, shows that $\varphi(g)$ divides
+$h$. By normality $h$ splits over $M$, so the nonconstant factor $\varphi(g)$ has a root
+$\theta'\in M$, and the assignment $\theta\mapsto\theta'$ extends $\varphi$ to an embedding of
+$E(\theta)$ into $M$. After finitely many steps we obtain a $K$-embedding
+$\sigma:M\to M$; being $K$-linear and injective on the finite-dimensional $K$-vector space $M$, it
+is surjective, hence an automorphism.
+
+Now let $a\in F$ with minimal polynomial $P$ over $K$. All roots of $P$ lie in $M$ by normality.
+If some root $b\neq a$ lay in $M$, the $K$-embedding $K(a)\to M$ carrying $a$ to $b$ would extend,
+by the previous paragraph, to a $K$-automorphism $\sigma$ of $M$ with $\sigma a=b\neq a$ — but
+$a\in F$ is fixed by every such automorphism. Hence $a$ is the only root of $P$ in $M$, therefore
+the only root of $P$ in $\bar K$, and $P=(T-a)^d$ where $d=\deg P$. If $d=1$ then $a\in K$. If
+$d\geq2$ then $P'=d(T-a)^{d-1}$ shares the factor $(T-a)$ with $P$, and irreducibility of $P$
+forces $P'=0$, i.e. $P(T)=R(T^p)$ for some $R\in K[T]$; moreover $R$ is irreducible, because a
+factorization $R=R_1R_2$ would give $P=R_1(T^p)R_2(T^p)$, and $a^p$ is the only root of $R$ in
+$\bar K$, being the image of $a$ under $T\mapsto T^p$. The same argument applied to $R$ and
+iterated reaches a linear polynomial with sole root $a^{p^n}$, whence $a^{p^n}\in K$. This proves
+the claim when $\operatorname{char}K=p>0$; in characteristic zero no irreducible polynomial has a
+multiple root, since $P'\not\equiv0$ has smaller degree than $P$, so the case $d\geq2$ cannot
+occur and $F=K$. Finiteness of $F/K$ is inherited from $M/K$. $\square$
+
+**Lemma 1.2D.3 (inseparability reduction).** Let $L/K$ be a finite field extension. Then there is
+a finite purely inseparable extension $K'/K$ such that $LK'/K'$ is finite separable. If
+$\operatorname{char}K=0$ one may take $K'=K$.
+
+_Proof._ The case $\operatorname{char}K=0$ is immediate, since every finite extension in
+characteristic zero is separable: an irreducible polynomial whose derivative vanishes identically
+is a polynomial in $T^p$, and $p=1$ is impossible there. Assume $\operatorname{char}K=p>0$. Choose
+generators $x_1,\ldots,x_m$ of $L$ over $K$ and let $f_i\in K[T]$ be the minimal polynomial of
+$x_i$. Let $M\subseteq\bar K$ be the splitting field of $f_1\cdots f_m$: adjoining the roots of
+$f_1,\ldots,f_m$ one at a time exhibits $M$ as a finite extension of $K$, and $M$ is normal over
+$K$. For the normality, let $g\in K[T]$ be irreducible with a root $\alpha\in M$ and let
+$\beta\in\bar K$ be any other root of $g$. The embedding $K(\alpha)\to\bar K$ carrying $\alpha$ to
+$\beta$ extends step by step, across each of the finitely many generators of $M$ over $K$, to a
+$K$-embedding $\sigma:M\to\bar K$: at a typical step the next generator $\theta$ is a root of some
+$f_i$, its minimal polynomial over the current domain divides $f_i$, hence so does the transported
+polynomial obtained by applying the embedding, and $\theta$ may be sent to any root of that factor
+in the algebraically closed field $\bar K$. The image of $M$ under $\sigma$ is generated over $K$
+by the images of those generators, each of which is again a root of the same $f_i$ and hence lies
+in $M$; so $\sigma(M)\subseteq M$, and comparing degrees over $K$ gives $\sigma(M)=M$. In
+particular $\beta=\sigma\alpha\in M$. Thus all roots of $g$ lie in $M$, as normality requires.
+
+So $M/K$ is finite normal and contains $L$. Let $G=\operatorname{Aut}(M/K)$ and
+$K'=M^G$. By Lemma 1.2D.2, $K'/K$ is finite purely inseparable, and by Lemma 1.2D.1, $M/K'$ is
+finite separable. Since $L\subseteq M$ we have $LK'\subseteq M$, and an intermediate extension of
+a finite separable extension is finite separable: each element of the intermediate field has its
+minimal polynomial dividing a polynomial with simple roots, hence has simple roots itself. Thus
+$LK'/K'$ is finite separable, as required. $\square$
 
 ### 1.3 The shape of the argument
 
@@ -3209,9 +3307,8 @@ suppose that $R$ is $t$-adically complete and that $R/tR$ is a domain which is $
 $N$-$2$.
 
 **Proof.** Write $K=\operatorname{Frac}R$ and let $L/K$ be finite. If $\operatorname{char}K=0$, or
-more generally if $L/K$ is separable, this is Lemma 9.2. In general there is a finite purely
-inseparable extension $K'/K$, obtained by adjoining finitely many $p^r$-th roots of the
-coefficients of minimal polynomials of generators of $L$, such that $LK'/K'$ is separable. If the
+more generally if $L/K$ is separable, this is Lemma 9.2. In general there is, by Lemma 1.2D, a
+finite purely inseparable extension $K'/K$ such that $LK'/K'$ is separable. If the
 integral closure $R'$ of $R$ in $K'$ is finite, then $R'$ is a normal noetherian domain, the trace
 argument applies to $LK'/K'$, and the integral closure of $R$ in $L$ — a submodule of the integral
 closure of $R'$ in $LK'$ — is finite over $R$. So we may assume $L/K$ purely inseparable, say
@@ -3587,12 +3684,12 @@ development of the formal-smoothness calculus rather than as a link in the chain
 proves the $p$-independence criterion for separability in one direction in general and in the
 converse direction only for extensions generated by $p$-th roots, which is all that is needed.
 
-**Standard results used without proof.** Three classical facts from the background list of
+**Standard results used without proof.** Three classical facts connected with the background list of
 Section 1.2 carry more weight than the rest and are named here: that in a Cohen–Macaulay local ring an ideal of height
 $h$ contains a regular sequence of length $h$ and that quotients by regular sequences stay
 Cohen–Macaulay and equidimensional, used in Proposition 10.2; that every finite field extension
 becomes separable after a finite purely inseparable extension of the base field, used in
-Lemma 9.3; and Serre's criteria for reducedness and for normality, used in Proposition 4.5 and
+Lemma 9.3 and proved in Section 1.2D; and Serre's criteria for reducedness and for normality, used in Proposition 4.5 and
 Corollary 3.12. The homological characterization of regularity, by contrast, is _not_ assumed: it
 is proved in Chapter 2 precisely because the two consequences drawn from it — that localizations of
 regular rings are regular, and that regularity descends along faithfully flat maps — carry
