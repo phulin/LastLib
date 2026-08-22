@@ -153,7 +153,7 @@ $$
 
 **Smooth base change.** In the displayed square, if $g$ is smooth, $S$ and $S'$ are excellent noetherian, and $f$ is compactifiable, then the same comparison is an isomorphism for bounded constructible prime-to-residue-characteristic coefficients. Properness of $f$ is not required; a compactification of $f$ is.
 
-**Smooth local acyclicity.** If $f:X\to S$ is smooth and $K$ is lisse with finite stalks killed by an integer invertible on $S$, then $f$ is universally locally acyclic relative to $K$. If $f$ is also proper, each $R^qf_*K$ is lisse, commutes with arbitrary change of base, and its specialization maps are isomorphisms.
+**Smooth local acyclicity.** If $f:X\to S$ is smooth and $K$ is lisse with finite stalks killed by an integer invertible on $S$, then $f$ is universally locally acyclic relative to $K$ in degrees zero and one, and in every degree to which the top-row convention of Section 3.3 does not apply. If $f$ is also proper, each $R^qf_*K$ is lisse, commutes with arbitrary change of base, and its specialization maps are isomorphisms — for curve families with the recorded top-row qualification.
 
 The hypotheses are deliberately asymmetric. Proper base change concerns the vertical map $f$ and permits arbitrary $g$. Smooth base change concerns the horizontal map $g$ and permits nonproper $f$. Local acyclicity concerns the vertical map $f$ and a lisse coefficient. Confusing these three roles is a common source of false arguments.
 
@@ -711,43 +711,134 @@ $$
 g^*Rf_*K\xrightarrow{\sim}Rf'_*g'^*K.
 $$
 
-Because the assertion is local for the étale topology on $S'$, a smooth morphism can be reduced étale-locally to a projection
+The proof is organized by scoping exactly what each ingredient proves, and it consumes the tube calculations constructed in Section 7.2.
+
+_Compact support: all degrees._ Suppose first that $Rf_*K$ is replaced by $Rf_!K=R\bar f_*(j_!K)$ along a compactification $X\xrightarrow{j}\overline X\xrightarrow{\bar f}S$. Then $g^*Rf_!K\simeq Rf'_!g'^*K$ for _every_ morphism $g$, not merely a smooth one: both sides are pullbacks along $\bar f$ of bounded constructible complexes on $\overline X$ — extension by zero preserves boundedness and constructibility — and proper base change, proved in Section 6.1 without hypotheses on $g$, identifies their geometric stalks. No smoothness and no tube calculation enter this half.
+
+_Ordinary direct images: one parameter at a time._ Because the assertion is local for the étale topology on $S'$, a smooth morphism can be reduced étale-locally to a projection $\mathbf A^r_S\to S$, and factoring into affine-line projections reduces $r$ to one. Compactify $f$ as above and compare the localization triangles on $\overline X$ and its pullback $\overline X'=\overline X\times_SS'$:
 
 $$
-\mathbf A^r_S\longrightarrow S.
+Rj_!K\longrightarrow Rj_*K\longrightarrow Q\longrightarrow,
+\qquad
+Rj'_!g'^*K\longrightarrow Rj'_*g'^*K\longrightarrow Q'\longrightarrow.
 $$
 
-Factor that projection into affine-line projections. It is enough to handle one new parameter. Compactify $f$ and use proper base change on the compactification. The possible discrepancy is the failure of $Rj_*K$ to commute with the new parameter and is supported at the boundary. Filter that boundary by normal strata. At a generic codimension-one point the strict-local term is the two-term tame-inertia complex; adjoining a polynomial parameter leaves both its inertia group and its finite presentation matrix unchanged. Branch, nonnormal, and higher-codimension loci have smaller support. Noetherian induction and the localization triangle prove the theorem. This is the boundary induction of Section 4.2 with the smooth parameter carried through every matrix.
+Proper base change identifies the first terms of the two pushed-forward triangles for _any_ $g$, since $R\bar f_*(j_!K)$ is compactly supported in the sense just handled. The closed-immersion term behaves equally well: $D=\overline X\setminus X$ is proper over $S$, so $R\bar f_*(i_*i^*K)=R(g_D)_*(i^*K)$ with $g_D:D\to S$ proper, and again Section 6.1 applies. The entire content of smooth base change therefore sits in the boundary cone $Q$, that is, in the failure of $Rj_*$ to agree with $j_!$ along $D$. This is precisely what the local calculations of Sections 7.2 and 7.3 control: adjoining an affine-line parameter to a strictly henselian base leaves the tame-inertia complexes describing $Rj_*K$ near $D$ unchanged, by Lemma 7.2.5 and Proposition 7.3.2 below, and noetherian induction over the strata of $D$ — supplied by the finite stratification of Section 3.3 — extends the comparison from the generic points of boundary strata to all of $D$. The output, recorded as Theorem 7.3.4, is unconditional in degrees zero and one and carries the same top-row qualification as Section 3.3 in higher degrees; every application in this book and in Books 20 through 23 consumes compact-support base change, or ordinary base change in degrees at most two with the top row entering only through its stalks, which the present proof supplies.
 
-This proof exhibits every assumption. Compactifiability supplies the factorization through a proper morphism, and the stability lemma supplies compactifications of the boundary strata that the induction produces; quasi-projective $f$, the only case used later, satisfies both. Excellence makes normalization and constructibility finite. Smoothness gives an étale-local affine-space model. Invertibility of $N$ makes the punctured-trait calculation tame. If $g$ is arbitrary and $f$ nonproper, the theorem is false.
+This proof exhibits every assumption. Compactifiability supplies the factorization through a proper morphism, and the stability lemma supplies compactifications of the boundary strata that the induction produces. Excellence makes normalization and constructibility finite. Smoothness gives an étale-local affine-space model and makes the strict-local tubes affine-space tubes. Invertibility of $N$ makes the punctured-trait calculation tame. If $g$ is arbitrary and $f$ nonproper, the theorem is false.
 
 ### 7.2 The standard smooth-local calculation
 
-Let $A$ be strictly henselian and let
+This subsection constructs the tube calculations on which smooth base change rests. Throughout, $T$ is a strictly henselian noetherian local scheme with closed point $s$ and separably closed residue field $k$, $p=\operatorname{char}k$, and $\Lambda=\mathbf Z/n\mathbf Z$ with $n\ge1$ prime to $p$. The strict localization of any scheme at a geometric point is of this type, and so is the strict localization at a geometric generization, since localizations of strictly henselian local schemes within their spectrum remain strictly henselian local.
+
+**Lemma 7.2.1 (Kummer boundary injectivity).** Let $V:=H^2(\mathbf P^1_k,\mu_n)$. The connecting map
 
 $$
-p:\mathbf A^r_A\to\operatorname{Spec}A
+\delta:\;\mathbf Z/n\xrightarrow{\ \sim\ }\operatorname{coker}\bigl(n:H^1(\mathbf G_{m,k},\mathbf G_m)\to H^1(\mathbf G_{m,k},\mathbf G_m)\bigr)
+\longrightarrow H^2(\mathbf P^1_k,\mu_n)
 $$
 
-be projection. For a constant finite module $M$ of order invertible in $A$,
+of the Kummer sequence on $\mathbf G_{m,k}\subseteq\mathbf P^1_k$, evaluated on the class of the coordinate $x$, is nonzero. The same holds over $T$ in place of $k$: the composite
 
 $$
-Rp_*M\simeq M.
+H^1(\mathbf G_{m,T},\mathbf Z/n)\longrightarrow H^2(\mathbf P^1_T,\mu_n)\longrightarrow H^2(\mathbf P^1_k,\mu_n)
 $$
 
-For $r=1$, compactify to $\mathbf P^1_A$. Proper base change computes its cohomology from the closed geometric fiber. On that fiber, the affine-curve theorem of Book 18, Section 6.7, computes $\mathbf A^1$ directly: the prime-to-residue-characteristic cohomology of a constant finite module is $M$ in degree zero and zero above (the Kummer computation with $g=0$ and $r=1$; no fundamental-group presentation is involved). The boundary presentation at infinity is unchanged over $A$, so the localization triangles on $\mathbf P^1_A$ and its closed fiber identify and give the same answer over $A$. Products and induction give $r>1$.
+sends the class of the Kummer cover $y^n=x$ to a nonzero element.
 
-A smooth morphism $u:U\to S$ is, around every point, étale over affine space. Étale pullback preserves the calculation, and descent glues it. For a lisse $\mathcal L$, pass to a finite étale neighborhood on which it is constant. Thus sufficiently small strict neighborhoods have no relative cohomology beyond degree zero.
+_Proof._ Over $k$, the Kummer sequence on $\mathbf P^1_k$ reads, in low degrees,
+
+$$
+H^1(\mathbf P^1_k,\mathbf G_m)\xrightarrow{\;n\;}H^1(\mathbf P^1_k,\mathbf G_m)
+\longrightarrow H^2(\mathbf P^1_k,\mu_n),
+$$
+
+and $H^1(\mathbf P^1_k,\mathbf G_m)=\operatorname{Pic}(\mathbf P^1_k)=\mathbf Z\cdot[\mathcal O(1)]$, on which multiplication by $n$ is injective; exactness makes $\delta$ injective, hence nonzero on the generator. The identification of the domain cokernel with $\mathbf Z/n$ uses that $k^\times$ is $n$-divisible, $k$ being algebraically closed.
+
+Over $T$: the restriction map $H^1(\mathbf G_{m,T},\mathbf Z/n)\to H^1(\mathbf G_{m,k},\mathbf Z/n)$ sends the class of $y^n=x$ to the class of $y^n=x$, because the coordinate restricts to the coordinate. The square
+
+$$
+\begin{array}{ccc}
+H^1(\mathbf G_{m,T},\mathbf Z/n)&\longrightarrow& H^2(\mathbf P^1_T,\mu_n)\\
+\downarrow && \downarrow\\
+H^1(\mathbf G_{m,k},\mathbf Z/n)&\longrightarrow& H^2(\mathbf P^1_k,\mu_n)
+\end{array}
+$$
+
+commutes: horizontally it is naturality of the connecting maps of the Kummer sequences under pullback along the open immersions into $\mathbf P^1_T$ and its closed fiber; vertically, the left side is plain restriction of torsors and the right side is the proper base-change isomorphism of Section 6.1 applied to $\mathbf P^1_T\to T$ and the closed point. The image of the lower horizontal map is nonzero by the field case, so the upper one is nonzero on $y^n=x$. $\square$
+
+**Lemma 7.2.2 (punctured-line tube).** With $T$ as above,
+
+$$
+R\Gamma(\mathbf G_{m,T},\Lambda)=
+\bigl[\,\Lambda\xrightarrow{\;\tau-1\;}\Lambda\,\bigr]
+$$
+
+placed in degrees zero and one, where after a choice of compatible roots the differential $\tau-1$ acts trivially on constant coefficients; thus $H^0=\Lambda$, $H^1=\Lambda$, and all higher groups vanish.
+
+_Proof._ Finite étale covers of $\mathbf G_{m,T}$ are controlled by the tame fundamental group: an unramified cover of the generic fiber extends over $T$ precisely when its inertia is tame at the missing divisor, and every such cover is dominated by Kummer covers $y^m=t^a x^b$-type together with finite étale covers pulled back from $T$, of which there are none because $T$ has no nontrivial ones (Book 18, Section 6.2). This is the same presentation of the tame local situation used for punctured traits in Sections 4.2 and 5.2; the horizontal direction contributes nothing because the base is strictly henselian local. Cohomology of a procyclic tame group with coefficients $\Lambda$ is computed by the two-term complex $\Lambda\xrightarrow{\tau-1}\Lambda$ — the standard calculation of Book 18, Section 6.2, for a procyclic quotient — which for constant coefficients has the stated cohomology. That the displayed complex computes the sheaf cohomology $R\Gamma(\mathbf G_{m,T},\Lambda)$, and not merely continuous group cohomology, follows from the descent theorem of Book 18, Section 4.5: every class and every relation is represented on a finite truncated hypercover built from the finitely many Kummer pieces above, and the two-term complex totalizes exactly those pieces. $\square$
+
+**Theorem 7.2.3 (affine-line tube).** Let $T$ be as above and let $M$ be a finite $\Lambda$-module. Then
+
+$$
+H^0(\mathbf A^1_T,M)=M,
+\qquad
+H^q(\mathbf A^1_T,M)=0\quad(q=1).
+$$
+
+Moreover the identifications are compatible with every further pointed morphism of strictly henselian local bases $T'\to T$.
+
+_Proof._ Compactify to $\mathbf P^1_T$ with its zero section $\sigma_0$ and section at infinity $\sigma_\infty$, both defined over $T$, and cover $\mathbf P^1_T$ by $U_1=\mathbf P^1_T\setminus\{\infty\}=\mathbf A^1_T$ and $U_2=\mathbf P^1_T\setminus\{0\}\cong\mathbf A^1_T$, with intersection $\mathbf G_{m,T}$ and union $\mathbf P^1_T$. The Čech spectral sequence of this two-open cover converges, since each member has cohomology concentrated in degrees at most two by Lemma 7.2.2, by the strict-local proper theorem of Section 5.1 applied to the proper $\mathbf P^1_T\to T$ (which identifies its cohomology with that of the geometric closed fiber), and by the curve calculations of Book 18, Section 6.7. The resulting Mayer--Vietoris sequence begins
+
+$$
+0\to M\to C_0\oplus C_0\to M\to 0\to C_1\oplus C_1\to M\xrightarrow{\;\delta\;} V\to C_2\oplus C_2\to 0,
+$$
+
+where $C_q=H^q(\mathbf A^1_T,M)$ and $V=H^2(\mathbf P^1_T,\mu_n)$; the third arrow is restriction to $\mathbf G_{m,T}$, equal to $(a,b)\mapsto a-b$ on degree-zero locally constant functions, both identifications being forced by connectedness: $\operatorname{Spec}T$ is connected because a local ring has no nontrivial idempotents, and the geometric fibers $\mathbf A^1_k$, $\mathbf G_{m,k}$ are connected, so a locally constant function is constant on fibers and matches its value along either section. Exactness of the first row forces $C_0=M$ with diagonal restrictions.
+
+For degree one, exactness gives that the restriction $C_1\oplus C_1\to M$ is injective — it follows $H^1(\mathbf P^1_T,M)=0$ from the same fiber calculation — and has image $\ker\delta$. Lemma 7.2.1 computes $\ker\delta$: it is the kernel of a map that sends the class of $y^n=x$ to a nonzero element, and $H^1(\mathbf G_{m,T},M)$ for general $M$ is generated by such classes through the identification $H^1(-,\mathbf Z/n)=\operatorname{Hom}(\pi_1^{\mathrm{tame}},\mathbf Z/n)$ underlying Lemma 7.2.2. Hence $\ker\delta=0$, the restriction map is injective with zero image, and $C_1=0$.
+
+Compatibility with $T'\to T$: every object entering the proof — the compactification with its two sections, the open cover, the coefficient module, and the identifications of Lemmas 7.2.1 and 7.2.2 — pulls back along $T'\to T$, and base change for the proper term is supplied by Section 6.1, so the Mayer--Vietoris comparison transports the isomorphisms. $\square$
+
+_Top degrees._ The Mayer--Vietoris sequence continues only as $V\twoheadrightarrow C_2\oplus C_2$, which does not determine $C_q$ for $q\ge2$; vanishing of the top-degree tube cohomology would require identifying $V$ with the cyclotomic twist, the same input deferred in Section 3.3. Accordingly this book claims the affine-line tube in degrees zero and one, and every argument below is arranged to consume exactly those degrees, matching the consumption recorded in Chapters 9 through 15.
+
+**Corollary 7.2.4 (direct images along the affine line).** Let $S$ be excellent noetherian, let $p_S:\mathbf A^1_S\to S$ be the projection, and let $M$ be a lisse $\Lambda$-sheaf on $S$. Then $(R^0p_S)_*M=M_S$ and $(R^1p_S)_*M=0$; both identifications are compatible with every base change of $S$.
+
+_Proof._ Stalks at geometric points are computed by the strict-localization formula of Book 18, Section 2.3, as filtered colimits of $H^q(\mathbf A^1_V,M_V)$ over pointed étale neighborhoods $V$ of the point; each $V$ may be replaced by the strict localization $T$ of $S$ at the given geometric point, to which Theorem 7.2.3 applies, and the colimit of the degree-zero values is $M$ at the stalk while the colimit of the vanishing groups vanishes. Base-change compatibility is the compatibility clause of Theorem 7.2.3 read through the same colimit systems, whose transition maps are affine. $\square$
+
+**Lemma 7.2.5 (parameters leave tame terms invariant).** Let $Z$ carry a constructible stratification as in Section 3.3, let $j$ denote the inclusion of a stratum-union whose boundary terms are described, at the geometric points of a stratum of $D$, by two-term tame-inertia complexes as in Section 4.2, and let $\mathbf A^1_Z\to Z$ be a polynomial parameter. Then the pulled-back boundary terms over $\mathbf A^1_Z$, taken on the tubes over the corresponding generizations, are described by the identical two-term complexes: the tame inertia group of the punctured tube and its action on coefficients are unchanged by adjoining the parameter.
+
+_Proof._ At a point of $D$, work over the strictly henselian trait-like local base and identify the punctured tube of $Z\times\mathbf A^1$ at a boundary point with $\mathbf G_{m,T}\times_T\mathbf A^1_T$-type situations composed with the original tube. Finite étale covers of the product that are tame along the missing divisor are, after base-tameness, dominated by products of Kummer covers in the boundary variable and covers étale over the parameter direction; the latter split near the lifted point, because their special-fiber restrictions are unramified along the section and a point of a smooth morphism lifts through infinitesimal thickenings by Hensel's lemma (Book 01, Section 9), after which finite étale plus a trivialized fiber point is locally an isomorphism. Hence the tame quotient of the fundamental group, and with it the two-term complex of Lemma 7.2.2, is carried over unchanged: the loop generating vertical inertia lifts, and no new tame loop appears because the parameter direction is simply connected for tame prime-to-$p$ covers, by the same RH-based argument that gives the triviality of prime-to-$p$ covers of $\mathbf A^1_k$ in Book 17, Section 15. $\square$
+
+A smooth morphism $u:U\to S$ is, around every point, étale over affine space. Étale pullback preserves the calculation of Theorem 7.2.3, and descent glues it. For a lisse $\mathcal L$, pass to a finite étale neighborhood on which it is constant. Thus sufficiently small strict neighborhoods have no relative cohomology beyond degree zero, and none in degree one either.
 
 This is local on the source. It does not say $R^qu_*\mathcal L$ is globally lisse when $u$ is nonproper. Section 6.4 is locally a smooth projection everywhere; its jump occurs because no fixed source neighborhood contains a whole noncompact fiber.
 
 ### 7.3 Derived compatibility
 
-Smooth base change is first proved for a constructible sheaf. The complexes for which comparison is an isomorphism form a triangulated subcategory. The finite sequence of truncation triangles therefore gives the result for every $K\in D^b_c$.
+**Proposition 7.3.2 (boundary terms under a smooth parameter).** Let $S$ be excellent noetherian, let $f:X\to S$ be compactifiable with compactification $X\xrightarrow{j}\overline X\xrightarrow{\bar f}S$, let $K\in D^b_c(X,\Lambda)$, and let $g:\mathbf A^1_S\to S$. Then the canonical base-change map
+
+$$
+g^*\,R\bar f_*Q\longrightarrow R\bar f'_*Q'
+$$
+
+on the boundary cones of the localization triangles is an isomorphism in degrees zero and one, and on all degrees it induces isomorphisms whose formation is compatible with every further base change.
+
+_Proof._ Both cones are supported on the boundary, so by the strict-localization formula of Book 18, Section 2.3, it suffices to compare tubes over geometric points $\bar d$ of $D$ and their generizations. Étale-locally near $\bar d$ the pair $(\overline X,D)$ is described by the stratification of Section 3.3: after finite étale descent trivializing the relevant lisse coefficients and deleting smaller-support loci handled inductively, the boundary stratum through $\bar d$ is normal connected with tame branch description as in Section 4.2, and the strict-local terms of $Rj_*K$ are the two-term tame-inertia complexes recorded there. Lemma 7.2.5 computes exactly what happens when the polynomial parameter is adjoined: the punctured tubes acquire no new tame loops and keep the same two-term matrices, while the extension-by-zero side is carried along by proper base change. The localization triangles over $T$ and over its pullback therefore identify termwise in degrees zero and one — where both complexes are concentrated — and compatibly in general; passing back from strict-local data to sheaves uses that constructible sheaves are detected on geometric stalks (Book 18, Section 2.2) together with the continuity mechanism of Section 3.3, Step 5. $\square$
+
+**Theorem 7.3.4 (smooth base change).** In the square of Section 7.1 with $g$ smooth, the canonical map
+
+$$
+g^*Rf_*K\xrightarrow{\sim}Rf'_*g'^*K
+$$
+
+is an isomorphism for $K$ a constructible sheaf, in every degree in which the top-row convention of Section 3.3 does not intervene; for $K\in D^b_c(X,\Lambda)$ it follows in the derived sense through the truncation triangles.
+
+_Proof._ Reduce $g$ étale-locally on $S'$ to affine-line projections and handle one parameter at a time, transitivity in $g$ being formal from the functoriality of pullback and direct image. For one parameter, combine the compact-support case — valid for every $g$ by proper base change — the closed-immersion case, likewise proper, and Proposition 7.3.2 for the boundary cone, then apply the five-lemma style comparison along the pushed-forward localization triangle: two of every three maps are already isomorphisms, so the middle one is. Noetherian induction over the boundary strata runs exactly as in Section 3.3, each stratum carrying a strictly smaller support or dimension. Smooth base change is first proved for a constructible sheaf; the complexes for which comparison is an isomorphism form a triangulated subcategory, so the finite sequence of truncation triangles gives the result for every $K\in D^b_c$. $\square$
 
 It follows that smooth base change respects connecting maps, hypercohomology, and the Leray filtration. For finite-Tor-amplitude $K$ and $L$, the comparison square for $K\otimes^LL$ commutes with the square formed from the comparisons for $K$ and $L$. All maps arise from the same monoidal adjunctions before cohomology is taken.
 
-One cannot replace “smooth” by “flat.” Flat maps may introduce new valuations and boundary specializations. Smoothness supplies both flatness and a regular affine-space local model; the latter is decisive.
+One cannot replace "smooth" by "flat." Flat maps may introduce new valuations and boundary specializations. Smoothness supplies both flatness and a regular affine-space local model; the latter is decisive.
 
 ### 7.4 Étale, smooth, and universal changes
 
@@ -778,24 +869,19 @@ For the identity $X=S$ and a lisse sheaf, the map is an isomorphism because the 
 
 ### 8.2 Smooth morphisms with lisse coefficients
 
-**Smooth local-acyclicity theorem.** Let $f:X\to S$ be smooth of finite presentation. Let $\mathcal L$ be a lisse finite $\Lambda$-sheaf, with $N\Lambda=0$ and $N$ invertible on $S$. Then $f$ is universally locally acyclic relative to $\mathcal L$.
+**Smooth local-acyclicity theorem.** Let $f:X\to S$ be smooth of finite presentation. Let $\mathcal L$ be a lisse finite $\Lambda$-sheaf, with $N\Lambda=0$ and $N$ invertible on $S$. Then $f$ is universally locally acyclic relative to $\mathcal L$ in degrees zero and one: for every triple $(\bar x,\bar s,\bar t)$ as in Section 8.1, the canonical map induces isomorphisms on $H^0$ and $H^1$ of the tube, and these isomorphisms are compatible with every further base change. In higher degrees the same comparison maps are isomorphisms whenever the top-row convention of Section 3.3 does not intervene; this is the precise form consumed by Books 20 through 23.
 
-**Proof.** Work étale-locally on source and base. Trivialize $\mathcal L$ by a finite étale cover. A smooth morphism is étale-locally a projection from affine space, so reduce to $\mathbf A^r_S\to S$ with constant coefficients.
+**Proof.** Work étale-locally on source and base. Trivialize $\mathcal L$ by a finite étale cover; descent returns the general lisse coefficient from the constant one because local acyclicity is stable under finite étale descent — the tube topos pulls back along such covers and the complexes descend. A smooth morphism is étale-locally a projection from affine space, so reduce to $\mathbf A^r_S\to S$ with constant coefficients, the reduction being compatible with tubes since it is an étale localization on the source.
 
-If $\bar x$ lies over $\bar s$ and $\bar t$ is a geometric generization in $S_{(\bar s)}$, the smooth-tube calculation is
+The decisive point is that the fibered tube of a smooth morphism is an affine-space tube over a strictly henselian base. Indeed, after strict localization at $(\bar x,\bar s)$, the morphism becomes (pro-)smooth with section through the lifted point, and its fiber over the geometric generization $\bar t$ identifies with
 
 $$
-R\Gamma\left(
-(\mathbf A^r_S)_{(\bar x)}\times_{S_{(\bar s)}}\bar t,
-\Lambda
-\right)\simeq\Lambda.
+\mathbf A^r_{T},\qquad T=\operatorname{Spec}\mathcal O^{\mathrm{sh}}_{S_{(\bar s)},\bar t},
 $$
 
-To prove it, choose coordinates centered at the image of $\bar x$ after an étale extension. Successively compactify each coordinate line. Proper base change identifies the projective-line term, while the unique boundary section has the same tame-inertia presentation before and after generization. The two localization triangles cancel that boundary term and leave the constant degree-zero class. Induction on $r$ gives the formula. The map from the stalk is the unit class and hence is the displayed isomorphism.
+a strictly henselian noetherian local scheme, exactly the situation of Section 7.2. For $r=1$, Theorem 7.2.3 gives $H^0=\Lambda$ and $H^1=0$, compatibly with pointed base changes, which is precisely the compatibility demanded by universal local acyclicity; the map from the stalk is the unit class and hence realizes the degree-zero identification. For $r>1$, proceed by induction on the number of parameters, writing the tube as an iterated affine-line extension and applying Theorem 7.2.3 together with Lemma 7.2.5, which guarantees that each new parameter leaves the previously computed terms unchanged; the Mayer--Vietoris or Künneth-free composition used there is replaced here by direct images along successive projections, each controlled by Corollary 7.2.4. Universal local acyclicity follows because after any base change the morphism remains smooth, the coefficient remains lisse, and the strictly henselian tube calculation applies verbatim. $\square$
 
-After arbitrary base change, the morphism remains smooth, the coefficient remains lisse, and the same calculation applies. Finite étale descent returns the original coefficient. $\square$
-
-The theorem extends to bounded complexes with lisse cohomology by truncation. It does not include coefficients whose ramification moves along the fibers.
+The theorem extends to bounded complexes with lisse cohomology in degrees where the convention above permits, by truncation. It does not include coefficients whose ramification moves along the fibers.
 
 ### 8.3 Universal local acyclicity and its limits
 
@@ -836,7 +922,9 @@ They commute with cup products and pullback because they arise at the derived-sh
 3. its formation commutes with arbitrary base change;
 4. every specialization map is an isomorphism.
 
-**Proof.** Proper base change identifies stalks with geometric-fiber cohomology and proves arbitrary base change. Absolute finiteness makes stalks finite. Smooth local acyclicity makes every generization map an isomorphism. Refine a constructibility stratification; adjacent strata then carry local systems with invertible transport and glue to a lisse sheaf. Fiber dimension supplies vanishing. $\square$
+For smooth proper families of curves, clause 1 for the top row — relative degree two — carries the qualification of Section 3.3: the row has compatible formation and cyclic stalk values of order $n$, and its lisseness follows only after Chapter 12 identifies it with the cyclotomic twist. Clauses 2 through 4 hold for it as stated.
+
+**Proof.** Proper base change identifies stalks with geometric-fiber cohomology and proves arbitrary base change; alternatively, for families whose fibers are curves, rows zero and one together with base-change compatibility are supplied directly by the relative curve theorem of Book 18, Section 7.2, part 1, and Section 3.3 packages them into stratifications. Absolute finiteness makes stalks finite. Smooth local acyclicity makes every generization map an isomorphism in the degrees supplied. Refine a constructibility stratification; adjacent strata then carry local systems with invertible transport and glue to a lisse sheaf. Fiber dimension supplies vanishing. $\square$
 
 For clarity, the gluing step uses this lissity criterion: a constructible finite sheaf on a locally noetherian scheme is lisse if, on every strict localization, all maps from the closed geometric stalk to geometric generizations are isomorphisms. Trivialize on the finitely many strata meeting one strict localization. The assumed maps identify their finite stalks and descent operators; after one common pointed étale neighborhood these finitely many identifications glue the stratumwise trivializations. Thus the sheaf is lisse near every geometric point.
 
@@ -1402,7 +1490,7 @@ The following checklist packages the results without blurring their hypotheses.
 
 **Smooth-horizontal package.** If the change-of-base map is smooth, direct image for a compactifiable morphism commutes with that change. The original morphism need not be proper, but it must admit a compactification.
 
-**Smooth-vertical package.** A smooth morphism is universally locally acyclic relative to lisse finite coefficients of invertible order. If it is also proper, higher direct images are lisse and all specialization maps are isomorphisms.
+**Smooth-vertical package.** A smooth morphism is universally locally acyclic relative to lisse finite coefficients of invertible order, in degrees zero and one and in every degree to which the top-row convention of Section 3.3 does not apply. If it is also proper, higher direct images are lisse and all specialization maps are isomorphisms, with the recorded qualification for curve families' top rows.
 
 **Adic package.** The finite-level statements pass to a normalized $\mathbf Z_\ell$-system when amplitude is uniform and finite cohomology gives Mittag--Leffler. Rationalization takes place after derived inverse limit.
 
