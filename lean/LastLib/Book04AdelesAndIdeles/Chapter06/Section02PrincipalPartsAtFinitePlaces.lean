@@ -1,6 +1,11 @@
 import LastLib.Book04AdelesAndIdeles.Chapter06.Section01WhyCompactnessIsCentral
+import LastLib.Book04AdelesAndIdeles.Chapter04.Section05FinitePrincipalPartsQuotient
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section02StrongApproximationInTheFiniteAdeles
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter06
+
+open LastLib.Book04AdelesAndIdeles.Chapter04
+open LastLib.Book04AdelesAndIdeles.Chapter05
 
 noncomputable section
 
@@ -67,6 +72,22 @@ theorem chapter06_finite_principal_parts_iff
       ∃ a : K, ∃ u : Ohat,
         x = P.globalToFinite a + P.finiteIntegralEmbedding u := by
   rfl
+
+/- The canonical Chapter 4 carrier already has the exact principal-parts
+   statement used by the book.  Keep this bridge next to the abstract adapter
+   theorem so later arguments can use the established number-field API. -/
+theorem chapter06_canonical_finite_principal_parts
+    (K : Type*) [Field K] [NumberField K]
+    (x : Chapter04FiniteAdeleRing K) :
+    ∃ a : K, ∀ v : Chapter04FinitePlace K,
+      x v - (a : Chapter04FiniteLocalField K v) ∈
+        chapter04FiniteLocalIntegerSet K v := by
+  exact chapter04_finite_principal_parts_are_represented_by_one_global_element K x
+
+theorem chapter06_canonical_finite_diagonal_dense
+    (K : Type*) [Field K] [NumberField K] :
+    Dense (Set.range (chapter05FiniteDiagonal K)) := by
+  exact chapter05_theorem_5_1_strong_approximation_away_from_infinity K
 
 end
 
