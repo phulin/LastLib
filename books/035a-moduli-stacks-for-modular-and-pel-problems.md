@@ -813,10 +813,10 @@ $$
 
 over $S$; being fiberwise given by a base-point-free linear system, it exists globally by Book 8
 Sections 2.3 and 5.2. Let $C$ be the scheme-theoretic image of $\varphi_m$, so that
-$\varphi_m=p\circ g$ is Stein-factored through $C\to S$ with $p_*\mathcal O_E=\mathcal O_C$ by
+$\varphi_m=p\circ g$ is Stein-factored through $C\to S$ with $g_*\mathcal O_E=\mathcal O_C$ by
 Book 9, Theorem 9.3, applied relative to $S$.
 
-Fiberwise statements now descend. Over a geometric point of $S$: Lemma 8.2A.1 shows that $p$
+Fiberwise statements now descend. Over a geometric point of $S$: Lemma 8.2A.1 shows that $g$
 collapses each bridge chain to one point; Lemma 8.2A.2 (2) shows $p$ separates all other points and
 branches and is an immersion off the chains, being given on each visible component by the
 subsystem of sections of degree $md_i\geq 3$ vanishing at its two nodes, which separates points. The local structure at an image point of a chain is
@@ -833,11 +833,34 @@ $$
 an ordinary double point. Hence the geometric fibers of $C\to S$ are connected reduced nodal
 curves of arithmetic genus one in which every smooth rational component meets the rest in at least
 three special points — the components meeting $D$ keep their incident nodes plus a point of
-$D$ — that is, stable genus-one curves. Their Hilbert polynomial under the embedding by
-$\mathcal L^m$ is fixed by constancy of $h^0$ and of the degree, namely the polynomial with value
-$md$ in degree zero shifted by the standard linear correction, so
-flatness of $C\to S$ follows from Book 8 Section 8.2, constancy of the Hilbert polynomial forcing
-flatness for a closed subscheme of the fixed projective bundle $\mathbf P(V_m)$.
+$D$ — that is, stable genus-one curves. It remains to prove that $C\to S$ is flat. For every
+$n\geq1$ the factorization of $\varphi_m$ through $C$ identifies $\mathcal L^{mn}$ with
+$g^*\mathcal O_C(n)$, because both are computed by the same evaluation of $V_m$. The projection
+formula (Book 7a, Section 4.4) applies with the twisting sheaf $\mathcal O_C(n)$ as the locally
+free coefficient: it is finite locally free in degree zero, so the derived projection morphism is an
+isomorphism, and since $g^*\mathcal O_C(n)\simeq\mathcal L^{mn}$ is invertible no Tor terms arise on
+the source side, while flatness of $\mathcal O_C(n)$ kills them on the target side. Taking degree-zero
+parts gives
+
+$$
+g_*\mathcal L^{mn}\;\simeq\;g_*\bigl(g^*\mathcal O_C(n)\bigr)
+\;\simeq\;(g_*\mathcal O_E)\otimes\mathcal O_C(n)
+\;\simeq\;\mathcal O_C(n),
+$$
+
+using $g_*\mathcal O_E=\mathcal O_C$ from the Stein factorization above. Pushing forward along
+$C\to S$ therefore identifies $f_*\mathcal L^{mn}\simeq p_*\mathcal O_C(n)$ for every $n\geq1$. Each
+$f_*\mathcal L^{mn}$ is locally free with formation commuting with arbitrary base change: the
+fiberwise count of Lemma 8.2A.2 applies verbatim at the exponent $mn\geq m_0$, giving constant
+$h^0=mnd$ and $h^1=0$ on geometric fibers, so the argument of Book 15, Section 5.4 already used for
+$V_m=f_*\mathcal L^m$ above applies unchanged; in particular formation commutes with every
+residue-field pullback. Now apply the fiberwise flatness criterion of Book 15, Section 6.2 to the
+coherent sheaf $\mathcal O_C$: its hypotheses hold, since $S$ is locally noetherian and the closed
+subscheme $C\subset\mathbf P(V_m)$ is projective and finitely presented over $S$, while for all $n$
+— a fortiori for all sufficiently large $n$ — the sheaf $p_*\mathcal O_C(n)$ is locally free and its
+formation commutes with residue fields. The criterion concludes that $\mathcal O_C$ is flat over
+$S$; being a closed subscheme of the finitely presented projective bundle $\mathbf P(V_m)$, also
+$C\to S$ is of finite presentation, so $C\to S$ is flat of finite presentation as claimed.
 
 Uniqueness: let $c'\colon E\to C'$ have the same three properties. Then $c'_*\mathcal O_E=
 \mathcal O_{C'}$ forces $c'$ to factor uniquely through $p$ and conversely, since both collapse
