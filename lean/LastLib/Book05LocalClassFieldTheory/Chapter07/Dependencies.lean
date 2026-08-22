@@ -242,7 +242,29 @@ theorem chapter07_mem_precision_subgroup_iff
     x ∈ chapter07PrecisionSubgroup D m n ↔
       ∃ z : ℤ, ∃ u : G, u ∈ D.unitFiltration n.1 ∧
         x = D.uniformizer ^ (m.1 * z) * u := by
-  sorry
+  change x ∈ Subgroup.zpowers (D.uniformizer ^ m.1) ⊔ D.unitFiltration n.1 ↔
+    ∃ z : ℤ, ∃ u : G, u ∈ D.unitFiltration n.1 ∧
+      x = D.uniformizer ^ (m.1 * z) * u
+  rw [Subgroup.mem_sup]
+  constructor
+  · rintro ⟨y, hy, u, hu, hxy⟩
+    obtain ⟨z, hz⟩ := Subgroup.mem_zpowers_iff.mp hy
+    refine ⟨z, u, hu, ?_⟩
+    calc
+      x = y * u := hxy.symm
+      _ = (D.uniformizer ^ m.1) ^ z * u := by rw [hz]
+      _ = (D.uniformizer ^ (m.1 : ℤ)) ^ z * u := by rw [zpow_natCast]
+      _ = D.uniformizer ^ (m.1 * z) * u := by rw [zpow_mul]
+  · rintro ⟨z, u, hu, hxu⟩
+    have hzmem : (D.uniformizer ^ m.1) ^ z ∈
+        Subgroup.zpowers (D.uniformizer ^ m.1) :=
+      (Subgroup.mem_zpowers_iff).2 ⟨z, rfl⟩
+    refine ⟨(D.uniformizer ^ m.1) ^ z, hzmem, u, hu, ?_⟩
+    calc
+      (D.uniformizer ^ m.1) ^ z * u =
+          (D.uniformizer ^ (m.1 : ℤ)) ^ z * u := by rw [zpow_natCast]
+      _ = D.uniformizer ^ (m.1 * z) * u := by rw [zpow_mul]
+      _ = x := hxu.symm
 
 /-- The intersection of all positive precision subgroups. -/
 def chapter07PrecisionIntersection

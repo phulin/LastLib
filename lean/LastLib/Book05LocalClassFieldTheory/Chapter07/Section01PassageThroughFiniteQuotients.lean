@@ -48,10 +48,11 @@ theorem chapter07FiniteReciprocityQuotientHom_comp_mk
     [IsAbelianGalois K KAb] (S : Chapter07FiniteArtinSystem K KAb)
     (L : Chapter07FiniteAbelianIndex K KAb) :
     (chapter07FiniteReciprocityQuotientHom S L).comp
-        (QuotientGroup.mk'
+      (QuotientGroup.mk'
           (chapter07NormSubgroup (K := K) (L := L))) =
       S.artin L := by
-  sorry
+  ext x
+  rfl
 
 /-- The finite reciprocity equivalence obtained from the Artin map and its
 norm kernel. -/
@@ -90,7 +91,12 @@ theorem chapter07_finite_artin_is_the_reciprocity_projection
         ((chapter07AbelianGaloisLimitEquiv K KAb)
           (chapter07LocalReciprocity S x)) =
       S.artin L x := by
-  sorry
+  change InfiniteGalois.proj L
+      ((chapter07AbelianGaloisLimitEquiv K KAb)
+        ((chapter07AbelianGaloisLimitEquiv K KAb).symm
+          (S.toLimitHom x))) = S.artin L x
+  rw [(chapter07AbelianGaloisLimitEquiv K KAb).apply_symm_apply]
+  rfl
 
 /-- Equivalent restriction formulation of the finite projection statement. -/
 theorem chapter07_local_reciprocity_restricts_to_artin
@@ -100,7 +106,10 @@ theorem chapter07_local_reciprocity_restricts_to_artin
     AlgEquiv.restrictNormalHom L
         (chapter07LocalReciprocity S x) =
       S.artin L x := by
-  sorry
+  change InfiniteGalois.proj L
+      ((chapter07AbelianGaloisLimitEquiv K KAb)
+        (chapter07LocalReciprocity S x)) = S.artin L x
+  exact chapter07_finite_artin_is_the_reciprocity_projection S L x
 
 /- LOCAL_DEPENDENCY_GUESS: the maximality property of the chosen K-ab model
 is the cofinality bridge from arbitrary finite abelian extensions to the
@@ -112,7 +121,12 @@ theorem chapter07_finite_abelian_levels_are_cofinal
     {L : Type v} [Field L] [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] :
     ∃ M : Chapter07FiniteAbelianIndex K KAb, Nonempty (L ≃ₐ[K] M) := by
-  sorry
+  obtain ⟨f⟩ := hmax L
+  let M : Chapter07FiniteAbelianIndex K KAb :=
+    { f.fieldRange with
+      finiteDimensional := f.toLinearMap.finiteDimensional_range
+      isGalois := IsGalois.of_algEquiv (AlgHom.equivFieldRange f) }
+  exact ⟨M, ⟨AlgHom.equivFieldRange f⟩⟩
 
 /- The inverse-limit construction is indexed by the chosen canonical model,
 but the source theorem quantifies over every finite abelian extension.  The
@@ -128,7 +142,82 @@ theorem chapter07_finite_abelian_extension_reciprocity
     Nonempty
       (Kˣ ⧸ chapter07NormSubgroup (K := K) (L := L) ≃*
         Gal(L / K)) := by
-  sorry
+  obtain ⟨M, ⟨e⟩⟩ :=
+    chapter07_finite_abelian_levels_are_cofinal (K := K) (KAb := KAb) (L := L) hmax
+  let eUnits : Lˣ →* Mˣ := Units.map e.toMonoidHom
+  let eUnitsInv : Mˣ →* Lˣ := Units.map e.symm.toMonoidHom
+  have heUnits_left (y : Lˣ) : eUnitsInv (eUnits y) = y := by
+    ext
+    simp [eUnits, eUnitsInv]
+  have heUnits_right (y : Mˣ) : eUnits (eUnitsInv y) = y := by
+    ext
+    simp [eUnits, eUnitsInv]
+  have hnorm_map (y : Lˣ) :
+      chapter07NormHom (K := K) (L := M) (eUnits y) =
+        chapter07NormHom (K := K) (L := L) y := by
+    apply Units.ext
+    change Algebra.norm K (e (y : L)) = Algebra.norm K (y : L)
+    exact Algebra.norm_eq_of_algEquiv e (y : L)
+  have hnorm :
+      chapter07NormSubgroup (K := K) (L := M) =
+        chapter07NormSubgroup (K := K) (L := L) := by
+    ext x
+    constructor
+    · rintro ⟨y, hy⟩
+      refine ⟨eUnitsInv y, ?_⟩
+      calc
+        chapter07NormHom (K := K) (L := L) (eUnitsInv y) =
+            chapter07NormHom (K := K) (L := M) (eUnits (eUnitsInv y)) := by
+              rw [hnorm_map]
+        _ = chapter07NormHom (K := K) (L := M) y := by rw [heUnits_right]
+        _ = x := hy
+    · rintro ⟨y, hy⟩
+      refine ⟨eUnits y, ?_⟩
+      calc
+        chapter07NormHom (K := K) (L := M) (eUnits y) =
+            chapter07NormHom (K := K) (L := L) y := hnorm_map y
+        _ = x := hy
+  let conjugate : Gal(M / K) ≃* Gal(L / K) :=
+    { toFun := fun σ => (e.trans σ).trans e.symm
+      invFun := fun τ => (e.symm.trans τ).trans e
+      left_inv := by
+        intro σ
+        ext x
+        simp [AlgEquiv.trans_apply]
+      right_inv := by
+        intro τ
+        ext x
+        simp [AlgEquiv.trans_apply]
+      map_mul' := by
+        intro σ τ
+        ext x
+        simp [AlgEquiv.trans_apply, AlgEquiv.mul_apply] }
+  let F : Kˣ →* Gal(L / K) := conjugate.toMonoidHom.comp (S.artin M)
+  have hsurj : Function.Surjective F := by
+    exact conjugate.surjective.comp (S.surjective M)
+  have hker_artin : (S.artin M).ker =
+      chapter07NormSubgroup (K := K) (L := L) :=
+    (S.kernel_eq_norm M).trans hnorm
+  have hker : F.ker = chapter07NormSubgroup (K := K) (L := L) := by
+    ext x
+    change conjugate (S.artin M x) = 1 ↔
+      x ∈ chapter07NormSubgroup (K := K) (L := L)
+    constructor
+    · intro hx
+      have hx' : S.artin M x = 1 := by
+        apply conjugate.injective
+        simpa using hx
+      rw [← hker_artin]
+      exact hx'
+    · intro hx
+      have hx' : S.artin M x = 1 := by
+        change x ∈ (S.artin M).ker
+        rw [hker_artin]
+        exact hx
+      rw [hx']
+      exact conjugate.map_one
+  exact ⟨(QuotientGroup.quotientMulEquivOfEq hker.symm).trans
+    (QuotientGroup.quotientKerEquivOfSurjective F hsurj)⟩
 
 /-- The inverse-limit equivalence in the source notation
 Galois-abelian-group equals Gal of the maximal abelian extension. -/
