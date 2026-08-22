@@ -203,12 +203,17 @@ theorem chapter14_coefficient_weak_approximation
 theorem chapter14_coefficient_polynomial_is_monic
     {R : Type*} [Semiring R] [Nontrivial R] (n : ℕ) (c : Fin n → R) :
     (chapter14CoefficientPolynomial n c).Monic := by
-  sorry
+  unfold chapter14CoefficientPolynomial
+  exact Polynomial.monic_X_pow_add (Polynomial.degree_sum_fin_lt c)
 
 theorem chapter14_coefficient_polynomial_natDegree
     {R : Type*} [Semiring R] [Nontrivial R] (n : ℕ) (c : Fin n → R) :
     (chapter14CoefficientPolynomial n c).natDegree = n := by
-  sorry
+  unfold chapter14CoefficientPolynomial
+  rw [Polynomial.natDegree_add_eq_left_of_degree_lt (by
+    rw [Polynomial.degree_X_pow]
+    exact Polynomial.degree_sum_fin_lt c)]
+  exact Polynomial.natDegree_X_pow n
 
 structure Chapter14SimultaneousPolynomialNeighborhood
     {F : Type u} [Field F] [NumberField F]
@@ -228,7 +233,25 @@ theorem chapter14_simultaneous_monic_polynomial_approximation
     ∃ g : F[X], g.Monic ∧ g.natDegree = n ∧
       ∀ p,
         (fun i : Fin n => (chapter14PolynomialMapAt p.1 g).coeff i) ∈ N.neighborhood p := by
-  sorry
+  let a : ∀ p : S, Fin n → chapter14BaseCompletion F p.1 :=
+    fun p i => (N.local_polynomial p).coeff i
+  obtain ⟨c, hc⟩ :=
+    chapter14_coefficient_weak_approximation S n a N.neighborhood
+      N.open_neighborhood N.contains
+  refine ⟨chapter14CoefficientPolynomial n c,
+    chapter14_coefficient_polynomial_is_monic n c,
+    chapter14_coefficient_polynomial_natDegree n c, ?_⟩
+  intro p
+  have hp := hc p
+  convert hp using 1
+  funext i
+  simp [chapter14CoefficientDiagonal, chapter14PolynomialMapAt,
+    chapter14CoefficientPolynomial, Polynomial.coeff_map]
+  have h_eq (x : Fin n) : ((i : ℕ) = (x : ℕ)) ↔ (i = x) := Fin.ext_iff.symm
+  simp_rw [h_eq]
+  rw [if_neg (Nat.ne_of_lt i.isLt)]
+  rw [← map_sum]
+  simp [chapter14FinitePlaceEmbedding]
 
 /- Coefficient congruences are the nonarchimedean neighborhood basis used by
    the proof after denominators have been cleared. -/
@@ -242,14 +265,28 @@ theorem chapter14_coefficient_congruent_comm
     (c d : Fin n → A) :
     chapter14CoefficientCongruent n m N c d ↔
       chapter14CoefficientCongruent n m N d c := by
-  sorry
+  unfold chapter14CoefficientCongruent
+  constructor
+  · intro h i
+    simpa [sub_eq_add_neg, add_comm] using (m ^ N).neg_mem (h i)
+  · intro h i
+    simpa [sub_eq_add_neg, add_comm] using (m ^ N).neg_mem (h i)
 
 theorem chapter14_coefficient_congruence_is_open
     {A : Type*} [CommRing A] [TopologicalSpace A] [IsTopologicalRing A]
     (n : ℕ) (m : Ideal A) (N : ℕ)
     (hmN : IsOpen ((m ^ N : Ideal A) : Set A)) (c : Fin n → A) :
     IsOpen {d : Fin n → A | chapter14CoefficientCongruent n m N c d} := by
-  sorry
+  rw [show {d : Fin n → A | chapter14CoefficientCongruent n m N c d} =
+      ⋂ i : Fin n, {d : Fin n → A | c i - d i ∈ (m ^ N : Ideal A)} by
+    ext d
+    simp [chapter14CoefficientCongruent]]
+  apply isOpen_iInter_of_finite
+  intro i
+  have hcont : Continuous (fun d : Fin n → A => c i - d i) :=
+    continuous_const.sub (continuous_apply i)
+  apply Continuous.isOpen_preimage hcont ((m ^ N : Ideal A) : Set A)
+  exact hmN
 
 def chapter14DenominatorCleared
     {F : Type u} [Field F] [NumberField F]
@@ -261,7 +298,37 @@ theorem chapter14_coefficients_can_be_denominator_cleared
     (n : ℕ) (c : Fin n → F) :
     ∃ s : 𝓞 F, s ≠ 0 ∧
       ∀ i, ∃ y : 𝓞 F, chapter14DenominatorCleared s (c i) y := by
-  sorry
+  choose a b hb hcb using
+    fun i : Fin n => IsFractionRing.div_surjective (𝓞 F) (c i)
+  let s : 𝓞 F := ∏ i : Fin n, b i
+  have hs : s ≠ 0 := by
+    dsimp [s]
+    apply Finset.prod_ne_zero_iff.mpr
+    intro i hi
+    exact nonZeroDivisors.ne_zero (hb i)
+  refine ⟨s, hs, ?_⟩
+  intro i
+  refine ⟨a i * Finset.prod (Finset.univ.erase i) b, ?_⟩
+  unfold chapter14DenominatorCleared
+  rw [← hcb i]
+  have hbi : algebraMap (𝓞 F) F (b i) ≠ 0 := by
+    simp [nonZeroDivisors.ne_zero (hb i)]
+  have hprod0 :
+      Finset.prod (Finset.univ.erase i) b * b i =
+        Finset.prod (Finset.univ : Finset (Fin n)) b :=
+    Finset.prod_erase_mul (Finset.univ : Finset (Fin n)) b (Finset.mem_univ i)
+  have hprod := congrArg (algebraMap (𝓞 F) F) hprod0
+  dsimp [s] at ⊢
+  simp only [map_mul, map_prod] at hprod ⊢
+  field_simp [hbi]
+  calc
+    _ = algebraMap (𝓞 F) F (a i) *
+        ((Finset.prod (Finset.univ.erase i)
+          (fun x => algebraMap (𝓞 F) F (b x))) *
+          algebraMap (𝓞 F) F (b i)) := by ring
+    _ = algebraMap (𝓞 F) F (a i) *
+        Finset.prod (Finset.univ : Finset (Fin n))
+          (fun x => algebraMap (𝓞 F) F (b x)) := by rw [hprod]
 
 theorem chapter14_simultaneous_prime_power_congruence
     {F : Type u} [Field F] [NumberField F]
