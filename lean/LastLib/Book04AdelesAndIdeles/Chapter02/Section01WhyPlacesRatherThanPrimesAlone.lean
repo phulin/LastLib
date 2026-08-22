@@ -179,6 +179,49 @@ noncomputable def chapter02_complex_place_completion_isometric_to_complex
     Chapter02InfiniteCompletion w ≃ᵢ ℂ := by
   exact NumberField.InfinitePlace.Completion.isometryEquivComplexOfIsComplex hw
 
+theorem chapter02_restriction_of_a_nontrivial_place_to_Q_is_nontrivial
+    {K : Type*} [Field K] [NumberField K]
+    (v : AbsoluteValue K ℝ) (hv : v.IsNontrivial) :
+    ∃ a : ℚ, a ≠ 0 ∧ v (algebraMap ℚ K a) ≠ 1 := by
+  by_contra hrestriction
+  have hQ (a : ℚ) (ha : a ≠ 0) : v (algebraMap ℚ K a) = 1 := by
+    by_contra ha1
+    exact hrestriction ⟨a, ha, ha1⟩
+  let b := Module.finBasis ℚ K
+  let C : ℝ := ∑ i, v (b i)
+  have hsum (f : Fin (Module.finrank ℚ K) → K) :
+      v (∑ i, f i) ≤ ∑ i, v (f i) := by
+    classical
+    have hsum' (s : Finset (Fin (Module.finrank ℚ K))) :
+        v (∑ i ∈ s, f i) ≤ ∑ i ∈ s, v (f i) := by
+      induction s using Finset.induction_on with
+      | empty => simp
+      | @insert a s ha ih =>
+          simp only [Finset.sum_insert, ha, not_false_eq_true]
+          exact (v.add_le _ _).trans (add_le_add le_rfl ih)
+    simpa only [Finset.sum_const_zero, Finset.sum_filter] using hsum' Finset.univ
+  have hbound (y : K) : v y ≤ C := by
+    rw [← b.sum_repr y]
+    refine (hsum fun i ↦ (b.repr y i) • b i).trans ?_
+    apply Finset.sum_le_sum
+    intro i hi
+    rw [Algebra.smul_def, v.map_mul]
+    by_cases hcoeff : b.repr y i = 0
+    · simp [hcoeff, v.nonneg]
+    · rw [hQ _ hcoeff, one_mul]
+  have hvalue_le_one (x : K) : v x ≤ 1 := by
+    by_contra hx
+    have hx' : 1 < v x := lt_of_not_ge hx
+    obtain ⟨n, hn⟩ := pow_unbounded_of_one_lt C hx'
+    exact (not_le_of_gt hn) (by simpa only [map_pow] using hbound (x ^ n))
+  obtain ⟨x, hx0, hx1⟩ := hv
+  have hxpos : 0 < v x := v.pos_iff.mpr hx0
+  have hinv : (v x)⁻¹ ≤ 1 := by
+    rw [← map_inv₀]
+    exact hvalue_le_one x⁻¹
+  have hone_le : 1 ≤ v x := (inv_le_one₀ hxpos).mp hinv
+  exact hx1 (le_antisymm (hvalue_le_one x) hone_le)
+
 /-- Exhaustiveness of the finite/infinite classification, stated modulo the
 equivalence relation defining a place. -/
 theorem chapter02_finite_or_infinite_absolute_value
@@ -190,18 +233,15 @@ theorem chapter02_finite_or_infinite_absolute_value
         Chapter02EquivalentAbsoluteValues v w.1) := by
   sorry
 
-theorem chapter02_restriction_of_a_nontrivial_place_to_Q_is_nontrivial
-    {K : Type*} [Field K] [NumberField K]
-    (v : AbsoluteValue K ℝ) (hv : v.IsNontrivial) :
-    ∃ a : ℚ, a ≠ 0 ∧ v (algebraMap ℚ K a) ≠ 1 := by
-  sorry
-
 theorem chapter02_number_field_place_classification
     {K : Type*} [Field K] [NumberField K]
     (v : AbsoluteValue K ℝ) (hv : v.IsNontrivial) :
     ∃ w : Chapter02Place K,
       Chapter02EquivalentAbsoluteValues v (Chapter02PlaceAbsoluteValue w) := by
-  sorry
+  rcases chapter02_finite_or_infinite_absolute_value v hv with
+    ⟨w, hw⟩ | ⟨w, hw⟩
+  · exact ⟨Sum.inl w, hw⟩
+  · exact ⟨Sum.inr w, hw⟩
 
 theorem chapter02_no_extra_places_beyond_prime_and_embedding_data
     {K : Type*} [Field K] [NumberField K]
@@ -210,7 +250,14 @@ theorem chapter02_no_extra_places_beyond_prime_and_embedding_data
         Chapter02EquivalentAbsoluteValues v (NumberField.FinitePlace.mk p).1) ∨
       (∃ φ : K →+* ℂ,
         Chapter02EquivalentAbsoluteValues v (NumberField.InfinitePlace.mk φ).1) := by
-  sorry
+  rcases chapter02_finite_or_infinite_absolute_value v hv with
+    ⟨w, hw⟩ | ⟨w, hw⟩
+  · refine Or.inl ⟨w.maximalIdeal, ?_⟩
+    rw [NumberField.FinitePlace.mk_maximalIdeal]
+    exact hw
+  · refine Or.inr ⟨w.embedding, ?_⟩
+    rw [NumberField.InfinitePlace.mk_embedding]
+    exact hw
 
 end
 
