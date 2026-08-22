@@ -1,4 +1,5 @@
 import LastLib.Book04AdelesAndIdeles.Chapter05.Section03DiscretenessInTheFullAdeles
+import LastLib.Book04AdelesAndIdeles.Chapter05.Section02StrongApproximationInTheFiniteAdeles
 
 namespace LastLib.Book04AdelesAndIdeles.Chapter05
 
