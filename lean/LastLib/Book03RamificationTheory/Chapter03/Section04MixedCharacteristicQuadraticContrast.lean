@@ -1,21 +1,12 @@
 import LastLib.Book03RamificationTheory.Chapter03.Dependencies
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.Section04WorkedEisensteinExtensions
 import LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Section07ConcreteFiniteExtensions
-import LastLib.Book01ValuationsDVRsAndCompletions.Chapter09.Section01CorrectingAnApproximateRoot
-import Mathlib.FieldTheory.KummerPolynomial
 
 namespace LastLib.Book03RamificationTheory.Chapter03
 
 noncomputable section
 
-open Polynomial
-
 /-! ## 3.4. A mixed-characteristic quadratic contrast -/
-
-/- The integral polynomial for `X^2-p` over the `p`-adic integers. -/
-def chapter03QuadraticPolynomial
-    (p : ℕ) [Fact p.Prime] : (ℤ_[p])[X] :=
-  X ^ 2 - C (p : ℤ_[p])
 
 /- A normalized quadratic radical together with its nontrivial symmetry. -/
 structure Chapter03QuadraticExtensionData
@@ -33,8 +24,10 @@ structure Chapter03QuadraticExtensionData
 theorem chapter03_quadratic_polynomial_is_eisenstein
     (p : ℕ) [Fact p.Prime] :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt
-      (p : ℤ_[p]) (chapter03QuadraticPolynomial p) := by
-  simpa [chapter03QuadraticPolynomial,
+      (p : ℤ_[p])
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08PadicIntegralRadicalPolynomial
+        p 2) := by
+  simpa [
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08PadicIntegralRadicalPolynomial,
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08RadicalPolynomial] using
     (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_padic_radical_polynomial_is_eisenstein

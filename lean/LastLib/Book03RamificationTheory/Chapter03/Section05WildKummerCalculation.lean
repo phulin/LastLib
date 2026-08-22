@@ -31,11 +31,6 @@ theorem chapter03_cyclotomic_polynomial_is_eisenstein_at_p
       (p : ℤ_[p]) (chapter03CyclotomicPolynomial (ℤ_[p]) p) := by
   sorry
 
-/- The wild radical polynomial `T^p - λ`. -/
-def chapter03WildKummerPolynomial
-    {K : Type*} [CommRing K] (lambda : K) (p : ℕ) : K[X] :=
-  X ^ p - C lambda
-
 theorem chapter03_cyclotomic_lambda_is_a_root
     (p : ℕ) [Fact p.Prime]
     {K : Type*} [Field K] (ζ lambda : K)
@@ -87,7 +82,8 @@ theorem chapter03_wild_kummer_polynomial_is_eisenstein
     (lambda : A) (p : ℕ) (hp : 0 < p)
     (hlambda : Ideal.span ({lambda} : Set A) = IsLocalRing.maximalIdeal A) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt lambda
-      (chapter03WildKummerPolynomial lambda p) := by
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08KummerPolynomial
+        lambda p) := by
   sorry
 
 theorem chapter03_wild_kummer_extension_is_cyclic

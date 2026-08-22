@@ -10,11 +10,6 @@ open scoped BigOperators
 
 /-! ## 3.7. Same degree, arbitrarily different depth -/
 
-/- The equation defining the equal-characteristic family. -/
-def chapter03ArtinSchreierFamilyEquation
-    (K : Type*) [Field K] (p m : ℕ) (t y : K) : Prop :=
-  y ^ p - y = t ^ (-(m : ℤ))
-
 /- The normal-form condition on a family member. -/
 def chapter03ArtinSchreierFamilyMember (p m : ℕ) : Prop :=
   0 < m ∧ Nat.Coprime m p

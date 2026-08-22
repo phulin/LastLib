@@ -12,12 +12,6 @@ open scoped BigOperators
 
 /-! ## 3.2. Tame Kummer extensions -/
 
-/- The integral Kummer polynomial in the source's unit-times-uniformizer form. -/
-def chapter03TameKummerPolynomial
-    {A : Type*} [CommRing A] (u : Aˣ) (π : A) (e : ℕ) : A[X] :=
-  LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08RadicalPolynomial
-    ((u : A) * π) e
-
 /- The hypotheses of the tame Kummer calculation. -/
 structure Chapter03TameKummerData
     {A K L : Type*} [CommRing A] [IsDomain A]
@@ -47,8 +41,9 @@ theorem chapter03_tame_kummer_polynomial_is_eisenstein
     [CharP (IsLocalRing.ResidueField A) p]
     (D : Chapter03TameKummerData (A := A) (K := K) (L := L) p e) :
     LastLib.Book01ValuationsDVRsAndCompletions.Chapter12.IsEisensteinAt D.π
-      (chapter03TameKummerPolynomial D.u D.π e) := by
-  simpa [chapter03TameKummerPolynomial,
+      (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08KummerPolynomial
+        ((D.u : A) * D.π) e) := by
+  simpa [
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08KummerPolynomial,
     LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08RadicalPolynomial] using
     (LastLib.Book02FiniteExtensionsOfLocalFields.Chapter08.chapter08_tame_radical_polynomial_is_eisenstein

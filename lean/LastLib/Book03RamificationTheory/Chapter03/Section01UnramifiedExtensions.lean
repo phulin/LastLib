@@ -91,11 +91,6 @@ theorem chapter03_unramified_lower_groups
   have h := chapter03_unramified_reduction_has_no_positive_ramification D
   exact ⟨h.1, h.2.1⟩
 
-/- SOURCE_ISSUE (3.1): The sentence that Frobenius lies at level `-1` but
-   not at level `0` is false for the trivial unramified extension (`f = 1`),
-   where Frobenius is the identity.  The theorem below makes the minimal
-   correction by assuming the residue extension has degree greater than one. -/
-
 /- Arithmetic Frobenius is recorded at the residue-visible, `-1` level. -/
 theorem chapter03_unramified_arithmetic_frobenius_at_minus_one
     {K L k l : Type*} [Field K] [Field L] [Field k] [Field l]

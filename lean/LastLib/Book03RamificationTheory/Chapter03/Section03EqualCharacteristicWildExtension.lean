@@ -1240,17 +1240,11 @@ theorem chapter03_artin_schreier_divisible_exponent_is_a_coboundary
   congr 1
   ring
 
-/- SOURCE_ISSUE (3.3): The informal sentence that terms with exponent
-   divisible by `p` can be removed by replacing `y` by `y - z` is too strong
-   for an arbitrary coefficient field `k`: a leading coefficient can be
-   removed this way only when it is a `p`th power (or when `k` is perfect).
-   The smallest correction is to say “terms that occur in an Artin--Schreier
-   coboundary,” or to add perfectness of `k`. -/
-
-/- SOURCE_WARNING (3.3): The restriction `p ∤ m` is a normal-form choice,
-   not a restriction on all Artin--Schreier classes.  The preceding change of
+/- SOURCE_NOTE (3.3): The restriction `p ∤ m` is a normal-form choice, not a
+   restriction on all Artin--Schreier classes.  The preceding change of
    variable and coboundary identity records the precise coordinate operation
-   that removes exponents divisible by `p`. -/
+   that removes exponents divisible by `p` when the required coefficient is a
+   `p`th power. -/
 
 end
 end LastLib.Book03RamificationTheory.Chapter03
