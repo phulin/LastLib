@@ -222,7 +222,7 @@ theorem chapter11_unit_image_membership_iff
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A) (n : ℕ) (a : A) :
     a ∈ chapter11UnitImage D χ n ↔
       ∃ x ∈ D.unitFiltration n, χ x = a := by
-  sorry
+  rfl
 
 def chapter11ResidueDegreeOfCharacter
     {K A : Type*} [Field K] [CommGroup A]
@@ -239,7 +239,63 @@ theorem chapter11_residue_degree_of_character_eq_subgroup
     chapter11ResidueDegreeOfCharacter D χ hχ =
       chapter11ResidueDegreeOfSubgroup D (chapter11CharacterKernel χ)
         (chapter11_finite_image_character_kernel_finite_index χ hχ) := by
-  sorry
+  apply (orderOf_eq_orderOf_iff).2
+  intro m
+  constructor
+  · intro hpow
+    have hmem : (χ D.uniformizer) ^ m ∈ chapter11UnitImage D χ 0 := by
+      apply (QuotientGroup.eq_one_iff _).mp
+      change QuotientGroup.mk' (chapter11UnitImage D χ 0)
+          ((χ D.uniformizer) ^ m) = 1
+      rw [map_pow]
+      exact hpow
+    rcases (chapter11_unit_image_membership_iff D χ 0 _).mp hmem with
+      ⟨x, hx, hxχ⟩
+    have hxunit : x ∈ D.unitGroup := by
+      rw [D.unitFiltration_zero] at hx
+      exact hx
+    have heq :
+        QuotientGroup.mk' (chapter11CharacterKernel χ) (x : Kˣ) =
+          QuotientGroup.mk' (chapter11CharacterKernel χ) (D.uniformizer ^ m) := by
+      change ((x : Kˣ) : Kˣ ⧸ chapter11CharacterKernel χ) =
+        ((D.uniformizer ^ m : Kˣ) : Kˣ ⧸ chapter11CharacterKernel χ)
+      rw [QuotientGroup.eq_iff_div_mem]
+      change χ ((x : Kˣ) / D.uniformizer ^ m) = 1
+      rw [map_div, hxχ, map_pow]
+      simp
+    have hmem' :
+        QuotientGroup.mk' (chapter11CharacterKernel χ) (D.uniformizer ^ m) ∈
+          D.unitGroup.map (QuotientGroup.mk' (chapter11CharacterKernel χ)) := by
+      exact ⟨x, hxunit, heq⟩
+    exact (QuotientGroup.eq_one_iff _).mpr hmem'
+  · intro hpow
+    have hmem :
+        QuotientGroup.mk' (chapter11CharacterKernel χ) (D.uniformizer ^ m) ∈
+          D.unitGroup.map (QuotientGroup.mk' (chapter11CharacterKernel χ)) := by
+      apply (QuotientGroup.eq_one_iff _).mp
+      change QuotientGroup.mk'
+          (D.unitGroup.map (QuotientGroup.mk' (chapter11CharacterKernel χ)))
+          ((QuotientGroup.mk' (chapter11CharacterKernel χ) D.uniformizer) ^ m) = 1
+      rw [map_pow]
+      exact hpow
+    rcases hmem with ⟨x, hxunit, heq⟩
+    have heq' := heq
+    change ((x : Kˣ) : Kˣ ⧸ chapter11CharacterKernel χ) =
+      ((D.uniformizer ^ m : Kˣ) : Kˣ ⧸ chapter11CharacterKernel χ) at heq'
+    have hker :
+        (x : Kˣ) / D.uniformizer ^ m ∈ chapter11CharacterKernel χ := by
+      exact (QuotientGroup.eq_iff_div_mem.mp heq')
+    have hxχ : χ (x : Kˣ) = χ (D.uniformizer ^ m) := by
+      change χ ((x : Kˣ) / D.uniformizer ^ m) = 1 at hker
+      apply div_eq_one.mp
+      rw [map_div] at hker
+      exact hker
+    have hmem' : χ (D.uniformizer ^ m) ∈ chapter11UnitImage D χ 0 := by
+      apply (chapter11_unit_image_membership_iff D χ 0 _).mpr
+      exact ⟨x, by rw [D.unitFiltration_zero]; exact hxunit, hxχ⟩
+    have hmem'' : (χ D.uniformizer) ^ m ∈ chapter11UnitImage D χ 0 := by
+      simpa only [map_pow] using hmem'
+    exact (QuotientGroup.eq_one_iff _).mpr hmem''
 
 theorem chapter11_conductor_zero_iff_unramified
     {K A : Type*} [Field K] [CommGroup A]
@@ -247,7 +303,17 @@ theorem chapter11_conductor_zero_iff_unramified
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
     (hχ : chapter11ConductorExists D χ) :
     chapter11Conductor D χ hχ = 0 ↔ chapter11IsUnramified D χ := by
-  sorry
+  constructor
+  · intro hzero u
+    have hspec := chapter11_conductor_spec D χ hχ
+    rw [hzero, D.unitFiltration_zero] at hspec
+    exact hspec u u.property
+  · intro hunram
+    exact Nat.le_zero.mp (chapter11_conductor_minimal D χ hχ 0 (by
+      intro x hx
+      have hx0 : x ∈ D.unitFiltration 0 := hx
+      rw [D.unitFiltration_zero] at hx0
+      exact hunram ⟨x, hx0⟩))
 
 theorem chapter11_conductor_one_of_nontrivial_tame
     {K A : Type*} [Field K] [CommGroup A]
@@ -256,7 +322,12 @@ theorem chapter11_conductor_one_of_nontrivial_tame
     (hχ : chapter11ConductorExists D χ)
     (htame : chapter11IsTamelyRamified D χ) :
     chapter11Conductor D χ hχ = 1 := by
-  sorry
+  apply Nat.le_antisymm
+  · apply chapter11_conductor_minimal D χ hχ 1
+    exact htame.1
+  · apply Nat.one_le_iff_ne_zero.mpr
+    intro hzero
+    exact htame.2 ((chapter11_conductor_zero_iff_unramified D χ hχ).mp hzero)
 
 theorem chapter11_conductor_at_least_two_iff_wild
     {K A : Type*} [Field K] [CommGroup A]
@@ -264,7 +335,30 @@ theorem chapter11_conductor_at_least_two_iff_wild
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
     (hχ : chapter11ConductorExists D χ) :
     2 ≤ chapter11Conductor D χ hχ ↔ chapter11IsWildlyRamified D χ := by
-  sorry
+  constructor
+  · intro hlarge hlevel
+    have hsmall := chapter11_conductor_minimal D χ hχ 1 hlevel
+    exact (Nat.not_succ_le_self 1) (hlarge.trans hsmall)
+  · intro hwild
+    by_contra hnot
+    have hle : chapter11Conductor D χ hχ ≤ 1 := by
+      apply Nat.le_of_lt_succ
+      simpa using Nat.lt_of_not_ge hnot
+    rcases Nat.le_one_iff_eq_zero_or_eq_one.mp hle with hzero | hone
+    · apply hwild
+      intro x hx
+      have hunram :=
+        (chapter11_conductor_zero_iff_unramified D χ hχ).mp hzero
+      have hx0 : x ∈ D.unitFiltration 0 := by
+        have hx' := D.unitFiltration_succ_le 0 hx
+        simpa using hx'
+      rw [D.unitFiltration_zero] at hx0
+      exact hunram ⟨x, hx0⟩
+    · apply hwild
+      intro x hx
+      have hspec := chapter11_conductor_spec D χ hχ
+      rw [hone] at hspec
+      exact hspec x hx
 
 def chapter11InertiaImageFinite
     {G A : Type*} [Group G] [CommGroup A]
@@ -283,7 +377,25 @@ theorem chapter11_finite_inertia_image_gives_finite_conductor
       (F.inertia.map (chapter11AbelianizationMap G).toMonoidHom)
       (chapter11CorrespondingAbelianGaloisCharacter R χ)) :
     chapter11ConductorExists D χ := by
-  sorry
+  unfold chapter11InertiaImageFinite at hfinite
+  have hcompat :
+      (chapter11CorrespondingAbelianGaloisCharacter R χ).comp R.reciprocity = χ := by
+    have hcomp := chapter11_abelian_continuous_character_equiv_apply R
+      (chapter11CorrespondingAbelianGaloisCharacter R χ)
+    calc
+      _ = (chapter11AbelianContinuousCharacterEquiv R)
+          (chapter11CorrespondingAbelianGaloisCharacter R χ) := hcomp.symm
+      _ = χ := (chapter11AbelianContinuousCharacterEquiv R).apply_symm_apply χ
+  apply chapter11_conductor_exists_of_finite_unit_image D χ
+  apply hfinite.subset
+  rintro y ⟨u, rfl⟩
+  have huI :
+      R.reciprocity (u : Kˣ) ∈
+        F.inertia.map (chapter11AbelianizationMap G).toMonoidHom := by
+    rw [F.inertia_ab_eq_reciprocity_unit_image]
+    exact ⟨u, u.property, rfl⟩
+  refine ⟨⟨R.reciprocity (u : Kˣ), huI⟩, ?_⟩
+  exact congrArg (fun f : Kˣ →ₜ* A => f (u : Kˣ)) hcompat
 
 end
 end LastLib.Book05LocalClassFieldTheory.Chapter11
