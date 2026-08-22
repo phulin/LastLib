@@ -35,6 +35,13 @@ def Chapter11IntegralVirtualCharacter
     {G : Type*} [Fintype G] [Group G] (A : G → ℚ) : Prop :=
   ∃ V W : FDRep ℂ G, V.character - W.character = fun g ↦ (A g : ℂ)
 
+/-- The complex virtual characters represented by the integral character ring
+    `R(G)`.  Writing them as differences of finite-dimensional characters is
+    the representation-theoretic form used by the induction argument below. -/
+def Chapter11ComplexVirtualCharacter
+    {G : Type*} [Fintype G] [Group G] (A : G → ℂ) : Prop :=
+  ∃ V W : FDRep ℂ G, V.character - W.character = A
+
 /-- The complex-character formulation of being an actual finite-dimensional character. -/
 def Chapter11IsCharacter
     {G : Type*} [Fintype G] [Group G] (A : G → ℂ) : Prop :=
@@ -42,9 +49,9 @@ def Chapter11IsCharacter
 
 /-!
 Upper-numbering interface used only for the Hasse--Arf consequence.  The
-character-conductor equation is the earlier Chapter 10 bridge: it is stated as
-a field here so that the Chapter 11 file remains proof-ready even before the
-preceding Book 3 chapters are merged.
+character-conductor equation is the preceding cyclic Hasse--Arf/local-theory
+bridge: it is stated as a field here so that the Chapter 11 file remains
+proof-ready without importing a later chapter.
 -/
 
 def Chapter11HasLargestUpperBreak
@@ -123,6 +130,37 @@ def chapter11InducedClassFunction
       b ⟨x⁻¹ * g * x, h⟩
     else 0
 
+/-- An induced one-dimensional character, viewed as a complex class function.
+    The finite sum is the usual character formula for induction from a
+    subgroup. -/
+def chapter11InducedOneDimensionalCharacter
+    {G : Type*} [Fintype G] [Group G]
+    (H : Subgroup G) (χ : H →* ℂˣ) : G → ℂ :=
+  chapter11InducedClassFunction (k := ℂ) H (fun h : H ↦ (χ h : ℂ))
+
+/-- An integral monomial expression is a finite integral sum of characters
+    induced from one-dimensional characters of subgroups. -/
+def Chapter11IntegralMonomialExpression
+    {G : Type*} [Fintype G] [Group G] (A : G → ℂ) : Prop :=
+  ∃ s : Finset (Σ H : Subgroup G, H →* ℂˣ),
+    ∃ n : (Σ H : Subgroup G, H →* ℂˣ) → ℤ,
+      A = fun g =>
+        ∑ x ∈ s, (n x : ℂ) *
+          chapter11InducedOneDimensionalCharacter x.1 x.2 g
+
+/-- Integral monomial induction, i.e. Proposition 11.1B in a form that can
+    be consumed by later character pairings. -/
+theorem chapter11_integral_monomial_induction
+    {G : Type*} [Fintype G] [Group G] (A : G → ℂ)
+    (hA : Chapter11ComplexVirtualCharacter A) :
+    Chapter11IntegralMonomialExpression A := by
+  sorry
+
+theorem chapter11_character_has_integral_monomial_induction
+    {G : Type*} [Fintype G] [Group G] (V : FDRep ℂ G) :
+    Chapter11IntegralMonomialExpression V.character := by
+  sorry
+
 theorem chapter11_artin_class_function_eq_residue_degree_smul_ramification
     {k G : Type*} [Field k] [Fintype G] [Group G]
     (D : Chapter11RamificationData G) :
@@ -177,12 +215,16 @@ criterion, not a cyclic-subgroup criterion.  We spell out a finite
 subgroup and a `p`-group.  The commuting-product formulation avoids choosing
 an external product equivalence.
 -/
-def Chapter11ElementarySubgroup
-    {G : Type*} [Fintype G] [Group G] (H : Subgroup G) : Prop :=
-  ∃ p : ℕ, Nat.Prime p ∧ ∃ C P : Subgroup G,
+def Chapter11PElementarySubgroup
+    {G : Type*} [Fintype G] [Group G] (p : ℕ) (H : Subgroup G) : Prop :=
+  ∃ C P : Subgroup G,
     IsCyclic C ∧ IsPGroup p P ∧ Nat.Coprime (Nat.card C) p ∧
       C ≤ H ∧ P ≤ H ∧ H = C ⊔ P ∧
         ∀ c : C, ∀ q : P, (c : G) * (q : G) = (q : G) * (c : G)
+
+def Chapter11ElementarySubgroup
+    {G : Type*} [Fintype G] [Group G] (H : Subgroup G) : Prop :=
+  ∃ p : ℕ, Nat.Prime p ∧ Chapter11PElementarySubgroup p H
 
 def Chapter11ElementaryRestrictionCondition
     {G : Type*} [Fintype G] [Group G] (A : G → ℚ) : Prop :=
@@ -230,9 +272,7 @@ theorem chapter11_integral_virtual_character_implies_cyclic_augmentation
    elementary-subgroup bridge. -/
 theorem chapter11_integral_virtual_character_iff_elementary_restriction
     {G : Type*} [Fintype G] [Group G] (A : G → ℚ)
-    (hinteger : Chapter11IntegerValuedClassFunction A)
-    (hclass : Chapter11ConjugacyInvariantClassFunction A)
-    (hpower : Chapter11PowerInvariantClassFunction A) :
+    (hclass : Chapter11ConjugacyInvariantClassFunction A) :
     Chapter11IntegralVirtualCharacter A ↔
       Chapter11ElementaryRestrictionCondition A := by
   sorry
@@ -289,6 +329,18 @@ theorem chapter11_ramification_character_lemma
     Chapter11RamificationCharacterInput D := by
   sorry
 
+/-- Induction carries the integral virtual character on inertia to the full
+    Artin class function.  This is the reusable virtual-character half of
+    Artin's integrality proof; positivity is supplied separately by the
+    fixed-space formula. -/
+theorem chapter11_artin_class_function_integral_virtual_of_inertia_input
+    {G : Type*} [Fintype G] [Group G]
+    (D : Chapter11RamificationData G)
+    (hvirtual : Chapter11RamificationCharacterInput D) :
+    Chapter11IntegralVirtualCharacter
+      (fun σ : G => chapter11ArtinClassFunction (k := ℚ) D σ) := by
+  sorry
+
 theorem chapter11_canonical_artin_input_character_input
     {G : Type*} [Fintype G] [Group G]
     (D : Chapter11RamificationData G)
@@ -311,8 +363,12 @@ theorem chapter11_ramification_class_function_is_integral_virtual
     (D : Chapter11RamificationData G)
     (helementary : Chapter11ElementaryRestrictionCondition
       (fun σ : D.inertia => chapter11InertiaClassFunction (k := ℚ) D σ)) :
-    Chapter11RamificationCharacterInput D := by
-  exact chapter11_ramification_character_lemma D helementary
+    Chapter11IntegralVirtualCharacter
+      (fun σ : G => chapter11ArtinClassFunction (k := ℚ) D σ) := by
+  /- Prior attempt: this returned only the inertia-layer input, despite the
+     theorem name claiming a result for the full Artin class function.
+     exact chapter11_ramification_character_lemma D helementary -/
+  sorry
 
 /-- Artin's theorem: the Artin class function is an actual complex character.
 

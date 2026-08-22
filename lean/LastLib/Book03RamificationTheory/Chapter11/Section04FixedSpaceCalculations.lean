@@ -59,12 +59,28 @@ theorem chapter11_two_dimensional_tame_one_nontrivial_line_conductor_one
     chapter11ArtinConductor D ρ = 1 := by
   sorry
 
+theorem chapter11_two_dimensional_tame_one_nontrivial_line_fixed_space_dimension_one
+    {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
+    [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (D : Chapter11RamificationData G) (ρ : Representation k G V)
+    (hρ : Chapter11TameOneNontrivialLine D ρ) :
+    Module.finrank k (Representation.invariants (ρ.comp D.inertia.subtype)) = 1 := by
+  sorry
+
 theorem chapter11_two_dimensional_tame_fixed_space_zero_conductor_two
     {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (D : Chapter11RamificationData G) (ρ : Representation k G V)
     (hρ : Chapter11TameNoFixedVectors D ρ) :
     chapter11ArtinConductor D ρ = 2 := by
+  sorry
+
+theorem chapter11_two_dimensional_tame_fixed_space_zero_dimension_zero
+    {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
+    [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (D : Chapter11RamificationData G) (ρ : Representation k G V)
+    (hρ : Chapter11TameNoFixedVectors D ρ) :
+    Module.finrank k (Representation.invariants (ρ.comp D.inertia.subtype)) = 0 := by
   sorry
 
 /- The source's `V_χ` is represented canonically by
@@ -84,7 +100,6 @@ structure Chapter11WildCyclicBreakData
   inertia_eq_top : D.inertia = ⊤
   lower_eq_inertia_of_le : ∀ i, i ≤ m → D.lower i = D.inertia
   lower_eq_bot_of_gt : ∀ i, m < i → D.lower i = ⊥
-  residue_characteristic_divides_e : p ∣ D.e
 
 def Chapter11NontrivialMultiplicativeCharacter
     {k G : Type*} [Field k] [Group G] (χ : G →* kˣ) : Prop :=
@@ -104,6 +119,16 @@ theorem chapter11_wild_cyclic_nontrivial_character_fixed_spaces
     ∀ i, i ≤ W.m →
       Chapter11FixedSpaceIsZero
         (chapter11OneDimensionalRepresentation χ) (D.lower i) := by
+  sorry
+
+theorem chapter11_wild_cyclic_nontrivial_character_fixed_spaces_after_break
+    {k G : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
+    {D : Chapter11RamificationData G}
+    (W : Chapter11WildCyclicBreakData G D) (χ : G →* kˣ)
+    (hχ : Chapter11NontrivialMultiplicativeCharacter χ) :
+    ∀ i, W.m < i →
+      Representation.invariants
+        ((chapter11OneDimensionalRepresentation χ).comp (D.lower i).subtype) = ⊤ := by
   sorry
 
 theorem chapter11_wild_cyclic_character_conductor_and_swan
