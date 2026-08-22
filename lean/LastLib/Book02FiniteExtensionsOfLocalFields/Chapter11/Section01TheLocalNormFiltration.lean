@@ -300,7 +300,7 @@ theorem chapter11_mem_value_unit_product_set_iff {K : Type*} [Field K]
 
 /- The determinant norm is continuous in a finite-dimensional normed algebra. -/
 theorem chapter11_norm_continuous
-    (K L : Type*) [NormedField K] [NormedField L]
+    (K L : Type*) [NontriviallyNormedField K] [CompleteSpace K] [NormedField L]
     [NormedAlgebra K L] [FiniteDimensional K L] :
     Continuous (Algebra.norm K (S := L)) := by
   exact
