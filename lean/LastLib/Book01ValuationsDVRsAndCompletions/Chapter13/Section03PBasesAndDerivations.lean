@@ -1025,7 +1025,108 @@ theorem chapter13_p_basis_monomial_basis
     ∃ β : Basis (Chapter13PMonomialIndex B p)
         (Chapter13PthPowerSubfield k p) k,
       ∀ e, β e = Chapter13PMonomial (fun b : B => (b : k)) e := by
-  sorry
+  classical
+  let F := Chapter13PthPowerSubfield k p
+  have hli : LinearIndependent F
+      (fun e : Chapter13PMonomialIndex B p =>
+        Chapter13PMonomial (fun b : B => (b : k)) e) := by
+    rw [linearIndependent_iff_finset_linearIndependent]
+    intro s
+    let t : Finset B := s.biUnion (fun e => e.1.support)
+    have hsupport (e : s) : (e.1.1.support : Set B) ⊆ (t : Set B) := by
+      intro b hb
+      exact Finset.mem_coe.2 (Finset.mem_biUnion.2 ⟨e.1, e.2, hb⟩)
+    let f : t → B := fun x => x.1
+    have hf : Function.Injective f := by
+      intro x y hxy
+      exact Subtype.ext hxy
+    let b : Fin t.card → k := fun i => ((t.equivFin.symm i : t) : k)
+    have hbsub : Set.range b ⊆ B := by
+      rintro _ ⟨i, rfl⟩
+      exact (t.equivFin.symm i : B).property
+    have hbinj : Function.Injective b := by
+      intro i j hij
+      have hxy' : (t.equivFin.symm i : t) = t.equivFin.symm j := by
+        apply Subtype.ext
+        apply Subtype.ext
+        exact hij
+      exact t.equivFin.symm.injective hxy'
+    have hfinite : LinearIndependent F
+        (fun q : Chapter13PMonomialIndex (Fin t.card) p =>
+          Chapter13PMonomial b q) := hB.1 t.card b hbsub hbinj
+    let q : s → Chapter13PMonomialIndex (Fin t.card) p := fun e =>
+      let ee : Chapter13PMonomialIndex B p := e.1
+      ⟨Finsupp.mapDomain t.equivFin
+          (Finsupp.comapDomain f ee.1 hf.injOn), by
+        intro i
+        simp only [Finsupp.mapDomain_equiv_apply, Finsupp.comapDomain_apply]
+        exact ee.2 (f (t.equivFin.symm i))⟩
+    have hqinj : Function.Injective q := by
+      intro e₁ e₂ heq
+      have hcomap : Finsupp.comapDomain f e₁.1.1 hf.injOn =
+          Finsupp.comapDomain f e₂.1.1 hf.injOn := by
+        apply Finsupp.mapDomain_injective t.equivFin.injective
+        exact congrArg
+          (fun z : Chapter13PMonomialIndex (Fin t.card) p => z.1) heq
+      have he₁ : ((e₁.1.1).support : Set B) ⊆ Set.range f := by
+        intro x hx
+        exact ⟨⟨x, hsupport e₁ hx⟩, rfl⟩
+      have he₂ : ((e₂.1.1).support : Set B) ⊆ Set.range f := by
+        intro x hx
+        exact ⟨⟨x, hsupport e₂ hx⟩, rfl⟩
+      have hfs : e₁.1.1 = e₂.1.1 := by
+        calc
+          e₁.1.1 = Finsupp.mapDomain f
+              (Finsupp.comapDomain f e₁.1.1 hf.injOn) :=
+            (Finsupp.mapDomain_comapDomain f hf e₁.1.1 he₁).symm
+          _ = Finsupp.mapDomain f
+              (Finsupp.comapDomain f e₂.1.1 hf.injOn) := congrArg _ hcomap
+          _ = e₂.1.1 := Finsupp.mapDomain_comapDomain f hf e₂.1.1 he₂
+      apply Subtype.ext
+      apply Subtype.ext
+      exact hfs
+    have hqmonomial (e : s) :
+        Chapter13PMonomial b (q e) =
+          Chapter13PMonomial (fun x : B => (x : k)) e.1 := by
+      have he : ((e.1.1).support : Set B) ⊆ Set.range f := by
+        intro x hx
+        exact ⟨⟨x, hsupport e hx⟩, rfl⟩
+      have hemap : Finsupp.mapDomain f
+          (Finsupp.comapDomain f e.1.1 hf.injOn) = e.1.1 :=
+        Finsupp.mapDomain_comapDomain f hf e.1.1 he
+      calc
+        Chapter13PMonomial b (q e) =
+            (q e).1.prod (fun i n => b i ^ n) := rfl
+        _ = (Finsupp.comapDomain f e.1.1 hf.injOn).prod
+              (fun x n => b (t.equivFin x) ^ n) := by
+          rw [Finsupp.prod_mapDomain_index_inj t.equivFin.injective]
+        _ = (Finsupp.comapDomain f e.1.1 hf.injOn).prod
+              (fun x n => (f x : k) ^ n) := by
+          congr 2
+          funext x n
+          simp [b, f]
+        _ = (Finsupp.mapDomain f
+              (Finsupp.comapDomain f e.1.1 hf.injOn)).prod
+              (fun x n => (x : k) ^ n) := by
+          rw [Finsupp.prod_mapDomain_index_inj hf]
+        _ = Chapter13PMonomial (fun x : B => (x : k)) e.1 := by
+          rw [hemap]
+          rfl
+    have hqLI : LinearIndependent F (fun e : s => Chapter13PMonomial b (q e)) :=
+      hfinite.comp q hqinj
+    have hfun : (fun e : s => Chapter13PMonomial b (q e)) =
+        (fun e : s => Chapter13PMonomial (fun b : B => (b : k)) e.1) := by
+      funext e
+      exact hqmonomial e
+    rw [hfun] at hqLI
+    change LinearIndependent F
+      (fun e : s => Chapter13PMonomial (fun b : B => (b : k)) e.1)
+    exact hqLI
+  let β : Basis (Chapter13PMonomialIndex B p) F k :=
+    Basis.mk hli hB.2.ge
+  refine ⟨β, ?_⟩
+  intro e
+  exact Basis.mk_apply hli hB.2.ge e
 
 /-- Polynomial presentation and finite-degree formula supplied by a finite `p`-basis. -/
 theorem chapter13_p_basis_polynomial_presentation
