@@ -170,7 +170,32 @@ theorem chapter12_completion_extension_implies_relative_compact_range
     (χ : Chapter12ContinuousCharacter Kˣ A)
     (hext : chapter12CharacterExtendsToCompletion χ) :
     chapter12RelativeCompactRange χ := by
-  sorry
+  rcases hext with ⟨F, hF⟩
+  have hcompact : IsCompact (Set.range F) := by
+    rw [← Set.image_univ]
+    exact isCompact_univ.image F.continuous
+  have hclosed : IsClosed (Set.range F) := hcompact.isClosed
+  have hsubset : Set.range F ⊆ closure (Set.range χ) := by
+    intro y hy
+    rcases hy with ⟨z, rfl⟩
+    exact (LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07_open_profinite_completion_eta_dense
+      (G := Kˣ)).induction_on z
+      (isClosed_closure.preimage F.continuous) (fun x => by
+        change F (LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07OpenProfiniteCompletionEtaFn
+          Kˣ x) ∈ closure (Set.range χ)
+        rw [hF x]
+        exact subset_closure ⟨x, rfl⟩)
+  have hrange : closure (Set.range χ) = Set.range F := by
+    apply le_antisymm
+    · apply closure_minimal
+      · rintro y ⟨x, rfl⟩
+        exact ⟨LastLib.Book05LocalClassFieldTheory.Chapter07.chapter07OpenProfiniteCompletionEtaFn Kˣ x,
+          hF x⟩
+      · exact hclosed
+    · exact hsubset
+  change IsCompact (closure (Set.range χ))
+  rw [hrange]
+  exact hcompact
 
 /-- For a nonprofinite target, extension to the completion is the exact
 criterion; relative compactness is recorded separately as a necessary test. -/
