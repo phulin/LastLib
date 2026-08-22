@@ -154,14 +154,33 @@ def chapter14RootPermutation
     {F Ω : Type*} [Field F] [Field Ω] [Algebra F Ω]
     (f : F[X]) (σ : Gal(Ω / F)) :
     Equiv.Perm (Chapter14RootSet F Ω f) := by
-  sorry
+  have hmap : ∀ (τ : Gal(Ω / F)) (x : Ω),
+      aeval x f = 0 → aeval (τ x) f = 0 := by
+    intro τ x hx
+    have hτ : (algebraMap F Ω).comp (RingHom.id F) =
+        τ.toRingHom.comp (algebraMap F Ω) := by
+      ext a
+      simp
+    have hmap : τ (aeval x f) = aeval (τ x) f := by
+      simpa using Polynomial.map_aeval_eq_aeval_map hτ f x
+    rw [← hmap]
+    simp [hx]
+  let φ : Chapter14RootSet F Ω f → Chapter14RootSet F Ω f :=
+    fun x => ⟨σ x.1, hmap σ x.1 x.2⟩
+  refine Equiv.ofBijective φ ?_
+  refine ⟨?_, ?_⟩
+  · intro x y hxy
+    exact Subtype.ext (σ.injective (congrArg Subtype.val hxy))
+  · intro y
+    refine ⟨⟨σ⁻¹ y.1, hmap σ⁻¹ y.1 y.2⟩, ?_⟩
+    exact Subtype.ext (σ.apply_symm_apply y.1)
 
 theorem chapter14_root_permutation_apply
     {F Ω : Type*} [Field F] [Field Ω] [Algebra F Ω]
     (f : F[X]) (σ : Gal(Ω / F))
     (x : Chapter14RootSet F Ω f) :
     (chapter14RootPermutation f σ x).1 = σ x.1 := by
-  sorry
+  rfl
 
 /- DEPENDENCY_GUESS: The earlier chapters do not yet package the reduction of
    global roots to a common residue splitting field.  This record keeps that

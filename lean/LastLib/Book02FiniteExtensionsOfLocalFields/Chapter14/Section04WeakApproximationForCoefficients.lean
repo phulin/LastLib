@@ -47,7 +47,79 @@ theorem chapter14_weak_approximation_at_distinct_nonarchimedean_places
     {F : Type u} [Field F] [NumberField F]
     (S : Finset (Chapter14Prime F)) :
     chapter14WeakApproximationAtFinitePlaces S := by
-  sorry
+  let v : ∀ p : S, AbsoluteValue F ℝ :=
+    fun p => NumberField.HeightOneSpectrum.adicAbv F p.1
+  have hv_nontrivial : ∀ p : S, (v p).IsNontrivial := by
+    intro p
+    obtain ⟨r, hr, hr0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot p.1.ne_bot
+    refine ⟨algebraMap (𝓞 F) F r, ?_, ?_⟩
+    · intro hzero
+      apply hr0
+      apply NumberField.RingOfIntegers.coe_injective (K := F)
+      simpa using hzero
+    · have hlt : (v p) (algebraMap (𝓞 F) F r) < 1 := by
+        change p.1.adicAbv (NumberField.HeightOneSpectrum.one_lt_absNorm_nnreal p.1)
+          (algebraMap (𝓞 F) F r) < 1
+        exact (p.1.adicAbv_coe_lt_one_iff
+          (NumberField.HeightOneSpectrum.one_lt_absNorm_nnreal p.1) r).2 hr
+      exact ne_of_lt hlt
+  have hv_pairwise : Pairwise (fun p q : S => ¬(v p).IsEquiv (v q)) := by
+    intro p q hpq heq
+    have hnotle : ¬p.1.asIdeal ≤ q.1.asIdeal := by
+      intro hle
+      have heqideal : p.1.asIdeal = q.1.asIdeal :=
+        p.1.isMaximal.eq_of_le q.1.isMaximal.ne_top hle
+      exact hpq (Subtype.ext (IsDedekindDomain.HeightOneSpectrum.ext heqideal))
+    have hexists : ∃ r, r ∈ p.1.asIdeal ∧ r ∉ q.1.asIdeal := by
+      by_contra h
+      push_neg at h
+      exact hnotle h
+    obtain ⟨r, hrp, hrq⟩ := hexists
+    have hltp : (v p) (algebraMap (𝓞 F) F r) < 1 :=
+      (p.1.adicAbv_coe_lt_one_iff
+        (NumberField.HeightOneSpectrum.one_lt_absNorm_nnreal p.1) r).2 hrp
+    have hltq : (v q) (algebraMap (𝓞 F) F r) < 1 :=
+      (AbsoluteValue.isEquiv_iff_lt_one_iff.mp heq _).mp hltp
+    exact hrq ((q.1.adicAbv_coe_lt_one_iff
+      (NumberField.HeightOneSpectrum.one_lt_absNorm_nnreal q.1) r).1 hltq)
+  let g : ∀ p : S, WithAbs (v p) → chapter14BaseCompletion F p.1 :=
+    fun p x => chapter14FinitePlaceEmbedding p.1 x.ofAbs
+  have hg_dense : ∀ p : S, DenseRange (g p) := by
+    intro p
+    have hbase :=
+      IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap F p.1
+    rw [DenseRange] at hbase ⊢
+    have hrange : Set.range (g p) =
+        Set.range (algebraMap F (chapter14BaseCompletion F p.1)) := by
+      ext y
+      constructor
+      · rintro ⟨x, rfl⟩
+        exact ⟨x.ofAbs, rfl⟩
+      · rintro ⟨x, rfl⟩
+        exact ⟨WithAbs.toAbs _ x, rfl⟩
+    rw [hrange]
+    exact hbase
+  have hg_isometry : ∀ p : S, Isometry (g p) := by
+    intro p
+    apply Isometry.of_dist_eq
+    intro x y
+    rw [dist_eq_norm, dist_eq_norm]
+    change ‖chapter14FinitePlaceEmbedding p.1 x.ofAbs -
+        chapter14FinitePlaceEmbedding p.1 y.ofAbs‖ = ‖x - y‖
+    rw [← map_sub, chapter14FinitePlaceEmbedding,
+      NumberField.FinitePlace.norm_embedding,
+      WithAbs.norm_eq_apply_ofAbs]
+    rfl
+  have hbase : DenseRange (algebraMap F ((p : S) → WithAbs (v p))) :=
+    AbsoluteValue.denseRange_algebraMap_pi hv_nontrivial hv_pairwise
+  have hg : DenseRange (Pi.map g) := DenseRange.piMap hg_dense
+  have hgc : Continuous (Pi.map g) := continuous_pi fun p =>
+    (hg_isometry p).continuous.comp (continuous_apply p)
+  have hcomp := hg.comp hbase hgc
+  change DenseRange (chapter14DiagonalAtFinitePlaces S)
+  convert hcomp using 1
+  ext x p
+  rfl
 
 def chapter14CoefficientDiagonal
     {F : Type u} [Field F] [NumberField F]
@@ -85,7 +157,48 @@ theorem chapter14_coefficient_weak_approximation
     (U : ∀ p : S, Set (Fin n → chapter14BaseCompletion F p.1))
     (hU : ∀ p, IsOpen (U p)) (ha : ∀ p, a p ∈ U p) :
     ∃ c : Fin n → F, ∀ p, chapter14CoefficientDiagonal S n c p ∈ U p := by
-  sorry
+  have hweak : DenseRange (chapter14DiagonalAtFinitePlaces S) :=
+    chapter14_weak_approximation_at_distinct_nonarchimedean_places S
+  have hmap : DenseRange
+      (Pi.map (fun _ : Fin n => chapter14DiagonalAtFinitePlaces S)) :=
+    DenseRange.piMap (fun _ => hweak)
+  let transpose :
+      (Fin n → (∀ p : S, chapter14BaseCompletion F p.1)) →
+        (∀ p : S, Fin n → chapter14BaseCompletion F p.1) :=
+    fun b p i => b i p
+  have htranspose_surjective : Function.Surjective transpose := by
+    intro b
+    refine ⟨fun i p => b p i, ?_⟩
+    funext p i
+    rfl
+  have htranspose_continuous : Continuous transpose := by
+    apply continuous_pi
+    intro p
+    apply continuous_pi
+    intro i
+    exact (continuous_apply p).comp (continuous_apply i)
+  have hcoeff : DenseRange (chapter14CoefficientDiagonal S n) := by
+    have htranspose_dense : DenseRange transpose :=
+      htranspose_surjective.denseRange
+    have hcomp := htranspose_dense.comp hmap htranspose_continuous
+    convert hcomp using 1
+    ext c p i
+    rfl
+  let A : Set (∀ p : S, Fin n → chapter14BaseCompletion F p.1) :=
+    ⋂ p, {b | b p ∈ U p}
+  have hA : IsOpen A := by
+    apply isOpen_iInter_of_finite
+    intro p
+    exact (continuous_apply p).isOpen_preimage _ (hU p)
+  have haA : a ∈ A := by
+    rw [Set.mem_iInter]
+    intro p
+    exact ha p
+  obtain ⟨b, ⟨c, rfl⟩, hb⟩ :=
+    (show Dense (Set.range (chapter14CoefficientDiagonal S n)) from hcoeff).exists_mem_open
+      hA ⟨a, haA⟩
+  rw [Set.mem_iInter] at hb
+  exact ⟨c, hb⟩
 
 theorem chapter14_coefficient_polynomial_is_monic
     {R : Type*} [Semiring R] [Nontrivial R] (n : ℕ) (c : Fin n → R) :
