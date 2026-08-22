@@ -22,13 +22,6 @@ def chapter11OneDimensionalRepresentation
     ext
     simp [MonoidHom.map_mul, mul_comm]
 
-/-- A representation of an arbitrary group has finite image when its operator image is finite. -/
-def Chapter11FiniteImage
-    {Γ k V : Type*} [Group Γ] [Field k]
-    [AddCommGroup V] [Module k V]
-    (ρ : Representation k Γ V) : Prop :=
-  (Set.range fun g : Γ => ρ g).Finite
-
 /-- A rational class function is an integral virtual character when its complex
 scalar extension is a difference of finite-dimensional complex characters. -/
 def Chapter11IntegralVirtualCharacter
@@ -443,9 +436,10 @@ theorem chapter11_artin_conductor_eq_tame_add_swan
 /-- The finite-image reduction used for representations of an absolute Galois group. -/
 theorem chapter11_finite_image_quotient_is_finite
     {Γ k V : Type*} [Group Γ] [Field k]
-    [AddCommGroup V] [Module k V]
-    (ρ : Representation k Γ V) (hρ : Chapter11FiniteImage ρ) :
-    Finite (Γ ⧸ MonoidHom.ker ρ) := by
+    [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (ρ : LastLib.Book03RamificationTheory.Chapter10.FiniteImageRepresentation
+      k Γ V) :
+    Finite (Γ ⧸ MonoidHom.ker ρ.toRepresentation) := by
   sorry
 
 theorem chapter11_finite_image_factors_through_kernel_quotient
@@ -458,12 +452,15 @@ theorem chapter11_finite_image_factors_through_kernel_quotient
 
 theorem chapter11_finite_image_representation_is_computed_in_finite_quotient
     {Γ k V : Type*} [Group Γ] [Field k]
-    [AddCommGroup V] [Module k V]
-    (ρ : Representation k Γ V) (hρ : Chapter11FiniteImage ρ) :
-    ∃ ρq : Representation k (Γ ⧸ MonoidHom.ker ρ) V,
-      (∀ γ : Γ,
-        ρ γ = ρq (QuotientGroup.mk' (MonoidHom.ker ρ) γ)) ∧
-        Chapter11FiniteImage ρq := by
+    [AddCommGroup V] [Module k V] [FiniteDimensional k V]
+    (ρ : LastLib.Book03RamificationTheory.Chapter10.FiniteImageRepresentation
+      k Γ V) :
+    Finite (Γ ⧸ MonoidHom.ker ρ.toRepresentation) ∧
+      ∃ ρq : Representation k (Γ ⧸ MonoidHom.ker ρ.toRepresentation) V,
+        (∀ γ : Γ,
+          ρ.toRepresentation γ =
+            ρq (QuotientGroup.mk' (MonoidHom.ker ρ.toRepresentation) γ)) ∧
+          (Set.range ρq).Finite := by
   sorry
 
 /-- A nontrivial upper break in a finite abelian quotient admits a separating character. -/

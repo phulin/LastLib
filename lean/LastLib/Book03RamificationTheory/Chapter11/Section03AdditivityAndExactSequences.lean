@@ -113,10 +113,10 @@ theorem chapter11_swan_conductor_short_exact_additive
 theorem chapter11_fixed_space_codimension_dual
     {k G V : Type*} [Field k] [CharZero k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
-    (D : Chapter11RamificationData G) (ρ : Representation k G V)
+    (ρ : Representation k G V)
     (H : Subgroup G) :
-    chapter11FixedSpaceCodimension D ρ.dual H =
-      chapter11FixedSpaceCodimension D ρ H := by
+    LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ.dual H =
+      LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ H := by
   sorry
 
 theorem chapter11_artin_conductor_dual

@@ -215,14 +215,6 @@ formula honest before Artin integrality is applied; integrality statements
 below identify these rationals with nonnegative integers.
 -/
 
-/-- The codimension of the fixed space at a subgroup. -/
-def chapter11FixedSpaceCodimension
-    {k G V : Type*} [Field k] [Fintype G] [Group G]
-    [AddCommGroup V] [Module k V] [FiniteDimensional k V]
-    (_D : Chapter11RamificationData G)
-    (ρ : Representation k G V) (H : Subgroup G) : ℕ :=
-  LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ H
-
 /-- The rational weight attached to a lower level. -/
 def chapter11LowerWeight
     {G : Type*} [Fintype G] [Group G]
@@ -236,14 +228,15 @@ def chapter11ArtinConductor
     (D : Chapter11RamificationData G) (ρ : Representation k G V) : ℚ :=
   ∑ i ∈ Finset.range D.bound,
     chapter11LowerWeight D i *
-      (chapter11FixedSpaceCodimension D ρ (D.lower i) : ℚ)
+      (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ
+        (D.lower i) : ℚ)
 
 /-- The tame contribution, namely the codimension of inertia-fixed vectors. -/
 def chapter11TameConductor
     {k G V : Type*} [Field k] [Fintype G] [Group G]
     [AddCommGroup V] [Module k V] [FiniteDimensional k V]
     (D : Chapter11RamificationData G) (ρ : Representation k G V) : ℚ :=
-  (chapter11FixedSpaceCodimension D ρ D.inertia : ℚ)
+  (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ D.inertia : ℚ)
 
 /-- The Swan conductor, retaining the positive lower-numbered levels. -/
 def chapter11SwanConductor
@@ -252,7 +245,8 @@ def chapter11SwanConductor
     (D : Chapter11RamificationData G) (ρ : Representation k G V) : ℚ :=
   ∑ i ∈ Finset.Ico 1 D.bound,
     chapter11LowerWeight D i *
-      (chapter11FixedSpaceCodimension D ρ (D.lower i) : ℚ)
+      (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ
+        (D.lower i) : ℚ)
 
 end
 end LastLib.Book03RamificationTheory.Chapter11

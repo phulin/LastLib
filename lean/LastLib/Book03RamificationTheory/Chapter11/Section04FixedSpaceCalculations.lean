@@ -1,4 +1,5 @@
 import LastLib.Book03RamificationTheory.Chapter11.Section02ArtinsIntegrality
+import LastLib.Book03RamificationTheory.Chapter11.Section03AdditivityAndExactSequences
 
 namespace LastLib.Book03RamificationTheory.Chapter11
 
