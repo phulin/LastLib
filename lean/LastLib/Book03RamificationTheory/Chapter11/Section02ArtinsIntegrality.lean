@@ -651,7 +651,11 @@ theorem chapter11_artin_integrality_implies_chapter06_total_swan_conductor_integ
       ((chapter11SwanConductor D ρ : ℚ) : ℝ) =
         chapter06SwanConductor P ρ) :
     chapter06TotalSwanConductorIntegral P ρ := by
-  sorry
+  rcases chapter11_swan_conductor_is_nonnegative_integer D ρ hseparable hperfect hinput with
+    ⟨n, hn⟩
+  refine ⟨n, ?_⟩
+  rw [← hupper, ← hn]
+  norm_num
 
 theorem chapter11_swan_conductor_eq_artin_sub_tame
     {k G V : Type*} [Field k] [Fintype G] [Group G]
@@ -659,7 +663,26 @@ theorem chapter11_swan_conductor_eq_artin_sub_tame
     (D : Chapter11RamificationData G) (ρ : Representation k G V) :
     chapter11SwanConductor D ρ =
       chapter11ArtinConductor D ρ - chapter11TameConductor D ρ := by
-  sorry
+  classical
+  unfold chapter11ArtinConductor chapter11TameConductor chapter11SwanConductor
+  cases hbound : D.bound with
+  | zero =>
+      have hinertia : D.inertia = (⊥ : Subgroup G) := by
+        rw [← D.lower_zero]
+        exact D.lower_eq_bot_of_bound_le 0 (by simp [hbound])
+      have hcodim :
+          LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim ρ D.inertia = 0 := by
+        rw [hinertia]
+        apply (LastLib.Book03RamificationTheory.Chapter10.fixedSpaceCodim.eq_zero_iff ρ _).2
+        apply LastLib.Book03RamificationTheory.Chapter10.fixedSpace.top_of_trivial_on
+        intro g
+        have hg : (g : G) = 1 := Subgroup.mem_bot.mp g.property
+        rw [hg]
+        simpa only [Module.End.one_eq_id] using ρ.map_one
+      simp [hcodim]
+  | succ n =>
+      rw [Finset.sum_range_succ', Finset.sum_Ico_eq_sum_range]
+      simp [chapter11LowerWeight, D.lower_zero, add_comm]
 
 theorem chapter11_artin_conductor_eq_tame_add_swan
     {k G V : Type*} [Field k] [Fintype G] [Group G]
@@ -667,7 +690,8 @@ theorem chapter11_artin_conductor_eq_tame_add_swan
     (D : Chapter11RamificationData G) (ρ : Representation k G V) :
     chapter11ArtinConductor D ρ =
       chapter11TameConductor D ρ + chapter11SwanConductor D ρ := by
-  sorry
+  rw [chapter11_swan_conductor_eq_artin_sub_tame D ρ]
+  abel
 
 /-- The finite-image reduction used for representations of an absolute Galois group. -/
 theorem chapter11_finite_image_quotient_is_finite
@@ -676,7 +700,22 @@ theorem chapter11_finite_image_quotient_is_finite
     (ρ : LastLib.Book03RamificationTheory.Chapter10.FiniteImageRepresentation
       k Γ V) :
     Finite (Γ ⧸ MonoidHom.ker ρ.toRepresentation) := by
-  sorry
+  let f : Γ →* (V →ₗ[k] V) := ρ.toRepresentation
+  let _ : Fintype (Set.range f) := ρ.finite_image.fintype
+  let qlift := QuotientGroup.lift (MonoidHom.ker f) f (le_refl _)
+  have hqrange : ∀ q : Γ ⧸ MonoidHom.ker f, qlift q ∈ Set.range f := by
+    intro q
+    refine QuotientGroup.induction_on q ?_
+    intro g
+    exact ⟨g, (show qlift (g : Γ ⧸ MonoidHom.ker f) = f g by rfl).symm⟩
+  let qmap : Γ ⧸ MonoidHom.ker f → Set.range f := fun q => ⟨qlift q, hqrange q⟩
+  have hqinj : Function.Injective qlift := by
+    apply (QuotientGroup.injective_lift_iff (MonoidHom.ker f) f (le_refl _)).2
+    rfl
+  change Finite (Γ ⧸ MonoidHom.ker f)
+  exact Finite.of_injective qmap (by
+    intro q r hqr
+    exact hqinj (congrArg Subtype.val hqr))
 
 theorem chapter11_finite_image_factors_through_kernel_quotient
     {Γ k V : Type*} [Group Γ] [Field k]
@@ -684,7 +723,17 @@ theorem chapter11_finite_image_factors_through_kernel_quotient
     (ρ : Representation k Γ V) :
     ∃ ρq : Representation k (Γ ⧸ MonoidHom.ker ρ) V,
       ∀ γ : Γ, ρ γ = ρq (QuotientGroup.mk' (MonoidHom.ker ρ) γ) := by
-  sorry
+  let _ : (MonoidHom.ker ρ).Normal := by infer_instance
+  let _ : Representation.IsTrivial (ρ.comp (MonoidHom.ker ρ).subtype) := by
+    constructor
+    intro g
+    change ρ (g : Γ) = LinearMap.id
+    rw [MonoidHom.mem_ker.mpr g.property]
+    rfl
+  refine ⟨Representation.ofQuotient ρ (MonoidHom.ker ρ), ?_⟩
+  intro γ
+  ext v
+  exact (Representation.ofQuotient_coe_apply ρ (MonoidHom.ker ρ) γ v).symm
 
 theorem chapter11_finite_image_representation_is_computed_in_finite_quotient
     {Γ k V : Type*} [Group Γ] [Field k]
@@ -697,7 +746,15 @@ theorem chapter11_finite_image_representation_is_computed_in_finite_quotient
           ρ.toRepresentation γ =
             ρq (QuotientGroup.mk' (MonoidHom.ker ρ.toRepresentation) γ)) ∧
           (Set.range ρq).Finite := by
-  sorry
+  have hfinite := chapter11_finite_image_quotient_is_finite ρ
+  rcases chapter11_finite_image_factors_through_kernel_quotient ρ.toRepresentation with
+    ⟨ρq, hρq⟩
+  refine ⟨hfinite, ρq, hρq, ?_⟩
+  apply ρ.finite_image.subset
+  rintro x ⟨q, rfl⟩
+  obtain ⟨γ, rfl⟩ :=
+    QuotientGroup.mk'_surjective (MonoidHom.ker ρ.toRepresentation) q
+  exact ⟨γ, hρq γ⟩
 
 /-- A nontrivial upper break in a finite abelian quotient admits a separating character. -/
 theorem chapter11_exists_character_of_upper_break
