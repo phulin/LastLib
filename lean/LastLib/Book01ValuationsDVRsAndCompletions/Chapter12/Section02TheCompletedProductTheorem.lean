@@ -232,6 +232,32 @@ theorem completed_branch_factors_are_complete_DVR_and_finite_free
     chapterResidueDegree (AdicCompletion m A) (branchCompletion B (P i))
         (IsLocalRing.maximalIdeal (branchCompletion B (P i))) =
       chapterResidueDegree A B (P i) := by
+  let hNoeth : IsNoetherianRing B := IsNoetherianRing.of_finite A B
+  let hDedekind : IsDedekindDomain B := by
+    letI : IsNoetherianRing B := hNoeth
+    exact (isDedekindDomain_iff (A := B) (FractionRing B)).2
+      ⟨inferInstance, inferInstance, Ring.DimensionLEOne.of_isIntegral A B,
+        (isIntegrallyClosed_iff (FractionRing B)).1 inferInstance⟩
+  intro i
+  letI : IsDedekindDomain B := hDedekind
+  letI : Module.Free A B := hfree
+  have hmapinj : Function.Injective (algebraMap A B) := by
+    intro a b hab
+    have hs : a • (1 : B) = b • (1 : B) := by
+      simpa only [Algebra.smul_def, mul_one] using hab
+    exact smul_left_injective A (M := B) one_ne_zero hs
+  have hP0 : P i ≠ (⊥ : Ideal B) := by
+    intro hzero
+    have hcomap : (P i).comap (algebraMap A B) = m := (hP i).1.symm
+    rw [hzero, Ideal.comap_bot_of_injective _ hmapinj] at hcomap
+    have hm0 : m ≠ (⊥ : Ideal A) := by
+      rw [IsLocalRing.eq_maximalIdeal (inferInstance : m.IsMaximal)]
+      exact IsDiscreteValuationRing.not_a_field A
+    exact hm0 hcomap.symm
+  letI : IsDiscreteValuationRing (branchLocalization B (P i)) :=
+    by
+      exact IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain B hP0
+        (Localization.AtPrime (P i))
   sorry
 
 /-- The fraction-field decomposition after inverting the base uniformizer.
