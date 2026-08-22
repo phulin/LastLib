@@ -107,7 +107,27 @@ theorem chapter04_principalParts_map_injective
 theorem chapter04_principalParts_map_surjective
     (K : Type*) [Field K] [NumberField K] :
     Function.Surjective (chapter04PrincipalPartsMap K) := by
-  sorry
+  intro y
+  obtain ⟨x, rfl⟩ := QuotientAddGroup.mk'_surjective
+    (Chapter04FiniteIntegralAdeleAddSubgroup K) y
+  obtain ⟨a, ha⟩ :=
+    LastLib.Book04AdelesAndIdeles.Chapter01.chapter01_principal_parts_approximation K x
+  refine ⟨QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K) a, ?_⟩
+  rw [chapter04PrincipalPartsMap_apply]
+  change (↑(chapter04GlobalToFiniteAdeleAdditiveMap K a) :
+      Chapter04FinitePrincipalPartsQuotient K) =
+    QuotientAddGroup.mk' (Chapter04FiniteIntegralAdeleAddSubgroup K) x
+  apply (QuotientAddGroup.eq_iff_sub_mem).2
+  apply (chapter04_finiteIntegralAdele_mem_iff_all_coordinates_integral K _).2
+  intro v
+  change algebraMap K (v.adicCompletion K) a - x v ∈
+    v.adicCompletionIntegers K
+  have hneg := (v.adicCompletionIntegers K).neg_mem
+    (x v - (a : v.adicCompletion K)) (ha v)
+  have hcoe : (a : v.adicCompletion K) = algebraMap K (v.adicCompletion K) a := by
+    simp [IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion]
+  rw [hcoe] at hneg
+  simpa [sub_eq_add_neg, add_comm] using hneg
 
 noncomputable def chapter04PrincipalPartsEquiv
     (K : Type*) [Field K] [NumberField K] :
@@ -131,17 +151,81 @@ def chapter04GlobalPrincipalPartsQuotientIsTorsion
 theorem chapter04_global_principalParts_quotient_is_torsion
     (K : Type*) [Field K] [NumberField K] :
     chapter04GlobalPrincipalPartsQuotientIsTorsion K := by
-  sorry
+  intro x
+  obtain ⟨a, rfl⟩ := QuotientAddGroup.mk'_surjective
+    (Chapter04RingOfIntegersAddSubgroup K) x
+  obtain ⟨b, hb⟩ := IsLocalization.exists_integer_multiple (nonZeroDivisors (𝓞 K)) a
+  rcases hb with ⟨d, hd⟩
+  let I : Ideal (𝓞 K) := Ideal.span ({(b : 𝓞 K)} : Set (𝓞 K))
+  have hI : I ≠ ⊥ := by
+    intro h
+    have hmem : (b : 𝓞 K) ∈ (⊥ : Ideal (𝓞 K)) := by
+      rw [← h]
+      exact Ideal.subset_span (by simp)
+    simpa [mem_nonZeroDivisors_iff_ne_zero.mp b.property] using hmem
+  let n : ℕ := Ideal.absNorm (Ideal.under ℤ I)
+  have hn : n ≠ 0 := by
+    have hdiv : n ∣ Ideal.absNorm I := by
+      exact Int.absNorm_under_dvd_absNorm I
+    have hnorm : Ideal.absNorm I ≠ 0 :=
+      Ideal.absNorm_eq_zero_iff.not.mpr hI
+    intro hn
+    have hzero : (0 : ℕ) ∣ Ideal.absNorm I := by
+      simpa [n, hn] using hdiv
+    exact hnorm (by simpa using hzero)
+  have hnmem : (n : 𝓞 K) ∈ I := by
+    exact Int.absNorm_under_mem I
+  change (n : 𝓞 K) ∈ Ideal.span ({(b : 𝓞 K)} : Set (𝓞 K)) at hnmem
+  rcases Ideal.mem_span_singleton.mp hnmem with ⟨c, hc⟩
+  refine ⟨n, hn, ?_⟩
+  change QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K) (n • a) = 0
+  apply (QuotientAddGroup.eq_iff_sub_mem).2
+  simp only [sub_zero]
+  change n • a ∈ (chapter04RingOfIntegersEmbedding K).range
+  rw [nsmul_eq_mul]
+  refine ⟨c * d, ?_⟩
+  change algebraMap (𝓞 K) K c * algebraMap (𝓞 K) K d = (n : K) * a
+  have hcn : (n : K) = ((b : 𝓞 K) : K) * (c : K) := by
+    simpa using congrArg (algebraMap (𝓞 K) K) hc
+  rw [hd, hcn]
+  simp [Algebra.smul_def, mul_assoc, mul_comm, mul_left_comm]
 
 theorem chapter04_global_principalParts_quotient_is_not_additively_free
     (K : Type*) [Field K] [NumberField K] :
     ¬ IsAddTorsionFree (Chapter04GlobalPrincipalPartsQuotient K) := by
-  sorry
+  have hH : Chapter04RingOfIntegersAddSubgroup K ≠ ⊤ := by
+    intro h
+    have hsurj : Function.Surjective (algebraMap (𝓞 K) K) := by
+      intro x
+      have hx : x ∈ Chapter04RingOfIntegersAddSubgroup K := by
+        rw [h]
+        trivial
+      change x ∈ (chapter04RingOfIntegersEmbedding K).range at hx
+      exact hx
+    exact RingOfIntegers.not_isField K
+      ((IsFractionRing.surjective_iff_isField (R := 𝓞 K) (K := K)).mp hsurj)
+  have hnot : ¬ ∀ x : K, x ∈ Chapter04RingOfIntegersAddSubgroup K := by
+    intro hall
+    apply hH
+    exact top_unique (fun x _ => hall x)
+  obtain ⟨a, ha⟩ := not_forall.mp hnot
+  have hmk : QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K) a ≠ 0 := by
+    intro hzero
+    have hmem : a - 0 ∈ Chapter04RingOfIntegersAddSubgroup K :=
+      (QuotientAddGroup.eq_iff_sub_mem).mp hzero
+    exact ha (by simpa using hmem)
+  have hnontriv : Nontrivial (Chapter04GlobalPrincipalPartsQuotient K) :=
+    ⟨⟨QuotientAddGroup.mk' (Chapter04RingOfIntegersAddSubgroup K) a, 0, hmk⟩⟩
+  apply @not_isAddTorsionFree_of_isAddTorsion _ inferInstance hnontriv
+  intro x
+  obtain ⟨n, hn, hnx⟩ := chapter04_global_principalParts_quotient_is_torsion K x
+  exact isOfFinAddOrder_iff_nsmul_eq_zero.mpr ⟨n, Nat.pos_of_ne_zero hn, hnx⟩
 
 theorem chapter04_finitePrincipalPartsQuotient_is_discrete
     (K : Type*) [Field K] [NumberField K] :
     DiscreteTopology (Chapter04FinitePrincipalPartsQuotient K) := by
-  sorry
+  exact QuotientAddGroup.discreteTopology
+    (chapter04_finiteIntegralAdele_is_compact_open K).2
 
 abbrev chapter04PrincipalPartsTransportedDiscreteTopology
     (K : Type*) [Field K] [NumberField K] :
