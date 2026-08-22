@@ -90,7 +90,8 @@ theorem chapter13_artin_schreier_line_equality_iff
         chapter13ArtinSchreierClass K p v ↔
       ∃ x : K, u - v = x ^ p - x := by
     change (u : Chapter13ArtinSchreierQuotient K p) = v ↔ _
-    rw [QuotientAddGroup.eq_iff_sub_mem, AddMonoidHom.mem_range]
+    rw [QuotientAddGroup.eq_iff_sub_mem]
+    change (∃ x : K, chapter13ArtinSchreierMap K p x = u - v) ↔ _
     constructor
     · rintro ⟨x, hx⟩
       exact ⟨x, by simpa [chapter13ArtinSchreierMap] using hx.symm⟩
@@ -142,7 +143,7 @@ theorem chapter13_artin_schreier_line_equality_iff
       have hba : chapter13ArtinSchreierClass K p b =
           chapter13ArtinSchreierClass K p a := hb0.trans ha.symm
       obtain ⟨y, hy⟩ := (hclass b a).1 hba
-      exact ⟨1, one_ne_zero, y, hy⟩
+      exact ⟨1, one_ne_zero, y, by simpa using hy⟩
     · have hb_mem : chapter13ArtinSchreierClass K p b ∈ line b := by
         refine ⟨1, ?_⟩
         simp
@@ -525,6 +526,251 @@ theorem chapter13_artin_schreier_isomorphic_data_give_equal_classes
 
 /-! The valuation calculations are stated for an arbitrary normalized
 additive valuation, making the pole-order obstruction reusable. -/
+private theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation_early
+    (k : Type*) [Field k]
+    {p m n : ℕ} [Fact p.Prime] [CharP k p]
+    (hm : 0 < m) (hn : 0 < n)
+    (hmp : ¬p ∣ m) (hnp : ¬p ∣ n)
+    (Dm : Chapter13ArtinSchreierExtensionData k p m
+      (chapter13ArtinSchreierRightHandSide k m))
+    (Dn : Chapter13ArtinSchreierExtensionData k p n
+      (chapter13ArtinSchreierRightHandSide k n))
+    (hiso :
+      letI := Dm.carrierField
+      letI := Dn.carrierField
+      letI := Dm.carrierAlgebra
+      letI := Dn.carrierAlgebra
+      Nonempty (Dm.carrier ≃ₐ[LaurentSeries k] Dn.carrier)) :
+    chapter13ArtinSchreierEquivalent (LaurentSeries k) p
+      (chapter13ArtinSchreierRightHandSide k m)
+      (chapter13ArtinSchreierRightHandSide k n) := by
+  letI : Field Dm.carrier := Dm.carrierField
+  letI : Field Dn.carrier := Dn.carrierField
+  letI : Algebra (LaurentSeries k) Dm.carrier := Dm.carrierAlgebra
+  letI : Algebra (LaurentSeries k) Dn.carrier := Dn.carrierAlgebra
+  let _ : FiniteDimensional (LaurentSeries k) Dn.carrier := Dn.carrierFinite
+  let _ : IsGalois (LaurentSeries k) Dn.carrier := Dn.galois
+  let _ : IsCyclic (Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) := Dn.cyclic
+  let _ : CharP Dn.carrier p :=
+    charP_of_injective_algebraMap (algebraMap (LaurentSeries k) Dn.carrier).injective p
+  let _ : Algebra (ZMod p) (LaurentSeries k) := ZMod.algebra _ _
+  letI : Algebra (ZMod p) Dn.carrier := ZMod.algebra _ _
+  rcases hiso with ⟨e⟩
+  have hroot_m : (e Dm.root) ^ p - e Dm.root =
+      algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k m) := by
+    have h := Dm.root_equation
+    have h' : Dm.root ^ p - Dm.root =
+        algebraMap (LaurentSeries k) Dm.carrier
+          (chapter13ArtinSchreierRightHandSide k m) := by
+      apply sub_eq_zero.mp
+      simpa [Polynomial.aeval_def] using h
+    calc
+      (e Dm.root) ^ p - e Dm.root =
+          e (Dm.root ^ p - Dm.root) := by simp
+      _ = e (algebraMap (LaurentSeries k) Dm.carrier
+          (chapter13ArtinSchreierRightHandSide k m)) := by rw [h']
+      _ = algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k m) := by
+        rw [e.commutes]
+  have hroot_n : Dn.root ^ p - Dn.root =
+      algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k n) := by
+    apply sub_eq_zero.mp
+    simpa [Polynomial.aeval_def] using Dn.root_equation
+  have hcoeff (y : Dn.carrier) (hy : y ^ p - y = 0) :
+      ∃ c : ZMod p, algebraMap (ZMod p) Dn.carrier c = y := by
+    have hy' : y ^ p = y := sub_eq_zero.mp hy
+    have hybot : y ∈ (⊥ : Subfield Dn.carrier) :=
+      (Subfield.mem_bot_iff_pow_eq_self Dn.carrier p).2 hy'
+    rw [Subfield.bot_eq_of_zMod_algebra p] at hybot
+    exact hybot
+  obtain ⟨σ, hσ⟩ :=
+    IsCyclic.exists_generator (α := Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier)
+  have hcard : Nat.card (Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) = p := by
+    rw [IsGalois.card_aut_eq_finrank]
+    exact Dn.degree
+  have hσne : σ ≠ (1 : Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) := by
+    intro hσ1
+    have hcardne : Nat.card (Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) ≠ 1 := by
+      rw [hcard]
+      exact (Fact.out : Nat.Prime p).ne_one
+    apply hcardne
+    apply Nat.card_eq_one_iff_exists.mpr
+    refine ⟨1, ?_⟩
+    intro f
+    rcases Subgroup.mem_zpowers_iff.mp (hσ f) with ⟨z, hz⟩
+    rw [← hz, hσ1]
+    simp
+  have h_eq_one_of_fix (r : Dn.carrier)
+      (hr : Algebra.adjoin (LaurentSeries k) ({r} : Set Dn.carrier) = ⊤)
+      (hfix : σ r = r) : σ = 1 := by
+    have hhom : σ.toAlgHom =
+        (1 : Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier).toAlgHom := by
+      apply AlgHom.ext_of_adjoin_eq_top hr
+      intro y hy
+      rw [Set.mem_singleton_iff.mp hy]
+      simpa using hfix
+    apply AlgEquiv.ext
+    intro y
+    exact congrArg (fun f : Dn.carrier →ₐ[LaurentSeries k] Dn.carrier => f y) hhom
+  have hdiff_m : (σ (e Dm.root) - e Dm.root) ^ p -
+      (σ (e Dm.root) - e Dm.root) = 0 := by
+    have hσroot : (σ (e Dm.root)) ^ p - σ (e Dm.root) =
+        algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k m) := by
+      calc
+        (σ (e Dm.root)) ^ p - σ (e Dm.root) =
+            σ ((e Dm.root) ^ p - e Dm.root) := by simp
+        _ = σ (algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k m)) := by rw [hroot_m]
+        _ = algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k m) := by rw [σ.commutes]
+    calc
+      (σ (e Dm.root) - e Dm.root) ^ p -
+          (σ (e Dm.root) - e Dm.root) =
+          ((σ (e Dm.root)) ^ p - σ (e Dm.root)) -
+            ((e Dm.root) ^ p - e Dm.root) := by
+              rw [sub_pow_char]
+              ring
+      _ = 0 := by rw [hσroot, hroot_m]; ring
+  have hdiff_n : (σ Dn.root - Dn.root) ^ p -
+      (σ Dn.root - Dn.root) = 0 := by
+    have hσroot : (σ Dn.root) ^ p - σ Dn.root =
+        algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k n) := by
+      calc
+        (σ Dn.root) ^ p - σ Dn.root =
+            σ (Dn.root ^ p - Dn.root) := by simp
+        _ = σ (algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k n)) := by rw [hroot_n]
+        _ = algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k n) := by rw [σ.commutes]
+    calc
+      (σ Dn.root - Dn.root) ^ p - (σ Dn.root - Dn.root) =
+          ((σ Dn.root) ^ p - σ Dn.root) -
+            (Dn.root ^ p - Dn.root) := by
+              rw [sub_pow_char]
+              ring
+      _ = 0 := by rw [hσroot, hroot_n]; ring
+  obtain ⟨cm, hcm⟩ := hcoeff _ hdiff_m
+  obtain ⟨cn, hcn⟩ := hcoeff _ hdiff_n
+  have hcm_ne : cm ≠ 0 := by
+    intro hcm0
+    have hfix : σ (e Dm.root) = e Dm.root := by
+      apply sub_eq_zero.mp
+      rw [← hcm, hcm0]
+      simp
+    exact hσne (h_eq_one_of_fix (e Dm.root) (by
+      have hmap :
+          (Algebra.adjoin (LaurentSeries k) ({Dm.root} : Set Dm.carrier)).map
+              e.toAlgHom =
+            Algebra.adjoin (LaurentSeries k) ({e Dm.root} : Set Dn.carrier) := by
+        rw [AlgHom.map_adjoin]
+        simp
+      rw [← hmap, Dm.generates, Algebra.map_top]
+      exact (AlgHom.range_eq_top _).2 e.surjective) hfix)
+  have hcn_ne : cn ≠ 0 := by
+    intro hcn0
+    have hfix : σ Dn.root = Dn.root := by
+      apply sub_eq_zero.mp
+      rw [← hcn, hcn0]
+      simp
+    exact hσne (h_eq_one_of_fix Dn.root Dn.generates hfix)
+  let c : ZMod p := cn * cm⁻¹
+  have hc_ne : c ≠ 0 := by
+    dsimp [c]
+    exact mul_ne_zero hcn_ne (inv_ne_zero hcm_ne)
+  let z : Dn.carrier := Dn.root -
+      (algebraMap (ZMod p) Dn.carrier c) * e Dm.root
+  have hscale : (algebraMap (ZMod p) Dn.carrier c) *
+      (σ (e Dm.root) - e Dm.root) = σ Dn.root - Dn.root := by
+    have hdiff_ne : σ (e Dm.root) - e Dm.root ≠ 0 := by
+      rw [← hcm]
+      exact (map_ne_zero_iff _ (algebraMap (ZMod p) Dn.carrier).injective).mpr hcm_ne
+    simp [c, hcn, hcm, hdiff_ne, mul_assoc]
+  have hσc : σ (algebraMap (ZMod p) Dn.carrier c) =
+      algebraMap (ZMod p) Dn.carrier c := by
+    obtain ⟨z, hz⟩ := ZMod.intCast_surjective c
+    rw [← hz]
+    have hzmap : algebraMap (ZMod p) Dn.carrier (z : ZMod p) =
+        (z : Dn.carrier) := by
+      change ZMod.cast (z : ZMod p) = (z : Dn.carrier)
+      exact ZMod.cast_intCast' z
+    rw [hzmap]
+    simp
+  have hzfixed : σ z = z := by
+    dsimp [z]
+    rw [map_sub, map_mul, hσc]
+    calc
+      σ Dn.root - algebraMap (ZMod p) Dn.carrier c * σ (e Dm.root) =
+          Dn.root - algebraMap (ZMod p) Dn.carrier c * e Dm.root +
+            ((σ Dn.root - Dn.root) -
+              algebraMap (ZMod p) Dn.carrier c *
+                (σ (e Dm.root) - e Dm.root)) := by ring
+      _ = Dn.root - algebraMap (ZMod p) Dn.carrier c * e Dm.root := by
+        rw [hscale]
+        ring
+  have hzfixed_all : ∀ f : Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier,
+      f z = z := by
+    intro f
+    have hf : f ∈ Subgroup.zpowers σ := hσ f
+    have hs : σ • z = z := by simpa [AlgEquiv.smul_def] using hzfixed
+    have hf' := smul_eq_self_of_mem_zpowers hf hs
+    simpa [AlgEquiv.smul_def] using hf'
+  obtain ⟨x, hx⟩ :=
+    (IsGalois.mem_range_algebraMap_iff_fixed z).2 hzfixed_all
+  have hmap_c : algebraMap (LaurentSeries k) Dn.carrier
+      (ZMod.cast c : LaurentSeries k) = algebraMap (ZMod p) Dn.carrier c := by
+    obtain ⟨z, hz⟩ := ZMod.intCast_surjective c
+    rw [← hz]
+    have hzmapK : (ZMod.cast (z : ZMod p) : LaurentSeries k) =
+        (z : LaurentSeries k) := ZMod.cast_intCast' z
+    have hzmapE : algebraMap (ZMod p) Dn.carrier (z : ZMod p) =
+        (z : Dn.carrier) := by
+      change ZMod.cast (z : ZMod p) = (z : Dn.carrier)
+      exact ZMod.cast_intCast' z
+    rw [hzmapK, hzmapE]
+    simp
+  have hzpow : z ^ p - z =
+      algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k n -
+          (ZMod.cast c : LaurentSeries k) *
+            chapter13ArtinSchreierRightHandSide k m) := by
+    have hc_pow : (algebraMap (ZMod p) Dn.carrier c) ^ p =
+        algebraMap (ZMod p) Dn.carrier c := by
+      rw [← map_pow, ZMod.pow_card]
+    calc
+      z ^ p - z =
+          (Dn.root ^ p - Dn.root) -
+            (algebraMap (ZMod p) Dn.carrier c) *
+              ((e Dm.root) ^ p - e Dm.root) := by
+                dsimp [z]
+                rw [sub_pow_char, mul_pow, hc_pow]
+                ring
+      _ = algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k n) -
+          (algebraMap (ZMod p) Dn.carrier c) *
+            algebraMap (LaurentSeries k) Dn.carrier
+              (chapter13ArtinSchreierRightHandSide k m) := by
+                rw [hroot_n, hroot_m]
+      _ = algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k n -
+            (ZMod.cast c : LaurentSeries k) *
+              chapter13ArtinSchreierRightHandSide k m) := by
+                simp only [map_sub, map_mul]
+                rw [hmap_c]
+  have hxeq : algebraMap (LaurentSeries k) Dn.carrier (x ^ p - x) =
+      z ^ p - z := by
+    rw [map_sub, map_pow, hx]
+  refine ⟨c, hc_ne, x, ?_⟩
+  apply (algebraMap (LaurentSeries k) Dn.carrier).injective
+  calc
+    algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k n -
+          (ZMod.cast c : LaurentSeries k) *
+            chapter13ArtinSchreierRightHandSide k m) = z ^ p - z := hzpow.symm
+    _ = algebraMap (LaurentSeries k) Dn.carrier (x ^ p - x) := hxeq.symm
 
 theorem chapter13_artin_schreier_pole_order_multiple_of_p
     {K Γ : Type*} [Field K] [LinearOrderedAddCommGroupWithTop Γ]
@@ -555,7 +801,7 @@ theorem chapter13_artin_schreier_no_pole_from_integral_input
     0 ≤ v (x ^ p - x) := by
   have hpow : 0 ≤ v (x ^ p) := by
     rw [AddValuation.map_pow]
-    exact nsmul_nonneg hx
+    exact nsmul_nonneg hx p
   have hmin := v.map_sub (x ^ p) x
   have hpow' : 0 ≤ v (x ^ p) := hpow
   exact le_trans (le_min hpow' hx) hmin
@@ -648,8 +894,8 @@ theorem chapter13_artin_schreier_extension_exists
     have h := monic_X_pow_add (p := (-(X + C a) : K[X])) (n := p) hdeg
     convert h using 1
     ring
-  letI : Fact (Irreducible f) := ⟨hf⟩
-  letI : FiniteDimensional K (AdjoinRoot f) := hmonic.finite_adjoinRoot
+  let _ : Fact (Irreducible f) := ⟨hf⟩
+  let _ : FiniteDimensional K (AdjoinRoot f) := hmonic.finite_adjoinRoot
   have hnat : f.natDegree = p := by
     dsimp [f]
     have hdeg : degree (-(X + C a) : K[X]) < p := by
@@ -664,11 +910,14 @@ theorem chapter13_artin_schreier_extension_exists
     simp [AdjoinRoot.aeval_eq]
   have hEq : (AdjoinRoot.root f) ^ p - AdjoinRoot.root f =
       algebraMap K (AdjoinRoot f) a := by
+    apply sub_eq_zero.mp
     simpa [f, Polynomial.aeval_def] using hroot
   have hdegree : Module.finrank K (AdjoinRoot f) = p := by
     rw [PowerBasis.finrank (AdjoinRoot.powerBasis' hmonic)]
     exact hnat
-  let : Algebra (ZMod p) (AdjoinRoot f) := ZMod.algebra _ _
+  letI : CharP (AdjoinRoot f) p :=
+    charP_of_injective_algebraMap (RingHom.injective (algebraMap K (AdjoinRoot f))) p
+  letI : Algebra (ZMod p) (AdjoinRoot f) := ZMod.algebra _ _
   have hsplit0 : (X ^ p - X : (AdjoinRoot f)[X]).Splits := by
     have hsplitZ :
         ((X ^ p - X : (ZMod p)[X]).map
@@ -681,7 +930,7 @@ theorem chapter13_artin_schreier_extension_exists
         (X - C (AdjoinRoot.root f)) := by
     dsimp [f]
     simp [Polynomial.comp, sub_pow_char]
-    rw [← hEq, map_sub, ← C.map_pow]
+    rw [← AdjoinRoot.algebraMap_eq, ← hEq, map_sub, ← C.map_pow]
     ring
   have hsplit : (f.map (algebraMap K (AdjoinRoot f))).Splits := by
     rw [hEqPoly]
@@ -691,12 +940,14 @@ theorem chapter13_artin_schreier_extension_exists
     exact hroot
   have hadjoin : Algebra.adjoin K (f.rootSet (AdjoinRoot f)) = ⊤ := by
     apply top_unique
-    have hmono := Algebra.adjoin_mono K ({AdjoinRoot.root f} : Set (AdjoinRoot f))
-      (f.rootSet (AdjoinRoot f)) (Set.singleton_subset_iff.mpr hroot_mem)
+    have hmono : Algebra.adjoin K ({AdjoinRoot.root f} : Set (AdjoinRoot f)) ≤
+        Algebra.adjoin K (f.rootSet (AdjoinRoot f)) :=
+      Algebra.adjoin_mono (R := K) (A := AdjoinRoot f)
+        (Set.singleton_subset_iff.mpr hroot_mem)
     rw [AdjoinRoot.adjoinRoot_eq_top] at hmono
     exact hmono
-  have hsplitfield : f.IsSplittingField K (AdjoinRoot f) :=
-    (isSplittingField_iff_intermediateField).2 ⟨hsplit, hadjoin⟩
+  let hsplitfield : f.IsSplittingField K (AdjoinRoot f) :=
+    { splits' := hsplit, adjoin_rootSet' := hadjoin }
   let : f.IsSplittingField K (AdjoinRoot f) := hsplitfield
   have hsep : f.Separable := by
     simpa [f] using chapter13_artin_schreier_polynomial_is_separable K p a
@@ -724,9 +975,9 @@ theorem chapter13_artin_schreier_extension_data_is_cyclic_degree_p
     (k : Type*) [Field k] {p m : ℕ} [Fact p.Prime] [CharP k p]
     (a : LaurentSeries k)
     (D : Chapter13ArtinSchreierExtensionData k p m a) :
-    letI : Field D.carrier := D.carrierField
-    letI : Algebra (LaurentSeries k) D.carrier := D.carrierAlgebra
-    letI : FiniteDimensional (LaurentSeries k) D.carrier := D.carrierFinite
+    let _ : Field D.carrier := D.carrierField
+    let _ : Algebra (LaurentSeries k) D.carrier := D.carrierAlgebra
+    let _ : FiniteDimensional (LaurentSeries k) D.carrier := D.carrierFinite
     Module.finrank (LaurentSeries k) D.carrier = p ∧
       IsCyclic (D.carrier ≃ₐ[LaurentSeries k] D.carrier) := by
   exact ⟨D.degree, D.cyclic⟩
@@ -783,7 +1034,7 @@ theorem chapter13_laurent_series_has_wild_artin_schreier_family
     rw [HahnSeries.ofPowerSeries_X, HahnSeries.orderTop_single one_ne_zero]
     norm_num
   let ext : ∀ m : Chapter13PositiveNonPIndex p,
-      Chapter13ArtinSchreierExtensionData k m.1
+      Chapter13ArtinSchreierExtensionData k p m.1
         (chapter13ArtinSchreierRightHandSide k m.1) := fun m =>
     Classical.choice (chapter13_artin_schreier_extension_exists k v hv
       m.2.1 m.2.2)
@@ -791,7 +1042,6 @@ theorem chapter13_laurent_series_has_wild_artin_schreier_family
     extension := ext
     pairwise_nonisomorphic := ?_ }⟩
   intro m n hmn
-  dsimp
   intro hiso
   have hcast_val (c : ZMod p) (hc : c ≠ 0) :
       v (ZMod.cast c : LaurentSeries k) = 0 := by
@@ -850,7 +1100,7 @@ theorem chapter13_laurent_series_has_wild_artin_schreier_family
           _ = (p : ℤ) * (-zq) := by ring
       have hdvd : p ∣ q := Int.natCast_dvd_natCast.mp hdvdZ
       exact hqp hdvd
-  rcases chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation
+  rcases chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation_early
       k m.2.1 n.2.1 m.2.2 n.2.2 (ext m) (ext n) hiso with
     ⟨c, hc, x, hx⟩
   have hval_m := chapter13_laurent_series_rhs_has_pole_order
@@ -924,7 +1174,7 @@ private theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_rela
   let _ : IsCyclic (Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) := Dn.cyclic
   let _ : CharP Dn.carrier p :=
     charP_of_injective_algebraMap (algebraMap (LaurentSeries k) Dn.carrier).injective p
-  letI : Algebra (ZMod p) (LaurentSeries k) := ZMod.algebra _ _
+  let _ : Algebra (ZMod p) (LaurentSeries k) := ZMod.algebra _ _
   letI : Algebra (ZMod p) Dn.carrier := ZMod.algebra _ _
   rcases hiso with ⟨e⟩
   have hroot_m : (e Dm.root) ^ p - e Dm.root =
@@ -934,6 +1184,7 @@ private theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_rela
     have h' : Dm.root ^ p - Dm.root =
         algebraMap (LaurentSeries k) Dm.carrier
           (chapter13ArtinSchreierRightHandSide k m) := by
+      apply sub_eq_zero.mp
       simpa [Polynomial.aeval_def] using h
     calc
       (e Dm.root) ^ p - e Dm.root =
@@ -946,6 +1197,7 @@ private theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_rela
   have hroot_n : Dn.root ^ p - Dn.root =
       algebraMap (LaurentSeries k) Dn.carrier
         (chapter13ArtinSchreierRightHandSide k n) := by
+    apply sub_eq_zero.mp
     simpa [Polynomial.aeval_def] using Dn.root_equation
   have hcoeff (y : Dn.carrier) (hy : y ^ p - y = 0) :
       ∃ c : ZMod p, algebraMap (ZMod p) Dn.carrier c = y := by
@@ -1132,6 +1384,7 @@ private theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_rela
   have hxeq : algebraMap (LaurentSeries k) Dn.carrier (x ^ p - x) =
       z ^ p - z := by
     rw [map_sub, map_pow, hx]
+  refine ⟨c, hc_ne, x, ?_⟩
   apply (algebraMap (LaurentSeries k) Dn.carrier).injective
   calc
     algebraMap (LaurentSeries k) Dn.carrier
@@ -1202,6 +1455,7 @@ theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation
     have h' : Dm.root ^ p - Dm.root =
         algebraMap (LaurentSeries k) Dm.carrier
           (chapter13ArtinSchreierRightHandSide k m) := by
+      apply sub_eq_zero.mp
       simpa [Polynomial.aeval_def] using h
     calc
       (e Dm.root) ^ p - e Dm.root =
@@ -1214,6 +1468,7 @@ theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation
   have hroot_n : Dn.root ^ p - Dn.root =
       algebraMap (LaurentSeries k) Dn.carrier
         (chapter13ArtinSchreierRightHandSide k n) := by
+    apply sub_eq_zero.mp
     simpa [Polynomial.aeval_def] using Dn.root_equation
   have hcoeff (y : Dn.carrier) (hy : y ^ p - y = 0) :
       ∃ c : ZMod p, algebraMap (ZMod p) Dn.carrier c = y := by
@@ -1400,6 +1655,7 @@ theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation
   have hxeq : algebraMap (LaurentSeries k) Dn.carrier (x ^ p - x) =
       z ^ p - z := by
     rw [map_sub, map_pow, hx]
+  refine ⟨c, hc_ne, x, ?_⟩
   apply (algebraMap (LaurentSeries k) Dn.carrier).injective
   calc
     algebraMap (LaurentSeries k) Dn.carrier
@@ -1426,19 +1682,216 @@ theorem chapter13_artin_schreier_isomorphism_iff_same_line
           (chapter13ArtinSchreierRightHandSide k m) =
         chapter13ArtinSchreierLine (LaurentSeries k) p
           (chapter13ArtinSchreierRightHandSide k n) := by
-  sorry
+  constructor
+  · intro hiso
+    exact chapter13_artin_schreier_same_field_implies_same_line
+      k hm hn hmp hnp Dm Dn hiso
+  · intro hline
+    let K := LaurentSeries k
+    let _ : Field Dm.carrier := Dm.carrierField
+    let _ : Field Dn.carrier := Dn.carrierField
+    let _ : Algebra K Dm.carrier := Dm.carrierAlgebra
+    let _ : Algebra K Dn.carrier := Dn.carrierAlgebra
+    let _ : FiniteDimensional K Dm.carrier := Dm.carrierFinite
+    let _ : FiniteDimensional K Dn.carrier := Dn.carrierFinite
+    let _ : CharP Dm.carrier p :=
+      charP_of_injective_algebraMap (algebraMap K Dm.carrier).injective p
+    let _ : CharP Dn.carrier p :=
+      charP_of_injective_algebraMap (algebraMap K Dn.carrier).injective p
+    obtain ⟨c, hc, x, hx⟩ :=
+      (chapter13_artin_schreier_line_equality_iff K p
+        (chapter13ArtinSchreierRightHandSide k m)
+        (chapter13ArtinSchreierRightHandSide k n)).1 hline
+    have hmonic (a : K) :
+        ((X : K[X]) ^ p - X - C a).Monic := by
+      have hdeg : degree (-(X + C a) : K[X]) < p := by
+        rw [degree_neg, degree_X_add_C]
+        exact_mod_cast (Fact.out : Nat.Prime p).one_lt
+      have h := monic_X_pow_add (p := (-(X + C a) : K[X])) (n := p) hdeg
+      convert h using 1
+      ring
+    have hnat (a : K) :
+        ((X : K[X]) ^ p - X - C a).natDegree = p := by
+      have hdeg : degree (-(X + C a) : K[X]) < p := by
+        rw [degree_neg, degree_X_add_C]
+        exact_mod_cast (Fact.out : Nat.Prime p).one_lt
+      have hdeg' : degree (-(X + C a) : K[X]) < (X ^ p : K[X]).degree := by
+        simpa [degree_X_pow] using hdeg
+      rw [show X ^ p - X - C a = X ^ p + -(X + C a) by ring]
+      rw [natDegree_add_eq_left_of_degree_lt hdeg', natDegree_X_pow]
+    have hroot_m : Dm.root ^ p - Dm.root =
+        algebraMap K Dm.carrier
+          (chapter13ArtinSchreierRightHandSide k m) := by
+      apply sub_eq_zero.mp
+      simpa [Polynomial.aeval_def] using Dm.root_equation
+    have hroot_n : Dn.root ^ p - Dn.root =
+        algebraMap K Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k n) := by
+      apply sub_eq_zero.mp
+      simpa [Polynomial.aeval_def] using Dn.root_equation
+    let pm : PowerBasis K Dm.carrier :=
+      PowerBasis.ofAdjoinEqTop (IsIntegral.of_finite K Dm.root) Dm.generates
+    let pn : PowerBasis K Dn.carrier :=
+      PowerBasis.ofAdjoinEqTop (IsIntegral.of_finite K Dn.root) Dn.generates
+    have hdeg_pm : (minpoly K pm.gen).natDegree = p := by
+      rw [pm.natDegree_minpoly, ← PowerBasis.finrank pm]
+      exact Dm.degree
+    have hdeg_pn : (minpoly K pn.gen).natDegree = p := by
+      rw [pn.natDegree_minpoly, ← PowerBasis.finrank pn]
+      exact Dn.degree
+    have hmin_m : minpoly K pm.gen =
+        (X : K[X]) ^ p - X - C (chapter13ArtinSchreierRightHandSide k m) := by
+      rw [PowerBasis.ofAdjoinEqTop_gen]
+      symm
+      apply eq_of_monic_of_dvd_of_natDegree_le (minpoly.monic (IsIntegral.of_finite K Dm.root))
+        (hmonic (chapter13ArtinSchreierRightHandSide k m))
+      · exact minpoly.dvd K Dm.root (by simpa using Dm.root_equation)
+      · rw [hnat]
+        have hrootdeg : (minpoly K Dm.root).natDegree = p := by
+          simpa [pm] using hdeg_pm
+        exact hrootdeg.symm.le
+    have hmin_n : minpoly K pn.gen =
+        (X : K[X]) ^ p - X - C (chapter13ArtinSchreierRightHandSide k n) := by
+      rw [PowerBasis.ofAdjoinEqTop_gen]
+      symm
+      apply eq_of_monic_of_dvd_of_natDegree_le (minpoly.monic (IsIntegral.of_finite K Dn.root))
+        (hmonic (chapter13ArtinSchreierRightHandSide k n))
+      · exact minpoly.dvd K Dn.root (by simpa using Dn.root_equation)
+      · rw [hnat]
+        have hrootdeg : (minpoly K Dn.root).natDegree = p := by
+          simpa [pn] using hdeg_pn
+        exact hrootdeg.symm.le
+    let y : Dm.carrier :=
+      algebraMap K Dm.carrier (ZMod.cast c : K) * Dm.root +
+        algebraMap K Dm.carrier x
+    have hc0 : (ZMod.cast c : K) ≠ 0 := by
+      intro hc0
+      apply hc
+      apply (RingHom.injective (ZMod.castHom (dvd_refl p) K))
+      simpa using hc0
+    have hc_pow : (algebraMap K Dm.carrier (ZMod.cast c : K)) ^ p =
+        algebraMap K Dm.carrier (ZMod.cast c : K) := by
+      have hc_pow_K : (ZMod.cast c : K) ^ p = (ZMod.cast c : K) := by
+        rw [← ZMod.cast_pow', ZMod.pow_card]
+      rw [← map_pow, hc_pow_K]
+    have hy : y ^ p - y =
+        algebraMap K Dm.carrier (chapter13ArtinSchreierRightHandSide k n) := by
+      have hx' : (ZMod.cast c : K) *
+          chapter13ArtinSchreierRightHandSide k m + (x ^ p - x) =
+          chapter13ArtinSchreierRightHandSide k n := by
+        simpa [add_comm] using (sub_eq_iff_eq_add.mp hx).symm
+      calc
+        y ^ p - y =
+            (algebraMap K Dm.carrier (ZMod.cast c : K)) ^ p * Dm.root ^ p +
+              (algebraMap K Dm.carrier x) ^ p -
+                (algebraMap K Dm.carrier (ZMod.cast c : K) * Dm.root +
+                  algebraMap K Dm.carrier x) := by
+                    dsimp [y]
+                    rw [add_pow_char, mul_pow]
+        _ = algebraMap K Dm.carrier (ZMod.cast c : K) *
+              (Dm.root ^ p - Dm.root) +
+            (algebraMap K Dm.carrier (x ^ p - x)) := by
+              rw [hc_pow]
+              simp only [map_pow, map_sub]
+              ring
+        _ = algebraMap K Dm.carrier
+              ((ZMod.cast c : K) *
+                chapter13ArtinSchreierRightHandSide k m + (x ^ p - x)) := by
+              rw [hroot_m]
+              simp only [map_add, map_mul]
+        _ = algebraMap K Dm.carrier
+              (chapter13ArtinSchreierRightHandSide k n) := by rw [hx']
+    have hyroot : aeval y
+        ((X : K[X]) ^ p - X -
+          C (chapter13ArtinSchreierRightHandSide k n)) = 0 := by
+      simp only [Polynomial.aeval_def, eval₂_sub, eval₂_pow, eval₂_X, eval₂_C]
+      exact sub_eq_zero.mpr hy
+    have hygen : Algebra.adjoin K ({y} : Set Dm.carrier) = ⊤ := by
+      apply le_antisymm le_top
+      rw [← Dm.generates]
+      apply Algebra.adjoin_le
+      intro z hz
+      rw [Set.mem_singleton_iff.mp hz]
+      have hroot_expr : Dm.root =
+          (algebraMap K Dm.carrier (ZMod.cast c : K))⁻¹ *
+            (y - algebraMap K Dm.carrier x) := by
+        dsimp [y]
+        have hce : algebraMap K Dm.carrier (ZMod.cast c : K) ≠ 0 :=
+          (map_ne_zero_iff _ (algebraMap K Dm.carrier).injective).mpr hc0
+        calc
+          Dm.root = 1 * Dm.root := by rw [one_mul]
+          _ = (algebraMap K Dm.carrier (ZMod.cast c : K))⁻¹ *
+              algebraMap K Dm.carrier (ZMod.cast c : K) * Dm.root := by
+                rw [inv_mul_cancel₀ hce]
+          _ = (algebraMap K Dm.carrier (ZMod.cast c : K))⁻¹ *
+              (algebraMap K Dm.carrier (ZMod.cast c : K) * Dm.root +
+                algebraMap K Dm.carrier x - algebraMap K Dm.carrier x) := by
+            ring
+      rw [hroot_expr]
+      have hinv_mem :
+          (algebraMap K Dm.carrier (ZMod.cast c : K))⁻¹ ∈
+            Algebra.adjoin K ({y} : Set Dm.carrier) := by
+        rw [← map_inv₀]
+        exact Subalgebra.algebraMap_mem _ _
+      exact (Algebra.adjoin K ({y} : Set Dm.carrier)).mul_mem
+        hinv_mem
+        ((Algebra.adjoin K ({y} : Set Dm.carrier)).sub_mem
+          (Algebra.subset_adjoin (Set.mem_singleton y))
+          (Subalgebra.algebraMap_mem _ _))
+    let py : PowerBasis K Dm.carrier :=
+      PowerBasis.ofAdjoinEqTop (IsIntegral.of_finite K y) hygen
+    have hdeg_py : (minpoly K py.gen).natDegree = p := by
+      rw [py.natDegree_minpoly, ← PowerBasis.finrank py]
+      exact Dm.degree
+    have hmin_y : minpoly K py.gen =
+        (X : K[X]) ^ p - X - C (chapter13ArtinSchreierRightHandSide k n) := by
+      rw [PowerBasis.ofAdjoinEqTop_gen]
+      symm
+      apply eq_of_monic_of_dvd_of_natDegree_le (minpoly.monic (IsIntegral.of_finite K y))
+        (hmonic (chapter13ArtinSchreierRightHandSide k n))
+      · exact minpoly.dvd K y hyroot
+      · rw [hnat]
+        have hrootdeg : (minpoly K y).natDegree = p := by
+          simpa [py] using hdeg_py
+        exact hrootdeg.symm.le
+    have hroot_n_for_y : aeval py.gen (minpoly K pn.gen) = 0 := by
+      rw [hmin_n, PowerBasis.ofAdjoinEqTop_gen]
+      exact hyroot
+    have hroot_y_for_n : aeval pn.gen (minpoly K py.gen) = 0 := by
+      rw [hmin_y, PowerBasis.ofAdjoinEqTop_gen]
+      apply sub_eq_zero.mp
+      simpa [Polynomial.aeval_def] using Dn.root_equation
+    exact ⟨py.equivOfRoot pn hroot_n_for_y hroot_y_for_n⟩
 
 theorem chapter13_artin_schreier_distinct_rhs_has_maximal_pole_order
     (k : Type*) [Field k]
     {p m n : ℕ} [Fact p.Prime] [CharP k p]
-    (hm : 0 < m) (hn : 0 < n) (hmp : ¬p ∣ m) (hnp : ¬p ∣ n)
+    (hm : 0 < m) (hn : 0 < n) (_hmp : ¬p ∣ m) (_hnp : ¬p ∣ n)
     (hmn : m ≠ n)
     (v : AddValuation (LaurentSeries k) (WithTop ℤ))
     (ht : v (chapter13LaurentSeriesUniformizer k) = 1) :
     v (chapter13ArtinSchreierRightHandSide k n -
         (chapter13ArtinSchreierRightHandSide k m)) =
       (- (max m n : ℤ) : WithTop ℤ) := by
-  sorry
+  have hmval : v (chapter13ArtinSchreierRightHandSide k m) =
+      (-(m : ℤ) : WithTop ℤ) :=
+    chapter13_laurent_series_rhs_has_pole_order k v ht hm
+  have hnval : v (chapter13ArtinSchreierRightHandSide k n) =
+      (-(n : ℤ) : WithTop ℤ) :=
+    chapter13_laurent_series_rhs_has_pole_order k v ht hn
+  rcases lt_or_gt_of_ne hmn with hmnlt | hnm
+  · have hlt : v (chapter13ArtinSchreierRightHandSide k n) <
+        v (chapter13ArtinSchreierRightHandSide k m) := by
+      rw [hnval, hmval]
+      exact_mod_cast (neg_lt_neg (show (m : ℤ) < (n : ℤ) by exact_mod_cast hmnlt))
+    rw [v.map_sub_eq_of_lt_left hlt, hnval]
+    rw [max_eq_right (show (m : ℤ) ≤ (n : ℤ) by exact_mod_cast Nat.le_of_lt hmnlt)]
+  · have hlt : v (chapter13ArtinSchreierRightHandSide k m) <
+        v (chapter13ArtinSchreierRightHandSide k n) := by
+      rw [hmval, hnval]
+      exact_mod_cast (neg_lt_neg (show (n : ℤ) < (m : ℤ) by exact_mod_cast hnm))
+    rw [v.map_sub_eq_of_lt_right hlt, hmval]
+    rw [max_eq_left (show (n : ℤ) ≤ (m : ℤ) by exact_mod_cast Nat.le_of_lt hnm)]
 
 theorem chapter13_laurent_series_wild_lines_are_pairwise_distinct
     (k : Type*) [Field k]
@@ -1451,7 +1904,108 @@ theorem chapter13_laurent_series_wild_lines_are_pairwise_distinct
         (chapter13ArtinSchreierRightHandSide k m) ≠
       chapter13ArtinSchreierLine (LaurentSeries k) p
         (chapter13ArtinSchreierRightHandSide k n) := by
-  sorry
+  intro hline
+  let _ : Algebra (ZMod p) (LaurentSeries k) := ZMod.algebra _ _
+  obtain ⟨c, hc, x, hx⟩ :=
+    (chapter13_artin_schreier_line_equality_iff (LaurentSeries k) p
+      (chapter13ArtinSchreierRightHandSide k m)
+      (chapter13ArtinSchreierRightHandSide k n)).1 hline
+  have hc0 : (ZMod.cast c : LaurentSeries k) ≠ 0 := by
+    intro hc0
+    apply hc
+    apply (RingHom.injective (ZMod.castHom (dvd_refl p) (LaurentSeries k)))
+    simpa using hc0
+  have hc_top : v (ZMod.cast c : LaurentSeries k) ≠ (⊤ : WithTop ℤ) :=
+    (AddValuation.ne_top_iff v).2 hc0
+  have hc_pow : (ZMod.cast c : LaurentSeries k) ^ p =
+      (ZMod.cast c : LaurentSeries k) := by
+    rw [← ZMod.cast_pow', ZMod.pow_card]
+  have hcv : p • v (ZMod.cast c : LaurentSeries k) =
+      v (ZMod.cast c : LaurentSeries k) := by
+    rw [← v.map_pow, hc_pow]
+  let q : ℤ := (v (ZMod.cast c : LaurentSeries k)).untop hc_top
+  have hq : (q : WithTop ℤ) = v (ZMod.cast c : LaurentSeries k) := by
+    exact WithTop.coe_untop _ hc_top
+  have hqeq : (p : ℤ) * q = q := by
+    apply WithTop.coe_eq_coe.mp
+    calc
+      (((p : ℤ) * q : ℤ) : WithTop ℤ) =
+          ((p • q : ℤ) : WithTop ℤ) := by simp
+      _ = p • (q : WithTop ℤ) := WithTop.coe_nsmul q p
+      _ = p • v (ZMod.cast c : LaurentSeries k) := by rw [hq]
+      _ = v (ZMod.cast c : LaurentSeries k) := hcv
+      _ = (q : WithTop ℤ) := hq.symm
+  have hqzero : q = 0 := by
+    have hpgt : (1 : ℤ) < (p : ℤ) := by
+      exact_mod_cast (Fact.out : Nat.Prime p).one_lt
+    nlinarith
+  have hcvzero : v (ZMod.cast c : LaurentSeries k) = 0 := by
+    rw [← hq]
+    simp [hqzero]
+  have hmval : v (chapter13ArtinSchreierRightHandSide k m) =
+      (-(m : ℤ) : WithTop ℤ) :=
+    chapter13_laurent_series_rhs_has_pole_order k v ht hm
+  have hnval : v (chapter13ArtinSchreierRightHandSide k n) =
+      (-(n : ℤ) : WithTop ℤ) :=
+    chapter13_laurent_series_rhs_has_pole_order k v ht hn
+  have hmul_val : v ((ZMod.cast c : LaurentSeries k) *
+      chapter13ArtinSchreierRightHandSide k m) =
+      (-(m : ℤ) : WithTop ℤ) := by
+    rw [v.map_mul, hcvzero, zero_add, hmval]
+  have hno (r : ℕ) (hr : 0 < r) (hrp : ¬p ∣ r) (y : LaurentSeries k)
+      (hy : v (y ^ p - y) = (-(r : ℤ) : WithTop ℤ)) : False := by
+    by_cases hy0 : 0 ≤ v y
+    · have hnonneg := chapter13_artin_schreier_no_pole_from_integral_input v y hy0
+      rw [hy] at hnonneg
+      have hrZ : (0 : ℤ) < (r : ℤ) := by exact_mod_cast hr
+      have hneg : (-(r : ℤ) : WithTop ℤ) < 0 := by
+        exact_mod_cast (neg_lt_zero.mpr hrZ)
+      exact (not_le_of_gt hneg) hnonneg
+    · have hyneg : v y < 0 := lt_of_not_ge hy0
+      have hpole := chapter13_artin_schreier_pole_order_multiple_of_p v y hyneg
+      have heq : p • v y = (-(r : ℤ) : WithTop ℤ) := hpole.symm.trans hy
+      have hy_top : v y ≠ (⊤ : WithTop ℤ) := ne_top_of_lt hyneg
+      let z : ℤ := (v y).untop hy_top
+      have hz : (z : WithTop ℤ) = v y := WithTop.coe_untop _ hy_top
+      have heqZ : p • z = -(r : ℤ) := by
+        apply WithTop.coe_eq_coe.mp
+        calc
+          ((p • z : ℤ) : WithTop ℤ) = p • (z : WithTop ℤ) :=
+            (WithTop.coe_nsmul z p).symm
+          _ = p • v y := by rw [hz]
+          _ = (-(r : ℤ) : WithTop ℤ) := heq
+      have hdvdZ : (p : ℤ) ∣ (r : ℤ) := by
+        refine ⟨-z, ?_⟩
+        have heqZ' : (p : ℤ) * z = -(r : ℤ) := by
+          simpa [nsmul_eq_mul] using heqZ
+        calc
+          (r : ℤ) = -(-(r : ℤ)) := by ring
+          _ = -((p : ℤ) * z) := by rw [heqZ']
+          _ = (p : ℤ) * (-z) := by ring
+      exact hrp (Int.natCast_dvd_natCast.mp hdvdZ)
+  rcases lt_or_gt_of_ne hmn with hmnlt | hnm
+  · have hlt : v (chapter13ArtinSchreierRightHandSide k n) <
+        v ((ZMod.cast c : LaurentSeries k) *
+          chapter13ArtinSchreierRightHandSide k m) := by
+      rw [hnval, hmul_val]
+      exact_mod_cast (neg_lt_neg (show (m : ℤ) < (n : ℤ) by exact_mod_cast hmnlt))
+    have hdiff : v (chapter13ArtinSchreierRightHandSide k n -
+        (ZMod.cast c : LaurentSeries k) *
+          chapter13ArtinSchreierRightHandSide k m) =
+        (-(n : ℤ) : WithTop ℤ) := by
+      rw [v.map_sub_eq_of_lt_left hlt, hnval]
+    exact hno n hn hnp x (by rw [← congrArg v hx]; exact hdiff)
+  · have hlt : v ((ZMod.cast c : LaurentSeries k) *
+        chapter13ArtinSchreierRightHandSide k m) <
+      v (chapter13ArtinSchreierRightHandSide k n) := by
+      rw [hmul_val, hnval]
+      exact_mod_cast (neg_lt_neg (show (n : ℤ) < (m : ℤ) by exact_mod_cast hnm))
+    have hdiff : v (chapter13ArtinSchreierRightHandSide k n -
+        (ZMod.cast c : LaurentSeries k) *
+          chapter13ArtinSchreierRightHandSide k m) =
+        (-(m : ℤ) : WithTop ℤ) := by
+      rw [v.map_sub_eq_of_lt_right hlt, hmul_val]
+    exact hno m hm hmp x (by rw [← congrArg v hx]; exact hdiff)
 
 /-- One fixed finite-residue Laurent-series field has infinitely many
 pairwise nonisomorphic separable extensions of degree `p`. -/
@@ -1459,7 +2013,43 @@ theorem chapter13_laurent_series_has_infinitely_many_degree_p_separable_extensio
     (k : Type*) [Field k]
     (p : ℕ) [Fact p.Prime] [CharP k p] :
     Set.Infinite (chapter13DegreeClasses (K := LaurentSeries k) p) := by
-  sorry
+  classical
+  let F : Chapter13WildArtinSchreierFamily k p :=
+    Classical.choice (chapter13_laurent_series_has_wild_artin_schreier_family k p)
+  let φ : Chapter13PositiveNonPIndex p →
+      Chapter13FiniteExtensionClass (LaurentSeries k) := fun m =>
+    chapter13ArtinSchreierExtensionClass k p m.1
+      (chapter13ArtinSchreierRightHandSide k m.1) (F.extension m)
+  have hφ : Function.Injective φ := by
+    intro m n hmn
+    by_contra hne
+    exact (chapter13_wild_artin_schreier_family_classes_pairwise_distinct
+      k p F m n hne) (by simpa [φ] using hmn)
+  let f : ℕ → Chapter13PositiveNonPIndex p := fun n =>
+    ⟨p * n + 1, Nat.succ_pos _, by
+      intro hdiv
+      have hone : p ∣ 1 :=
+        (Nat.dvd_add_iff_right (dvd_mul_right p n)).mpr hdiv
+      exact (Fact.out : Nat.Prime p).not_dvd_one hone⟩
+  have hf : Function.Injective f := by
+    intro a b hab
+    apply Nat.mul_left_cancel (Fact.out : Nat.Prime p).pos
+    exact Nat.add_right_cancel (congrArg Subtype.val hab)
+  have hrange : Set.range (φ ∘ f) ⊆
+      chapter13DegreeClasses (K := LaurentSeries k) p := by
+    intro c hc
+    rcases hc with ⟨n, rfl⟩
+    let D := F.extension (f n)
+    let _ : Field D.carrier := D.carrierField
+    let _ : Algebra (LaurentSeries k) D.carrier := D.carrierAlgebra
+    let _ : FiniteDimensional (LaurentSeries k) D.carrier := D.carrierFinite
+    apply (chapter13_mem_degree_classes_iff p (φ (f n))).2
+    refine ⟨chapter13ArtinSchreierExtensionModel k p (f n).1
+      (chapter13ArtinSchreierRightHandSide k (f n).1) D, ?_, ?_⟩
+    · rfl
+    · change Module.finrank (LaurentSeries k) D.carrier = p
+      exact D.degree
+  exact (Set.infinite_range_of_injective (hφ.comp hf)).mono hrange
 
 theorem chapter13_laurent_series_wild_pole_orders_are_unbounded
     (k : Type*) [Field k]
@@ -1469,7 +2059,24 @@ theorem chapter13_laurent_series_wild_pole_orders_are_unbounded
     ∀ B : ℕ, ∃ m : ℕ, 0 < m ∧ ¬p ∣ m ∧
       (- (B : ℤ) : WithTop ℤ) >
         v (chapter13ArtinSchreierRightHandSide k m) := by
-  sorry
+  intro B
+  let m : ℕ := p * (B + 1) + 1
+  have hp2 : 2 ≤ p := (Fact.out : Nat.Prime p).two_le
+  have hmul : 2 * (B + 1) ≤ p * (B + 1) :=
+    Nat.mul_le_mul_right (B + 1) hp2
+  have hBm : B < m := by
+    dsimp [m]
+    omega
+  have hm : 0 < m := by omega
+  have hmp : ¬p ∣ m := by
+    intro hdiv
+    have hone : p ∣ 1 :=
+      (Nat.dvd_add_iff_right (dvd_mul_right p (B + 1))).mpr hdiv
+    exact (Fact.out : Nat.Prime p).not_dvd_one hone
+  refine ⟨m, hm, hmp, ?_⟩
+  rw [chapter13_laurent_series_rhs_has_pole_order k v ht hm]
+  have hBmZ : (B : ℤ) < (m : ℤ) := by exact_mod_cast hBm
+  exact_mod_cast (neg_lt_neg hBmZ)
 
 theorem chapter13_laurent_series_is_complete
     (k : Type*) [Field k] :
@@ -1480,7 +2087,23 @@ theorem chapter13_laurent_series_has_complete_discrete_finite_residue_profile
     (k : Type*) [Field k] [Fintype k] :
     chapter13CompleteFiniteResidueProfile
       (Valued.v : Valuation (LaurentSeries k) ℤᵐ⁰) := by
-  sorry
+  let vK : Valuation (LaurentSeries k) ℤᵐ⁰ :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10LaurentSeriesValuation k
+  have hvKdiscrete : Valuation.IsRankOneDiscrete vK := by
+    dsimp [vK]
+    change Valuation.IsRankOneDiscrete
+      ((PowerSeries.idealX k).valuation (LaurentSeries k))
+    infer_instance
+  let _ : Valuation.IsRankOneDiscrete vK := hvKdiscrete
+  have hcomplete : IsAdicComplete
+      (IsLocalRing.maximalIdeal vK.valuationSubring) vK.valuationSubring := by
+    exact LastLib.Book02FiniteExtensionsOfLocalFields.Chapter09.chapter09_laurent_series_valuation_ring_complete k
+  have hfinite : Finite (IsLocalRing.ResidueField vK.valuationSubring) := by
+    dsimp [vK]
+    exact Finite.of_equiv k
+      (LastLib.Book01ValuationsDVRsAndCompletions.Chapter10.Chapter10LaurentSeriesResidueRingEquiv k).toEquiv
+  change chapter13CompleteFiniteResidueProfile vK
+  exact ⟨⟨hvKdiscrete, hcomplete⟩, hfinite⟩
 
 end
 
