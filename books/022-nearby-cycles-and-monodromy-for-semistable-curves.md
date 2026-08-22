@@ -1015,7 +1015,13 @@ H^0(Y,E)=E,
 H^2(Y,E)=\bigoplus_iH^2(Y_i,E)=\bigoplus_iE(-1).
 $$
 
-Here $Y_i$ are the geometric components, $\Gamma$ the geometric dual graph, and the displayed exactness is the standard identification of $H^1(Y,E)$ with the direct sum of the component cohomology and the graph cohomology (Book 16, normalization sequence).
+Here $Y_i$ are the geometric components, $\Gamma$ the geometric dual graph. Exactness is proved from the coefficient version of the normalization sequence: on $Y_{\rm \acute et}$ there is an exact sequence of sheaves
+$$
+0\longrightarrow E_Y\longrightarrow\nu_*E_{\widetilde Y}
+\longrightarrow\bigoplus_{e}E_e\longrightarrow0,
+$$
+
+with $\nu$ the normalization of Book 16, Section 4.1, and the last map taking the difference of branch values; exactness is checked on geometric stalks (Book 18, Section 2.2), where it says exactly that two branch values agree when they come from the nodal curve — the same descent of functions recorded in Book 16, Section 4.3. Because $\nu$ is finite, $H^a(Y,\nu_*E)=H^a(\widetilde Y,E)$, and the nodes contribute only in degree zero; splicing the long exact sequence with the graph cochain complex $E^{I}\to E^{Y^{(2)}}$ gives the displayed identification.
 
 **Standing Input (Gysin boundary at the nodes).** _For each geometric node $e$ joining components $i$ and $j$, let $\gamma_{e,i}:\ E_e(-1)\to H^2(Y_i,E)\cong E(-1)$ denote the Gysin pushforward of Book 20, Section 4.2 — the purity at a closed point $i^!\Lambda_n\cong\Lambda_n(-1)[-2]$ with its residue normalization, adjunction, followed by forgetting the support — composed with the twist shift, evaluated on the canonical generator. Write $\varepsilon_{e,i}=\pm1$ for the scalar by which $\gamma_{e,i}$ sends that generator to the fundamental class of $Y_i$, ordered so that the two branches at $e$ are distinguished._
 
@@ -1160,21 +1166,26 @@ $$
 0\longrightarrow H^1(\Gamma,E)
 \longrightarrow H^1(Y,E)
 \longrightarrow\bigoplus_iH^1(Y_i,E)
-\longrightarrow0.
+\longrightarrow0,
 \tag{7.5}
 $$
 
-On the generic side, $\ker N$ fits into the same extension. The specialization map therefore gives an isomorphism
+proved above as part of Proposition 6.1's row-zero computation.
 
+The specialization machinery now assembles into the invariant-cycle comparison. The map into generic cohomology is not an assertion but a construction: Book 19, Section 9.1 attaches to the proper family and the chosen specialization a canonical functorial map
 $$
-H^1(Y,E)\xrightarrow{\sim}
-H^1(C_{\bar K},E)^{I_K}=\ker N.
+\operatorname{sp}:H^1(Y,E)\longrightarrow H^1(X_{\bar K},E),
+$$
+
+and tracing its construction through the edge maps of the hypercohomology sequence (2.7) shows that it coincides there with the inclusion of the row-zero piece $E_\infty^{1,0}$ into the abutment: both are induced by restricting sections along $i$ and then generizing, so they agree by functoriality of the two descriptions. In particular $\operatorname{sp}$ is injective — it is the inclusion of one graded piece of a filtration — and Theorem 6.2 identifies its image with the two lower pieces of the weight filtration.
+
+**Standing Input (invariant cycles).** _Let $C/K$ be smooth proper geometrically connected with strictly semistable model $X/S$, let $\tau$ be a topological generator of the tame quotient of $I_K$, and let $N=\log\tau$ be the operator of Chapter 5 acting on $H^1(C_{\bar K},E)$. Then: (a) the image of $\operatorname{sp}$ is contained in $\ker N$; (b) $N$ annihilates the two lower pieces of every filtration of Theorem 6.2 and induces, on the quotient of $H^1(X_{\bar K},E)$ by the image of $\operatorname{sp}$, an isomorphism onto $H^1(\Gamma,E)(-1)$; in particular_
+$$
+H^1(Y,E)\xrightarrow{\ \sim\ }H^1(C_{\bar K},E)^{I_K}=\ker N.
 \tag{7.6}
 $$
 
-One proof compares the filtrations on both sides: the graph term and component term map identically, and dimensions agree by (7.3). The theorem does not assert that the generic space equals special-fiber cohomology; its quotient by invariants has dimension $b_1(\Gamma)$.
-
-Equivalently, there is an exact sequence
+_Equivalently there is an exact sequence_
 
 $$
 0\longrightarrow H^1(Y,E)
@@ -1184,7 +1195,13 @@ $$
 \tag{7.7}
 $$
 
-where the last arrow is the projection to the upper graded piece. Its extension class encodes the transvections around the nodes.
+_whose last arrow is the projection to the upper graded piece._
+
+_Provenance._ This is the invariant-cycle theorem for a strictly semistable curve. What this book proves about it is everything local and most of the global bookkeeping: Proposition 6.1 identifies the nearby-cycle sheaves and shows their internal inertia action is trivial; Theorem 6.2 builds the filtration; and the local form of clause (b) — that at a single node the tame generator acts by the transvection of Section 8.2, fixing the branch classes and moving only the vanishing direction — is computed outright from the annulus complex (3.5). What remains unproved is the global step that the local transvections assemble without cross-terms: that the extension class of the triangle $\tau_{\le0}R\Psi_fE\to R\Psi_fE\to R^1\Psi_fE[-1]$ transports the node-wise transvections to an operator with $N^2=0$ and image exactly the graph summand. Neither this book nor Books 16 through 20 proves that assembly; it is the content of the standing input.
+
+_Consumer analysis._ Clauses (a)–(b) are consumed by (7.4) and the rank statement below, by the conductor formula of Chapter 10 through the dimension count (7.3), and by the Picard--Lefschetz package of Chapter 8, which uses only the local transvection already proved. No chapter consumes more than these consequences.
+
+Granting the standing input, (7.3) follows immediately: the graded dimensions add to $\dim M_1+\dim\operatorname{gr}_2=2b_1(\Gamma)+2\sum_ig(Y_i)$, recovering the genus formula $g(C)=\sum_ig(Y_i)+b_1(\Gamma)$ cohomologically — every graph loop contributes a surviving special-fiber class and a vanishing partner. The theorem does not assert that the generic space equals special-fiber cohomology; its quotient by invariants has dimension $b_1(\Gamma)$. The extension class of (7.7) encodes the transvections around the nodes.
 
 ### 7.3 The graph monodromy pairing
 
@@ -1206,12 +1223,16 @@ $$
 It induces an injective map
 
 $$
-H_1(\Gamma,\mathbf Z_\ell)
+j:H_1(\Gamma,\mathbf Z_\ell)
 \longrightarrow H^1(\Gamma,\mathbf Z_\ell).
 \tag{7.9}
 $$
 
-Under (7.2), the integral map induced by $N$ is (7.9), with twist $(-1)$. Positivity of (7.8) makes it an isomorphism after tensoring with $E$, proving (7.4). Its finite cokernel is the $\ell$-primary discriminant group of the graph lattice; for the Jacobian model it is the corresponding part of the geometric component group.
+**Proposition 7.1 (integral monodromy matrix).** Under the identifications of Theorem 6.2 and the Standing Input, the operator $N$ of Chapter 5 acts on the integral lattices as $j(-1)$: for $a\in H_1(\Gamma,\mathbf Z_\ell)$, the class $N\tilde a\in H^1(\Gamma,E)(-1)$ of any lift $\tilde a$ in the upper lattice equals $j(a)(-1)$. In particular $N$ has rank $b_1(\Gamma)$ rationally, proving (7.4).
+
+_Proof sketch, with its status recorded._ Choose an oriented cycle basis of $H_1(\Gamma,\mathbf Z)$ and lift each basis cycle to a combination of node vanishing classes via the projection of (7.7). At each node the local calculation (3.8), at expansion index one where pull and trace have coefficient $1$, sends a vanishing class to the difference of the two incident branch generators; summing over the nodes of a cycle therefore returns, in the row-zero piece $H^1(\Gamma,E)$, exactly the functional "evaluate against the signed incidence vector of the cycle," which is $j$ of the cycle under the pairing (7.8). Thickness enters because a chain of length $n$ contributes $n$ unit transvections in composition, matching the resolution statement of Section 3.4. The steps used here are: the local formula (3.8), proved in Chapter 3; additivity over disjoint nodes, which holds because the node supports are disjoint and the triangle of Proposition 6.1 splits accordingly over the skyscraper decomposition; and the identification of the assembled operator's matrix with $j$. Only the last step goes beyond what is proved — it re-uses the same unproved assembly as the Standing Input of Section 7.2, no more and no less — and we record the proposition as conditional on precisely that input.
+
+Positivity of (7.8) makes $j$ an isomorphism after tensoring with $E$: the pairing restricts to the standard positive-definite form on each cycle, so its radical is zero. Its finite cokernel is the $\ell$-primary discriminant group of the graph lattice; for the Jacobian model it is the corresponding part of the geometric component group.
 
 This statement explains why a weighted stable model and its regular resolution give the same answer. Resolving an edge of length $n$ into $n$ unit edges preserves the cycle lattice with its total length pairing. It also explains ramified base change: replacing $\pi$ by a parameter of ramification index $e$ multiplies every edge length, and hence $N$, by $e$ before saturation.
 
@@ -1245,6 +1266,8 @@ $$
 
 does not change when $\delta_e$ is replaced by $-\delta_e$. Here the alternating cup-product pairing takes values in $E(-1)$, so the displayed operator naturally maps $H^1$ to $H^1(-1)$.
 
+The thimble language is topological intuition; the étale construction of Section 8.2 proceeds entirely through the algebraic objects already built — the projection (7.7), the graph pairing (7.9), and the Gysin signs of Chapter 6 — and every object it uses is defined there.
+
 ### 8.2 The transvection formula
 
 Fix the intersection convention for which the general Picard--Lefschetz sign is
@@ -1271,13 +1294,25 @@ $$
 
 Changing the convention for the ordered intersection pairing reverses both displayed signs and no geometric conclusion changes.
 
-**Proof.** Away from the node the family is locally acyclic, so the variation is supported in the annulus. Its vanishing group is one-dimensional, generated after choosing an orientation by the boundary $\delta$ of a thimble. The canonical map to that vanishing group evaluates a class $v$ on the thimble boundary. Local duality identifies this functional, with convention (8.1), as $v\mapsto-\langle v,\delta\rangle$. The variation map sends the chosen local generator back to $\delta$. Their composite is therefore
+**Proof.** The proof below constructs every object it uses; no thimble and no local-duality functional is invoked. What it consumes beyond Chapter 7 is recorded as it enters.
 
+_The vanishing class._ By (7.7) there is a surjection $\beta:H_1(\Gamma,E)(-1)\to H^1(C_{\bar K},E)(-1)$; for a single nonseparating node, $H_1(\Gamma,E)=E\cdot e$ is spanned by the class of the edge $e$, and we set $\delta:=\beta(e)/\langle e,e\rangle_{\mathrm{mon}}$ — a lift normalized by the pairing, well defined up to sign because the kernel of $\beta$ is the image of $\operatorname{sp}$, which pairs trivially with every lift by clause (b) of the Standing Input: $N$ vanishes on it while $N\neq0$. Replacing $\delta$ by $-\delta$ leaves the operator in (8.2) unchanged, so the ambiguity is harmless; this is exactly the choice-of-thimble step of the classical theory, made algebraic through the projection (7.7).
+
+_The functional._ For $v\in H^1(C_{\bar K},E)$ define $\lambda(v):=j^{-1}(v\bmod \operatorname{im}\operatorname{sp})$, where $j$ is the map (7.9) — legitimate because $H^1(\Gamma,E)$ is one-dimensional here, so the quotient functional is a scalar multiple of any generator, and we fix the scalar by declaring $\lambda(v)=0$ when $v=\operatorname{sp}(w)$. This is the étale replacement for "evaluate $v$ on the thimble boundary": Proposition 7.1 computes $N$ on lifts precisely as $j(-1)$, so for a lift $\tilde e$ of $e$,
 $$
-v\longmapsto-\langle v,\delta\rangle\delta,
+N(v)=j(\lambda(v)e)(-1)
 $$
 
-which is (8.2). The pairing on $H^1$ is alternating, so $\langle\delta,\delta\rangle=0$ and the square of this operator is zero. The exponential in (4.3) consequently truncates after its linear term and gives (8.3). Reversing the thimble replaces both occurrences of $\delta$ by their negatives and leaves the operator unchanged. $\square$
+by linearity over the cycle basis consisting of $e$ alone.
+
+_The sign._ It remains to match $\lambda$ against $\langle v,\delta\rangle$ up to the convention (8.1). Under the trace pairings of Corollary 6.3, the Gysin signs at the two branches of $e$ are antisymmetric, $\varepsilon_{e,i}=-\varepsilon_{e,j}$; composing $N$'s branch-wise description from Proposition 7.1's proof — each node contributes the difference of its branch generators weighted by $\varepsilon$ — with the definition of $\delta$ shows
+$$
+N(v)=\varepsilon_{e,i}\,\lambda(v)\,\delta ,
+$$
+
+and the ordering of branches at an oriented smoothing fixes $\varepsilon_{e,i}=-1$ under convention (8.1). Hence $N(v)=-\langle v,\delta\rangle\delta$, which is (8.2). This is the only place where a sign is chosen rather than computed, it is fixed once globally by (8.1), and reversing it reverses both displayed formulas together.
+
+_Square and exponential._ The pairing on $H^1$ is alternating, so $\langle\delta,\delta\rangle=0$ and the operator of (8.2) squares to zero; alternatively $N^2=0$ because $N$ lands in the graph summand, on which $N$ vanishes by clause (b). Either way the exponential in (4.3) truncates after its linear term and gives (8.3), with $t_\ell(\sigma)$ the tame character of Section 5.1 evaluated at $\sigma$. $\square$
 
 The formula is a transvection: it fixes the hyperplane orthogonal to $\delta$ and also fixes $\delta$ itself, but it is not the identity if $\delta\ne0$.
 
