@@ -619,6 +619,192 @@ theorem chapter13_p_independence_three_forms
   · exact chapter13_finrank_implies_deletion p B
   · exact chapter13_deletion_implies_finrank p B
 
+private theorem chapter13_pIndependent_insert_of_not_mem_span
+    {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
+    (B : Set k) (x : k)
+    (hB : Chapter13PIndependent (Chapter13PthPowerSubfield k p) B p)
+    (hxspan : x ∉ Submodule.span (Chapter13PthPowerSubfield k p)
+      (Set.range (fun e : Chapter13PMonomialIndex B p =>
+        Chapter13PMonomial (fun b : B => (b : k)) e))) :
+    Chapter13PIndependent (Chapter13PthPowerSubfield k p) (insert x B) p := by
+  classical
+  let F := Chapter13PthPowerSubfield k p
+  have hspan_mono : ∀ (r : ℕ) (b : Fin r → k), Set.range b ⊆ B →
+      Function.Injective b →
+      Submodule.span F (Set.range (fun e : Chapter13PMonomialIndex (Fin r) p =>
+        Chapter13PMonomial b e)) ≤
+        Submodule.span F (Set.range (fun e : Chapter13PMonomialIndex B p =>
+          Chapter13PMonomial (fun z : B => (z : k)) e)) := by
+    intro r b hb hinj
+    apply Submodule.span_mono
+    rintro _ ⟨e, rfl⟩
+    let g : Fin r → B := fun i => ⟨b i, hb ⟨i, rfl⟩⟩
+    have hg : Function.Injective g := by
+      intro i j hij
+      exact hinj (congr_arg Subtype.val hij)
+    let ge : Fin r ↪ B := ⟨g, hg⟩
+    let e' : Chapter13PMonomialIndex B p :=
+      ⟨e.1.embDomain ge, by
+        intro z
+        by_cases hz : z ∈ Set.range ge
+        · obtain ⟨i, rfl⟩ := hz
+          simpa using e.2 i
+        · rw [Finsupp.embDomain_eq_mapDomain,
+            Finsupp.mapDomain_of_notMem_range e.1 z hz]
+          exact (Fact.out : Nat.Prime p).pos⟩
+    refine ⟨e', ?_⟩
+    dsimp [e']
+    change (e.1.embDomain ge).prod (fun z n => (z : k) ^ n) =
+      e.1.prod (fun i n => b i ^ n)
+    rw [Finsupp.embDomain_eq_mapDomain]
+    change (e.1.mapDomain g).prod (fun z n => (z : k) ^ n) =
+      e.1.prod (fun i n => b i ^ n)
+    rw [Finsupp.prod_mapDomain_index_inj (s := e.1) hg]
+  intro r b hb hinj
+  cases r with
+  | zero =>
+      exact hB 0 b (by simp) (by intro i; exact Fin.elim0 i)
+  | succ r =>
+      by_cases hxr : x ∉ Set.range b
+      · exact (chapter13_linearIndependent_pMonomials_iff_finrank p F le_rfl
+          r.succ b).mpr
+          ((chapter13_pIndependent_iff_finrank p B).mp hB r.succ b
+            (fun y hy => by
+              rcases Set.mem_insert_iff.mp (hb hy) with rfl | hyB
+              · exact (hxr hy).elim
+              · exact hyB) hinj)
+      · obtain ⟨i, hi⟩ := Set.mem_range.mp (not_not.mp hxr)
+        let b₀ : Fin r → k := fun j => b (Fin.succAbove i j)
+        have hb₀ : Set.range b₀ ⊆ B := by
+          rintro y ⟨j, rfl⟩
+          rcases Set.mem_insert_iff.mp (hb ⟨Fin.succAbove i j, rfl⟩) with h | h
+          · exact (Fin.succAbove_ne i j (hinj (h.trans hi.symm))).elim
+          · exact h
+        have hb₀inj : Function.Injective b₀ := by
+          intro j j' h
+          exact (Fin.succAbove_inj).mp (hinj h)
+        have hE : Module.finrank F (Algebra.adjoin F (Set.range b₀)) = p ^ r :=
+          (chapter13_pIndependent_iff_finrank p B).mp hB r b₀ hb₀ hb₀inj
+        have hxE : x ∉ Algebra.adjoin F (Set.range b₀) := by
+          intro hxE
+          apply hxspan
+          exact (hspan_mono r b₀ hb₀ hb₀inj)
+            ((chapter13_pMonomials_span_adjoin p F le_rfl r b₀).symm ▸ hxE)
+        have hpi : IsPurelyInseparable F k :=
+          chapter13_isPurelyInseparable_pthPowerSubfield p
+        let _ : IsPurelyInseparable F k := hpi
+        have halg : Algebra.IsAlgebraic F k := IsPurelyInseparable.isAlgebraic F k
+        let E : IntermediateField F k := IntermediateField.adjoin F (Set.range b₀)
+        have hEalg : E.toSubalgebra = Algebra.adjoin F (Set.range b₀) :=
+          IntermediateField.adjoin_toSubalgebra_of_isAlgebraic
+            (fun y _ ↦ halg.isAlgebraic y)
+        have hxE' : x ∉ E := by
+          intro hx'
+          apply hxE
+          rw [← hEalg]
+          exact hx'
+        have hFE : F ≤ E.toSubfield := by
+          intro y hy
+          exact IntermediateField.adjoin.range_algebraMap_subset F (Set.range b₀)
+            ⟨⟨y, hy⟩, rfl⟩
+        have hs := chapter13_simple_p_extension_degree p E.toSubfield hFE x
+        have hsfin : Module.finrank E (Algebra.adjoin E ({x} : Set k)) = p := by
+          rcases hs.2.2 with h | h
+          · exact (hxE' h.1).elim
+          · exact h.2
+        have hEfin : Module.finrank F E = p ^ r := by
+          change Module.finrank F E.toSubalgebra = p ^ r
+          rw [hEalg]
+          exact hE
+        let L : Subalgebra E k := Algebra.adjoin E ({x} : Set k)
+        let iE : E ≃ₐ[F] E.toSubalgebra :=
+          { toFun := fun y ↦ ⟨y, y.property⟩
+            invFun := fun y ↦ ⟨y, y.property⟩
+            left_inv := fun _ ↦ rfl
+            right_inv := fun _ ↦ rfl
+            map_mul' := fun _ _ ↦ rfl
+            map_add' := fun _ _ ↦ rfl
+            commutes' := fun _ ↦ rfl }
+        have hiE : algebraMap E k = (algebraMap E.toSubalgebra k) ∘ iE := by
+          funext y
+          rfl
+        have hLres : L.restrictScalars F = Algebra.adjoin F (Set.range b) := by
+          change (Algebra.adjoin E ({x} : Set k)).restrictScalars F = _
+          rw [Algebra.restrictScalars_adjoin_of_algEquiv iE hiE]
+          rw [Algebra.restrictScalars_adjoin F E.toSubalgebra ({x} : Set k)]
+          apply le_antisymm
+          · apply Algebra.adjoin_le
+            rintro y (hy | rfl)
+            · rw [hEalg] at hy
+              exact Algebra.adjoin_mono (show Set.range b₀ ⊆ Set.range b by
+                rintro z ⟨j, rfl⟩
+                exact ⟨Fin.succAbove i j, rfl⟩) hy
+            · exact Algebra.subset_adjoin ⟨i, hi⟩
+          · apply Algebra.adjoin_le
+            rintro y ⟨j, rfl⟩
+            induction j using Fin.succAboveCases i with
+            | x => exact Algebra.subset_adjoin (Or.inr hi)
+            | p j =>
+                exact Algebra.subset_adjoin (Or.inl
+                  (IntermediateField.subset_adjoin F (Set.range b₀) ⟨j, rfl⟩))
+        apply (chapter13_linearIndependent_pMonomials_iff_finrank p F le_rfl
+          (r + 1) b).mpr
+        calc
+          Module.finrank F (Algebra.adjoin F (Set.range b)) = Module.finrank F L := by
+            rw [← hLres]
+            rfl
+          _ = Module.finrank F E * Module.finrank E L :=
+            (Module.finrank_mul_finrank F E L).symm
+          _ = p ^ r * p := by rw [hEfin, hsfin]
+          _ = p ^ (r + 1) := (pow_succ p r).symm
+
+private theorem chapter13_pIndependent_sUnion_of_chain
+    {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
+    (c : Set (Set k)) (hc : IsChain (· ⊆ ·) c) (hcne : c.Nonempty)
+    (hI : ∀ B ∈ c,
+      Chapter13PIndependent (Chapter13PthPowerSubfield k p) B p) :
+    Chapter13PIndependent (Chapter13PthPowerSubfield k p) (⋃₀ c) p := by
+  intro r b hb hinj
+  obtain ⟨B, hBc, hsub⟩ :=
+    DirectedOn.exists_mem_subset_of_finite_of_subset_sUnion hcne hc.directedOn
+      (Set.finite_range b) hb
+  exact hI B hBc r b hsub hinj
+
+private theorem chapter13_pMonomial_mem_span
+    {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p]
+    (B : Set k) {x : k} (hx : x ∈ B) :
+    x ∈ Submodule.span (Chapter13PthPowerSubfield k p)
+      (Set.range (fun e : Chapter13PMonomialIndex B p =>
+        Chapter13PMonomial (fun b : B => (b : k)) e)) := by
+  classical
+  let e : Chapter13PMonomialIndex B p :=
+    ⟨Finsupp.single ⟨x, hx⟩ 1, by
+      intro i
+      by_cases hi : i = ⟨x, hx⟩
+      · subst i
+        simpa using (Fact.out : Nat.Prime p).one_lt
+      · simp [Finsupp.single_apply, hi]
+        exact (Fact.out : Nat.Prime p).pos⟩
+  have heq : Chapter13PMonomial (fun b : B => (b : k)) e = x := by
+    simp [Chapter13PMonomial, e, Finsupp.single_apply]
+  rw [← heq]
+  exact Submodule.mem_span_of_mem ⟨e, rfl⟩
+
+private theorem chapter13_pMonomials_span_le_adjoin
+    {k : Type u} [Field k] (p : ℕ)
+    (B : Set k) :
+    Submodule.span (Chapter13PthPowerSubfield k p)
+      (Set.range (fun e : Chapter13PMonomialIndex B p =>
+        Chapter13PMonomial (fun b : B => (b : k)) e)) ≤
+      (Algebra.adjoin (Chapter13PthPowerSubfield k p) B).toSubmodule := by
+  apply Submodule.span_le.2
+  rintro _ ⟨e, rfl⟩
+  change Finset.prod e.1.support (fun i => ((i : B) : k) ^ e.1 i) ∈
+    Algebra.adjoin (Chapter13PthPowerSubfield k p) B
+  exact (Algebra.adjoin (Chapter13PthPowerSubfield k p) B).prod_mem
+    fun i _ ↦ (Algebra.adjoin (Chapter13PthPowerSubfield k p) B).pow_mem
+      (Algebra.subset_adjoin i.property) _
+
 /-- Existence, maximality, and the perfect-field criterion for `p`-bases. -/
 theorem chapter13_p_basis_existence
     {k : Type u} [Field k] (p : ℕ) [Fact (Nat.Prime p)] [CharP k p] :
@@ -631,7 +817,205 @@ theorem chapter13_p_basis_existence
           Chapter13IsMaximalPIndependent (Chapter13PthPowerSubfield k p) B p) ∧
       (Chapter13PerfectAtPrime k p ↔
         Chapter13PBasis (Chapter13PthPowerSubfield k p) (∅ : Set k) p) := by
-  sorry
+  classical
+  let F := Chapter13PthPowerSubfield k p
+  have hmax : ∀ B : Set k,
+      Chapter13PIndependent F B p →
+        ∃ M : Set k, B ⊆ M ∧ Chapter13PIndependent F M p ∧
+          ∀ M' : Set k, M ⊆ M' → Chapter13PIndependent F M' p → M' = M := by
+    intro B hB
+    let X := {S : Set k // Chapter13PIndependent F S p ∧ B ⊆ S}
+    let rel : X → X → Prop := fun I J => I.1 ⊆ J.1
+    have hchain : ∀ c : Set X, IsChain rel c →
+        ∃ ub : X, ∀ a ∈ c, rel a ub := by
+      intro c hc
+      rcases Set.eq_empty_or_nonempty c with rfl | hcne
+      · exact ⟨⟨B, hB, Set.Subset.rfl⟩, by simp⟩
+      · let C : Set (Set k) := (fun I : X => (I : Set k)) '' c
+        have hCne : C.Nonempty := hcne.image _
+        have hCchain : IsChain (· ⊆ ·) C := by
+          rintro S ⟨I, hIc, rfl⟩ T ⟨J, hJc, rfl⟩ hST
+          by_cases hIJ : I = J
+          · subst J
+            exact (hST rfl).elim
+          rcases hc hIc hJc (by
+            intro h
+            apply hST
+            simpa [h]) with h | h
+          · exact Or.inl h
+          · exact Or.inr h
+        have hCpi : Chapter13PIndependent F (⋃₀ C) p :=
+          chapter13_pIndependent_sUnion_of_chain p C hCchain hCne
+            (fun S hS => by
+              rcases hS with ⟨I, hIc, rfl⟩
+              exact I.property.1)
+        have hBC : B ⊆ ⋃₀ C := by
+          rcases hcne with ⟨I, hIc⟩
+          exact I.property.2.trans
+            (Set.subset_sUnion_of_mem ⟨I, hIc, rfl⟩)
+        refine ⟨⟨⋃₀ C, hCpi, hBC⟩, ?_⟩
+        intro I hIc
+        exact Set.subset_sUnion_of_mem ⟨I, hIc, rfl⟩
+    obtain ⟨M, hM⟩ :=
+      exists_maximal_of_chains_bounded (r := rel) hchain Set.Subset.trans
+    refine ⟨M.1, M.property.2, M.property.1, ?_⟩
+    intro M' hMM' hM'pi
+    let M'X : X := ⟨M', hM'pi, M.property.2.trans hMM'⟩
+    exact Set.Subset.antisymm (hM M'X hMM') hMM'
+  have hspan_of_max : ∀ M : Set k,
+      Chapter13PIndependent F M p →
+        (∀ M' : Set k, M ⊆ M' → Chapter13PIndependent F M' p → M' = M) →
+          Chapter13PMonomialsSpan F M p := by
+    intro M hMpi hMmax
+    change Submodule.span F
+        (Set.range (fun e : Chapter13PMonomialIndex M p =>
+          Chapter13PMonomial (fun b : M => (b : k)) e)) = ⊤
+    apply le_antisymm le_top
+    intro x hx
+    by_contra hxspan
+    have hxM : x ∉ M := by
+      intro hxM
+      exact hxspan (chapter13_pMonomial_mem_span p M hxM)
+    have hinsert := chapter13_pIndependent_insert_of_not_mem_span p M x hMpi hxspan
+    have hEq := hMmax (insert x M) (Set.subset_insert x M) hinsert
+    exact hxM (by rw [← hEq]; exact Set.mem_insert x M)
+  have h_extend : ∀ B : Set k,
+      Chapter13PIndependent F B p →
+        ∃ B' : Set k, B ⊆ B' ∧ Chapter13PBasis F B' p := by
+    intro B hB
+    obtain ⟨M, hBM, hMpi, hMmax⟩ := hmax B hB
+    exact ⟨M, hBM, hMpi, hspan_of_max M hMpi hMmax⟩
+  have h_empty_pi : Chapter13PIndependent F (∅ : Set k) p := by
+    intro r b hb _hinj
+    apply (chapter13_linearIndependent_pMonomials_iff_finrank p F le_rfl r b).mpr
+    have hrange : Set.range b = (∅ : Set k) := by
+      by_cases hr : r = 0
+      · subst r
+        ext x
+        simp
+      · have hrpos : 0 < r := Nat.pos_of_ne_zero hr
+        exact ((hb ⟨⟨0, hrpos⟩, rfl⟩).elim)
+    have hrzero : r = 0 := by
+      by_contra hr
+      exact (hb ⟨⟨0, Nat.pos_of_ne_zero hr⟩, rfl⟩).elim
+    subst r
+    rw [hrange, Algebra.adjoin_empty]
+    simp
+  obtain ⟨M0, _hM0sub, hM0pi, hM0max⟩ := hmax (∅ : Set k) h_empty_pi
+  have h_basis_iff_max : ∀ B : Set k,
+      Chapter13PBasis F B p ↔ Chapter13IsMaximalPIndependent F B p := by
+    intro B
+    constructor
+    · rintro ⟨hBpi, hBspan⟩
+      refine ⟨hBpi, ?_⟩
+      intro B' hBB' hB'pi
+      apply Set.Subset.antisymm ?_ hBB'
+      intro x hx'
+      by_contra hxB
+      have hdegree := (chapter13_p_independence_three_forms p B').1.mp hB'pi
+      have hdelete : ∀ y : k, y ∈ B' →
+          y ∉ Algebra.adjoin F (B' \ {y}) :=
+        (chapter13_p_independence_three_forms p B').2.1 hdegree
+      have hBdel : B ⊆ B' \ {x} := by
+        intro y hy
+        refine ⟨hBB' hy, ?_⟩
+        intro hyx
+        exact hxB (hyx ▸ hy)
+      have hxspan : x ∈ Submodule.span F
+          (Set.range (fun e : Chapter13PMonomialIndex B p =>
+            Chapter13PMonomial (fun b : B => (b : k)) e)) := by
+        rw [hBspan]
+        trivial
+      exact (hdelete x hx')
+        ((Algebra.adjoin_mono hBdel)
+          (chapter13_pMonomials_span_le_adjoin p B hxspan))
+    · rintro ⟨hBpi, hBmax⟩
+      exact ⟨hBpi, hspan_of_max B hBpi hBmax⟩
+  have hFtop_iff_perfect : F = ⊤ ↔ Chapter13PerfectAtPrime k p := by
+    constructor
+    · intro hFtop x
+      have hxF : x ∈ F := by rw [hFtop]; trivial
+      change x ∈ Subfield.closure (Set.range (fun y : k => y ^ p)) at hxF
+      exact Subfield.closure_induction
+        (p := fun z _ => ∃ y : k, y ^ p = z)
+        (fun y hy => by rcases hy with ⟨z, rfl⟩; exact ⟨z, rfl⟩)
+        ⟨1, by simp⟩
+        (fun a b ha hb h₁ h₂ => by
+          rcases h₁ with ⟨a', ha'⟩
+          rcases h₂ with ⟨b', hb'⟩
+          exact ⟨a' + b', by rw [add_pow_char, ha', hb']⟩)
+        (fun a ha h₁ => by
+          rcases h₁ with ⟨a', ha'⟩
+          refine ⟨-a', ?_⟩
+          calc
+            (-a') ^ p = -(a' ^ p) := by
+              exact map_neg (frobenius k p) a'
+            _ = -a := by rw [ha'])
+        (fun a ha h₁ => by
+          rcases h₁ with ⟨a', ha'⟩
+          exact ⟨a'⁻¹, by simpa [ha'] using (inv_pow a' p)⟩)
+        (fun a b ha hb h₁ h₂ => by
+          rcases h₁ with ⟨a', ha'⟩
+          rcases h₂ with ⟨b', hb'⟩
+          exact ⟨a' * b', by rw [mul_pow, ha', hb']⟩) hxF
+    · intro hperfect
+      apply top_unique
+      intro x hx
+      obtain ⟨y, hy⟩ := hperfect x
+      rw [← hy]
+      exact Subfield.subset_closure ⟨y, rfl⟩
+  have h_empty_basis_iff_perfect : Chapter13PerfectAtPrime k p ↔
+      Chapter13PBasis F (∅ : Set k) p := by
+    constructor
+    · intro hperfect
+      have hFtop : F = ⊤ := hFtop_iff_perfect.mpr hperfect
+      have hspan : Chapter13PMonomialsSpan F (∅ : Set k) p := by
+        change Submodule.span F
+            (Set.range (fun e : Chapter13PMonomialIndex (∅ : Set k) p =>
+              Chapter13PMonomial (fun b : (∅ : Set k) => (b : k)) e)) = ⊤
+        apply le_antisymm le_top
+        intro x hx
+        have hxF : x ∈ F := by rw [hFtop]; trivial
+        let e₀ : Chapter13PMonomialIndex (∅ : Set k) p :=
+          ⟨0, by intro i; exact i.property.elim⟩
+        have he₀ : Chapter13PMonomial (fun b : (∅ : Set k) => (b : k)) e₀ = 1 := by
+          simp [Chapter13PMonomial, e₀]
+        have h₁ : (1 : k) ∈ Submodule.span F
+            (Set.range (fun e : Chapter13PMonomialIndex (∅ : Set k) p =>
+              Chapter13PMonomial (fun b : (∅ : Set k) => (b : k)) e)) := by
+          exact Submodule.mem_span_of_mem ⟨e₀, he₀⟩
+        have hsmul := Submodule.smul_mem (Submodule.span F
+          (Set.range (fun e : Chapter13PMonomialIndex (∅ : Set k) p =>
+            Chapter13PMonomial (fun b : (∅ : Set k) => (b : k)) e)))
+          (⟨x, hxF⟩ : F) h₁
+        have hmap : algebraMap F k (⟨x, hxF⟩ : F) = x :=
+          Algebra.algebraMap_ofSubsemiring_apply F (⟨x, hxF⟩ : F)
+        simpa [Algebra.smul_def, hmap] using hsmul
+      exact ⟨h_empty_pi, hspan⟩
+    · rintro ⟨hpi, hspan⟩
+      have hFtop : F = ⊤ := by
+        apply top_unique
+        intro x hx
+        have hxspan : x ∈ Submodule.span F
+            (Set.range (fun e : Chapter13PMonomialIndex (∅ : Set k) p =>
+              Chapter13PMonomial (fun b : (∅ : Set k) => (b : k)) e)) := by
+          rw [hspan]
+          trivial
+        have hxadj := chapter13_pMonomials_span_le_adjoin p (∅ : Set k) hxspan
+        rw [Algebra.adjoin_empty] at hxadj
+        change ∃ y : F, algebraMap F k y = x at hxadj
+        rcases hxadj with ⟨y, hy⟩
+        have hmap : algebraMap F k y = (y : k) :=
+          Algebra.algebraMap_ofSubsemiring_apply F y
+        have hyx : (y : k) = x := hmap.symm.trans hy
+        exact hyx ▸ y.property
+      exact hFtop_iff_perfect.mp hFtop
+  refine ⟨?_, ?_, ?_, h_empty_basis_iff_perfect⟩
+  · intro B hB
+    exact h_extend B hB
+  · exact ⟨M0, ⟨hM0pi, hspan_of_max M0 hM0pi hM0max⟩⟩
+  · intro B
+    exact h_basis_iff_max B
 
 /-- The `p`-monomial basis attached to a `p`-basis. -/
 theorem chapter13_p_basis_monomial_basis
