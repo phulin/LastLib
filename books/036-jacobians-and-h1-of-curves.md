@@ -1596,7 +1596,19 @@ $$
 =\operatorname{End}_k(A)\otimes_{\mathbf Z}\mathbf Q.
 $$
 
-The integral endomorphism ring is a finite free abelian group. Here is the finiteness input. More generally, for abelian varieties $A$ and $B$, pull the normalized Poincaré bundle on $B\times B^\vee$ back along $f\times1_{B^\vee}$ for $f:A\to B$. Its normalized mixed line-bundle class on $A\times B^\vee$ recovers $f$ by Poincaré representability and biduality. This embeds $\operatorname{Hom}_k(A,B)$ into the Néron--Severi group of $A\times B^\vee$, which is finitely generated. The Hom group is torsion-free: if $nf=0$, then $f$ factors through the finite affine group scheme $B[n]$. Every morphism from the proper geometrically connected variety $A$ to an affine scheme is constant because its coordinate functions are global regular functions on $A$; as a homomorphism, $f$ is therefore zero. Thus $\operatorname{Hom}_k(A,B)$, and in particular $\operatorname{End}_k(A)$, is finite free. Consequently $\operatorname{End}^0_k(A)$ is a finite-dimensional $\mathbf Q$-algebra.
+The integral endomorphism ring is a finite free abelian group. Here is the finiteness input, proved directly from the Tate module; no Chow or Néron--Severi theory is needed. Fix a prime $\ell$ invertible in $k$ and let $A$ and $B$ be abelian varieties over $k$. The action on torsion gives a homomorphism
+
+$$
+\operatorname{Hom}_k(A,B)
+\longrightarrow
+\operatorname{Hom}_{\mathbf Z_\ell}(T_\ell A,T_\ell B),
+\qquad
+f\longmapsto T_\ell f.
+$$
+
+It is injective. If $T_\ell f=0$, then $f$ kills $A[\ell^m](k^s)$ for every $m$. The union $A[\ell^\infty](k^s)$ is Zariski dense in $A$. Indeed, let $H$ be its Zariski closure; it is a closed subgroup. The union is $\ell$-divisible, while the image $[\ell](H)$ is closed because $H$ is proper. Since $[\ell](H)$ contains the dense torsion union, it equals $H$; multiplication by $\ell$ is therefore surjective on $H(k^s)$, including on its finite component group. If $Q=A/H$ had positive dimension, choose a nonzero $y\in Q[\ell](k^s)$ and lift it to $x\in A(k^s)$. Then $\ell x\in H(k^s)$, so choose $h\in H(k^s)$ with $\ell h=\ell x$. Now $x-h\in A[\ell](k^s)\subset H(k^s)$, whence $x\in H(k^s)$ and $y=0$, a contradiction. Thus $H=A$. The kernel of $f$ is closed and contains this dense union, so $f=0$.
+
+By (10.15) the target is a free $\mathbf Z_\ell$-module of rank $4g_Ag_B$, where $g_A=\dim A$ and $g_B=\dim B$. The source is torsion-free: if $nf=0$, then $f$ factors through the finite affine group scheme $B[n]$, and every morphism from the proper geometrically connected variety $A$ to an affine scheme is constant because its coordinate functions are global regular functions on $A$; as a homomorphism, $f$ is zero. Since $\mathbf Z_\ell$ is flat over $\mathbf Z$, tensoring the injection with $\mathbf Z_\ell$ embeds $\operatorname{Hom}_k(A,B)\otimes\mathbf Z_\ell$ into that free module, so $\operatorname{Hom}_k(A,B)$ embeds into $\mathbf Z_\ell^{4g_Ag_B}$ as an abelian group whose reduction modulo $\ell$ spans a finite-dimensional $\mathbf Z/\ell$-space. Such a subgroup is free of rank at most $4g_Ag_B$: choose $x_1,\dots,x_s$ mapping to a basis of the image modulo $\ell$, let $M$ be their span, so that every element of the subgroup lies in $M+\ell^n\mathbf Z_\ell^{4g_Ag_B}$ for every $n$; the coefficients of an element of $M$ in a $\mathbf Z_\ell$-basis stabilize integrally, so $M$ is closed, and $\ell^n\mathbf Z_\ell^{4g_Ag_B}$ tends to zero. Thus $\operatorname{Hom}_k(A,B)$, and in particular $\operatorname{End}_k(A)$, is finite free. Consequently $\operatorname{End}^0_k(A)$ is a finite-dimensional $\mathbf Q$-algebra.
 
 Every endomorphism acts covariantly on $T_\ell A$ and $V_\ell A$. If it is defined over $k$, that action commutes with $G_k$, giving
 
@@ -1606,7 +1618,7 @@ $$
 \operatorname{End}_{\mathbf Z_\ell[G_k]}(T_\ell A). \tag{15.1}
 $$
 
-The map is injective. If an endomorphism kills $T_\ell A$, it kills $A[\ell^m](k^s)$ for every $m$. The union $A[\ell^\infty](k^s)$ is Zariski dense. Indeed, let $H$ be its Zariski closure; it is a closed subgroup. The union is $\ell$-divisible, while the image $[\ell](H)$ is closed because $H$ is proper. Since $[\ell](H)$ contains the dense torsion union, it equals $H$; multiplication by $\ell$ is therefore surjective on $H(k^s)$, including on its finite component group. If $Q=A/H$ had positive dimension, choose a nonzero $y\in Q[\ell](k^s)$ and lift it to $x\in A(k^s)$. Then $\ell x\in H(k^s)$, so choose $h\in H(k^s)$ with $\ell h=\ell x$. Now $x-h\in A[\ell](k^s)\subset H(k^s)$, whence $x\in H(k^s)$ and $y=0$, a contradiction. Thus $H=A$. The kernel of our endomorphism is closed and contains this dense union, so the endomorphism is zero. We do not assert that (15.1) is surjective over an arbitrary field; that is a much deeper arithmetic statement and is not needed here.
+The map is injective by the density argument above: an endomorphism acting trivially on $T_\ell A$ is zero. We do not assert that (15.1) is surjective over an arbitrary field; that is a much deeper arithmetic statement and is not needed here.
 
 For a Jacobian, correspondences defined over $k$ supply a distinguished subalgebra of $\operatorname{End}_k(J)$. Vertical and horizontal cycle components lie in its kernel. Different cycles can induce the same endomorphism, so the correspondence ring and the endomorphism ring should not be identified.
 
