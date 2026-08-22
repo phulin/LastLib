@@ -173,7 +173,8 @@ theorem chapter07_local_reciprocity_continuous
       ∀ L : Chapter07FiniteAbelianIndex K KAb,
         IsOpen (chapter07NormSubgroup (K := K) (L := L) : Set Kˣ)) :
     Continuous (chapter07LocalReciprocity S) := by
-  sorry
+  exact (chapter07_local_reciprocity_continuous_iff_finite_artin S).2
+    (fun L => chapter07_finite_artin_continuous_of_open_norm S L (hopen L))
 
 /-- The inverse image of the basic Galois neighborhood fixing a finite level
 is exactly the corresponding norm subgroup. -/
@@ -184,7 +185,23 @@ theorem chapter07_reciprocity_preimage_fixing_subgroup
     (chapter07LocalReciprocity S) ⁻¹'
         (L.fixingSubgroup : Set Gal(KAb / K)) =
       (chapter07NormSubgroup (K := K) (L := L) : Set Kˣ) := by
-  sorry
+  ext x
+  change chapter07LocalReciprocity S x ∈ (L.fixingSubgroup : Set Gal(KAb / K)) ↔
+    x ∈ chapter07NormSubgroup (K := K) (L := L)
+  have hfix :
+      chapter07LocalReciprocity S x ∈ (L.fixingSubgroup : Set Gal(KAb / K)) ↔
+        (chapter07LocalReciprocity S x).restrictNormalHom L = 1 := by
+    simpa only [SetLike.mem_coe] using
+      (FiniteGaloisIntermediateField.mem_fixingSubgroup_iff
+        (chapter07LocalReciprocity S x) L)
+  rw [hfix]
+  change InfiniteGalois.proj L
+      ((chapter07AbelianGaloisLimitEquiv K KAb)
+        (chapter07LocalReciprocity S x)) = 1 ↔
+    x ∈ chapter07NormSubgroup (K := K) (L := L)
+  rw [chapter07_finite_artin_is_the_reciprocity_projection S L x]
+  change x ∈ (S.artin L).ker ↔ _
+  rw [chapter07_finite_artin_kernel_eq_norm S L]
 
 /-- The neighborhood version of continuity: norm subgroups pull back the
 finite-level fixing neighborhoods. -/
