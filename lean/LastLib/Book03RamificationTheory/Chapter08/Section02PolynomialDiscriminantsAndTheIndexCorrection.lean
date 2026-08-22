@@ -62,7 +62,101 @@ theorem chapter08_minpoly_polynomial_discriminant_eq_power_basis_discriminant
     (pb : PowerBasis K L) :
     chapter08PolynomialDiscriminant K (minpoly K pb.gen) =
       chapter08PowerBasisDiscriminant K L pb := by
-  sorry
+  let E := AlgebraicClosure K
+  let f := minpoly K pb.gen
+  let φ : K →+* E := algebraMap K E
+  have hfdeg : 0 < f.degree := by
+    exact minpoly.degree_pos pb.isIntegral_gen
+  have hfm : f.Monic := minpoly.monic pb.isIntegral_gen
+  have hsplit : (f.map φ).Splits := by
+    exact IsAlgClosed.splits _
+  have hφ : Function.Injective φ := FaithfulSMul.algebraMap_injective K E
+  have hroots : ∀ σ : L →ₐ[K] E, σ pb.gen ∈ (f.map φ).roots := by
+    intro σ
+    have hmapf0 : (f.map φ) ≠ 0 := Polynomial.map_monic_ne_zero hfm
+    rw [Polynomial.mem_roots, Polynomial.IsRoot.def,
+      Polynomial.eval_map_algebraMap, Polynomial.aeval_algHom_apply]
+    · simpa [f] using congrArg σ (minpoly.aeval : aeval pb.gen (minpoly K pb.gen) = 0)
+    · exact hmapf0
+  have hnodup : (f.map φ).roots.Nodup := by
+    exact Polynomial.nodup_roots
+      (Polynomial.Separable.map (Algebra.IsSeparable.isSeparable K pb.gen))
+  have hres :
+      φ ((-1 : K) ^ (f.natDegree * (f.natDegree - 1) / 2) * f.discr) =
+        ((f.map φ).roots.map (f.derivative.map φ).eval).prod := by
+    calc
+      φ ((-1 : K) ^ (f.natDegree * (f.natDegree - 1) / 2) * f.discr) =
+          resultant (f.map φ) (f.derivative.map φ) f.natDegree
+            (f.natDegree - 1) := by
+        rw [Polynomial.resultant_map_map]
+        simpa [hfm.leadingCoeff] using
+          (congrArg φ (Polynomial.resultant_deriv (f := f) hfdeg)).symm
+      _ = ((f.map φ).roots.map (f.derivative.map φ).eval).prod := by
+        simpa [Polynomial.natDegree_map_eq_of_injective hφ, hfm.leadingCoeff] using
+          (Polynomial.resultant_eq_prod_eval (f.map φ) (f.derivative.map φ)
+            (f.natDegree - 1) (by
+              simpa [Polynomial.natDegree_map_eq_of_injective hφ] using
+                Polynomial.natDegree_derivative_le f) hsplit)
+  have hprod :
+    ((f.map φ).roots.map (f.derivative.map φ).eval).prod =
+        ∏ σ : L →ₐ[K] E, σ (aeval pb.gen f.derivative) := by
+    letI : DecidableEq E := Classical.decEq E
+    have hroot_sub :
+        (∏ x : {x // x ∈ f.aroots E}, (f.derivative.map φ).eval x.1) =
+          ((f.map φ).roots.map (f.derivative.map φ).eval).prod := by
+      have hmem := Finset.prod_mem_multiset
+        (f.map φ).roots
+        (fun x : {x // x ∈ (f.map φ).roots} => (f.derivative.map φ).eval x.1)
+        ((f.derivative.map φ).eval)
+        (by intro x; rfl)
+      simpa only [Finset.prod_eq_multiset_prod, Multiset.toFinset_val,
+        Multiset.dedup_eq_self.mpr hnodup, Multiset.map_id] using hmem
+    rw [← hroot_sub]
+    change (∏ x : {x // x ∈ f.aroots E},
+      (f.derivative.map (algebraMap K E)).eval x.1) = _
+    simp_rw [Polynomial.eval_map_algebraMap]
+    symm
+    refine @Fintype.prod_equiv (L →ₐ[K] E)
+      {x : E // x ∈ f.aroots E} _ _ _ _ pb.liftEquiv'
+      (fun σ => σ (aeval pb.gen f.derivative))
+      (fun x => aeval x.1 f.derivative) ?_
+    intro σ
+    rw [PowerBasis.liftEquiv'_apply_coe, aeval_algHom_apply]
+  change Polynomial.discr f = Algebra.discr K pb.basis
+  apply (algebraMap K E).injective
+  rw [Algebra.discr_powerBasis_eq_norm K pb, map_mul, map_pow, map_neg, map_one,
+    Algebra.norm_eq_prod_embeddings]
+  rw [pb.finrank]
+  have hres' :
+      (-1 : E) ^ (f.natDegree * (f.natDegree - 1) / 2) * φ f.discr =
+        ((f.map φ).roots.map (f.derivative.map φ).eval).prod := by
+    simpa [map_mul, map_pow, map_neg, map_one] using hres
+  have hsign :
+      ((-1 : E) ^ (f.natDegree * (f.natDegree - 1) / 2)) ^ 2 = 1 := by
+    rw [← pow_mul]
+    simp
+  have hdisc :
+      φ f.discr = (-1 : E) ^ (f.natDegree * (f.natDegree - 1) / 2) *
+        ((f.map φ).roots.map (f.derivative.map φ).eval).prod := by
+    calc
+      φ f.discr = 1 * φ f.discr := by simp
+      _ = ((-1 : E) ^ (f.natDegree * (f.natDegree - 1) / 2)) ^ 2 * φ f.discr := by
+        rw [hsign]
+      _ = (-1 : E) ^ (f.natDegree * (f.natDegree - 1) / 2) *
+          (((-1 : E) ^ (f.natDegree * (f.natDegree - 1) / 2)) * φ f.discr) := by
+        ring
+      _ = (-1 : E) ^ (f.natDegree * (f.natDegree - 1) / 2) *
+          ((f.map φ).roots.map (f.derivative.map φ).eval).prod := by
+        rw [hres']
+  have hdisc' :
+      φ f.discr = (-1 : E) ^ (f.natDegree * (f.natDegree - 1) / 2) *
+        (∏ σ : L →ₐ[K] E, σ (aeval pb.gen f.derivative)) := by
+    calc
+      φ f.discr = (-1 : E) ^ (f.natDegree * (f.natDegree - 1) / 2) *
+          ((f.map φ).roots.map (f.derivative.map φ).eval).prod := hdisc
+      _ = (-1 : E) ^ (f.natDegree * (f.natDegree - 1) / 2) *
+          (∏ σ : L →ₐ[K] E, σ (aeval pb.gen f.derivative)) := by rw [hprod]
+  simpa [f, φ, chapter08DiscriminantSign, pb.natDegree_minpoly] using hdisc'
 
 /- The minimal polynomial and the power basis are kept separate: the first is
    a polynomial over the base field, while the latter is the finite family
@@ -151,7 +245,8 @@ theorem chapter08_power_family_discriminant_eq_field_discriminant_of_power_basis
     (hpower : b = chapter08MonogenicPowerFamily B α n) :
     chapter08PowerFamilyDiscriminantElement A B α n =
       chapter08FieldDiscriminant A B b := by
-  sorry
+  change Algebra.discr A (chapter08MonogenicPowerFamily B α n) = Algebra.discr A b
+  rw [← hpower]
 
 /-- The index ideal of an order inside the full integral algebra. -/
 noncomputable def chapter08IndexIdeal
@@ -167,7 +262,11 @@ theorem chapter08_order_discriminant_index_correction
     chapter08OrderDiscriminant A B O bO =
       chapter08FieldDiscriminant A B bB *
         chapter08OrderIndexDeterminant A B O bO bB ^ 2 := by
-  sorry
+  change Algebra.discr A (fun i => (bO i : B)) =
+    Algebra.discr A bB * (bB.det (fun i => (bO i : B))) ^ 2
+  conv_lhs => rw [← bB.toMatrix_map_vecMul (fun i => (bO i : B))]
+  rw [Algebra.discr_of_matrix_vecMul, bB.det_apply]
+  ac_rfl
 
 theorem chapter08_order_discriminant_ideal_index_correction
     (A B : Type*) [CommRing A] [CommRing B]
@@ -176,7 +275,18 @@ theorem chapter08_order_discriminant_ideal_index_correction
     Ideal.span ({chapter08OrderDiscriminant A B O bO} : Set A) =
       Ideal.span ({chapter08FieldDiscriminant A B bB} : Set A) *
         chapter08IndexIdeal A B O bO bB ^ 2 := by
-  sorry
+  have hdisc := chapter08_order_discriminant_index_correction A B O bO bB
+  rw [hdisc]
+  change Ideal.span ({chapter08FieldDiscriminant A B bB *
+      chapter08OrderIndexDeterminant A B O bO bB ^ 2} : Set A) =
+    Ideal.span ({chapter08FieldDiscriminant A B bB} : Set A) *
+      (Ideal.span ({chapter08OrderIndexDeterminant A B O bO bB} : Set A)) ^ 2
+  rw [Ideal.span_singleton_pow]
+  change Ideal.span ({chapter08FieldDiscriminant A B bB *
+      chapter08OrderIndexDeterminant A B O bO bB ^ 2} : Set A) =
+    Ideal.span ({chapter08FieldDiscriminant A B bB} : Set A) *
+      Ideal.span ({chapter08OrderIndexDeterminant A B O bO bB ^ 2} : Set A)
+  rw [← Ideal.span_singleton_mul_span_singleton]
 
 def chapter08ProperOrder
     (A B : Type*) [CommRing A] [CommRing B] [Algebra A B]

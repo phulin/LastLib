@@ -186,8 +186,137 @@ abbrev chapter08TraceDualQuotient
     [Algebra A B] [Algebra A K] [Algebra K L] [Algebra B L] [Algebra A L]
     [IsScalarTower A K L] [IsScalarTower A B L] : Type _ :=
   (chapter08TraceDualLattice A B K L).restrictScalars A ⧸
-    ((1 : Submodule B L).restrictScalars A).comap
+      ((1 : Submodule B L).restrictScalars A).comap
       ((chapter08TraceDualLattice A B K L).restrictScalars A).subtype
+
+private theorem chapter08_span_inv_quotient_length
+    (A B L : Type*) [CommRing A] [IsDomain A]
+    [IsDiscreteValuationRing A] [CommRing B]
+    [IsDedekindDomain B] [IsDiscreteValuationRing B] [Field L]
+    [Algebra A B] [Algebra B L] [Algebra A L] [IsFractionRing B L]
+    [IsScalarTower A B L] [Algebra.IsIntegral A B]
+    [Module.IsTorsionFree A B]
+    (g : B) (hg : g ≠ 0) :
+    Module.length A
+        ((FractionalIdeal.spanSingleton B⁰ (algebraMap B L g)⁻¹ :
+          Submodule B L).restrictScalars A ⧸
+          ((1 : Submodule B L).restrictScalars A).comap
+            ((FractionalIdeal.spanSingleton B⁰ (algebraMap B L g)⁻¹ :
+              Submodule B L).restrictScalars A).subtype) =
+      Module.length A (B ⧸ Ideal.span ({g} : Set B)) := by
+  let u : L := (algebraMap B L g)⁻¹
+  let D : Submodule B L :=
+    (FractionalIdeal.spanSingleton B⁰ u : Submodule B L)
+  let I : Ideal B := Ideal.span ({g} : Set B)
+  have hmapg : algebraMap B L g ≠ 0 := by
+    intro h
+    apply hg
+    exact (IsFractionRing.injective B L) (by simpa using h)
+  have hu : u ≠ 0 := by
+    simp [u, hmapg]
+  change Module.length A
+      (D.restrictScalars A ⧸
+        ((1 : Submodule B L).restrictScalars A).comap
+          (D.restrictScalars A).subtype) = Module.length A (B ⧸ I)
+  let coeff : D → B := fun z =>
+    Classical.choose ((FractionalIdeal.mem_spanSingleton B⁰).mp z.property)
+  have coeff_spec (z : D) : algebraMap B L (coeff z) * u = z := by
+    have hz := Classical.choose_spec
+      ((FractionalIdeal.mem_spanSingleton B⁰).mp z.property)
+    simpa [coeff, u, Algebra.smul_def] using hz
+  have coeff_mul (z : D) : algebraMap B L (coeff z) = z * algebraMap B L g := by
+    calc
+      algebraMap B L (coeff z) = algebraMap B L (coeff z) * 1 := by simp
+      _ = algebraMap B L (coeff z) * (u * algebraMap B L g) := by
+        rw [show u * algebraMap B L g = 1 by simp [u, hmapg]]
+      _ = (algebraMap B L (coeff z) * u) * algebraMap B L g := by ring
+      _ = z * algebraMap B L g := by rw [coeff_spec]
+  have coeff_add (x y : D) : coeff (x + y) = coeff x + coeff y := by
+    apply IsFractionRing.injective B L
+    simp only [map_add, coeff_mul]
+    change ((x : L) + (y : L)) * algebraMap B L g =
+      (x : L) * algebraMap B L g + (y : L) * algebraMap B L g
+    rw [add_mul]
+  have coeff_smul (b : B) (z : D) : coeff (b • z) = b * coeff z := by
+    apply IsFractionRing.injective B L
+    calc
+      algebraMap B L (coeff (b • z)) =
+          (b • z : L) * algebraMap B L g := coeff_mul _
+      _ = algebraMap B L b * ((z : L) * algebraMap B L g) := by
+        simp only [Algebra.smul_def]
+        ring
+      _ = algebraMap B L b * algebraMap B L (coeff z) := by rw [← coeff_mul]
+      _ = algebraMap B L (b * coeff z) := by rw [map_mul]
+  let coeffMap : D →ₗ[B] B :=
+    { toFun := coeff
+      map_add' := coeff_add
+      map_smul' := coeff_smul }
+  let q : D →ₗ[B] (B ⧸ I) := I.mkQ.comp coeffMap
+  have qker : LinearMap.ker q =
+      ((1 : Submodule B L).comap D.subtype) := by
+    ext z
+    constructor
+    · intro hz
+      change I.mkQ (coeff z) = 0 at hz
+      have hzI : coeff z ∈ I := by
+        exact (Submodule.Quotient.mk_eq_zero I).mp hz
+      obtain ⟨b, hb⟩ := (Ideal.mem_span_singleton).mp hzI
+      rw [Submodule.one_eq_range]
+      refine ⟨b, ?_⟩
+      calc
+        algebraMap B L b = algebraMap B L b *
+            (algebraMap B L g * u) := by simp [u, hmapg]
+        _ = algebraMap B L (g * b) * u := by rw [map_mul]; ring
+        _ = algebraMap B L (coeff z) * u := by rw [hb]
+        _ = z := coeff_spec z
+    · intro hz
+      have hz' : (z : L) ∈ (1 : Submodule B L) := hz
+      rw [Submodule.one_eq_range] at hz'
+      obtain ⟨b, hb⟩ := hz'
+      change I.mkQ (coeff z) = 0
+      apply (Submodule.Quotient.mk_eq_zero I).mpr
+      apply (Ideal.mem_span_singleton).mpr
+      refine ⟨b, ?_⟩
+      apply IsFractionRing.injective B L
+      calc
+        algebraMap B L (coeff z) = z * algebraMap B L g := coeff_mul z
+        _ = algebraMap B L b * algebraMap B L g := by
+          simpa only [Algebra.linearMap_apply] using
+            congrArg (fun x : L => x * algebraMap B L g) hb.symm
+        _ = algebraMap B L (g * b) := by rw [map_mul]; ring
+  have qsurj : Function.Surjective q := by
+    intro y
+    obtain ⟨b, rfl⟩ := I.mkQ_surjective y
+    let z : D :=
+      ⟨algebraMap B L b * u, by
+        apply (FractionalIdeal.mem_spanSingleton B⁰).mpr
+        refine ⟨b, ?_⟩
+        simp [Algebra.smul_def]
+      ⟩
+    refine ⟨z, ?_⟩
+    change I.mkQ (coeffMap z) = I.mkQ b
+    congr 1
+    change coeff z = b
+    apply IsFractionRing.injective B L
+    rw [coeff_mul]
+    simp [z, u, hmapg]
+  let r : D.restrictScalars A ≃ₗ[A] D :=
+    (Submodule.restrictScalarsEquiv A B L D).restrictScalars A
+  let qA : D.restrictScalars A →ₗ[A] (B ⧸ I) :=
+    (q.restrictScalars A).comp r.toLinearMap
+  have qkerA : LinearMap.ker qA =
+      ((1 : Submodule B L).restrictScalars A).comap
+        (D.restrictScalars A).subtype := by
+    ext z
+    change r z ∈ LinearMap.ker q ↔ (z : L) ∈ (1 : Submodule B L)
+    rw [qker]
+    change (r z : L) ∈ (1 : Submodule B L) ↔ (z : L) ∈ (1 : Submodule B L)
+    rfl
+  have qAsurj : Function.Surjective qA := qsurj.comp r.surjective
+  let e₀ := qA.quotKerEquivOfSurjective qAsurj
+  let e :=
+    (Submodule.quotEquivOfEq _ _ qkerA.symm).trans e₀
+  exact e.length_eq
 
 theorem chapter08_trace_dual_quotient_length
     (A B K L : Type*) [CommRing A] [IsDomain A]
@@ -201,13 +330,92 @@ theorem chapter08_trace_dual_quotient_length
     [Module.Finite A B] [Module.Free A B] [Module.IsTorsionFree A B]
     [Algebra.IsIntegral A B]
     (mA : Ideal A) (mB : Ideal B) (f d : ℕ)
-    (hmaxA : mA = IsLocalRing.maximalIdeal A)
+    (_hmaxA : mA = IsLocalRing.maximalIdeal A)
     (hmaxB : mB = IsLocalRing.maximalIdeal B)
     (hdifferent : chapter08DifferentIdeal A B = mB ^ d)
     (hresidue : (IsLocalRing.maximalIdeal B).inertiaDeg A = f) :
     Module.length A (chapter08TraceDualQuotient A B K L) =
       (f * d : ℕ∞) := by
-  sorry
+  let _ : IsLocalHom (algebraMap A B) := inferInstance
+  let _ : (IsLocalRing.maximalIdeal B).LiesOver
+      (IsLocalRing.maximalIdeal A) := by
+    rw [Ideal.liesOver_iff, Ideal.under_def]
+    exact IsLocalRing.maximalIdeal_comap (algebraMap A B) |>.symm
+  have hquot :=
+    LastLib.Book01ValuationsDVRsAndCompletions.Chapter11.chapter11_length_prime_power_over_base
+      A B (IsLocalRing.maximalIdeal A)
+      (IsDiscreteValuationRing.not_a_field A)
+      (IsLocalRing.maximalIdeal B) d
+  have hmB0 : mB ≠ (⊥ : Ideal B) := by
+    rw [hmaxB]
+    exact IsDiscreteValuationRing.not_a_field B
+  have hI0 : mB ^ d ≠ (⊥ : Ideal B) := by
+    by_cases hd0 : d = 0
+    · simp [hd0]
+    · intro h
+      exact hmB0 ((Ideal.pow_eq_bot hd0).mp h)
+  have hprincipal : (mB ^ d).IsPrincipal := inferInstance
+  let g : B := hprincipal.principal.choose
+  have hgspan : mB ^ d = Ideal.span ({g} : Set B) := by
+    exact hprincipal.principal.choose_spec
+  have hg : g ≠ 0 := by
+    intro hg0
+    apply hI0
+    rw [hgspan, hg0]
+    simp
+  let J : FractionalIdeal B⁰ L := (mB ^ d : Ideal B)
+  have hdf :
+      LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal
+          A B K L =
+        J := by
+    calc
+      LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal
+          A B K L = (chapter08DifferentIdeal A B : FractionalIdeal B⁰ L) :=
+        (chapter08_different_fractional_coe_eq_ideal A B K L).symm
+      _ = J := by
+        change (chapter08DifferentIdeal A B : FractionalIdeal B⁰ L) =
+          (mB ^ d : Ideal B)
+        rw [hdifferent]
+  have hcodiff :
+      LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal
+          A B K L =
+        J⁻¹ := by
+    calc
+      LastLib.Book03RamificationTheory.Chapter07.chapter07CodifferentFractionalIdeal
+          A B K L =
+          (LastLib.Book03RamificationTheory.Chapter07.chapter07DifferentFractionalIdeal
+            A B K L)⁻¹ := by
+        symm
+        rw [chapter08_different_fractional_is_inverse_codifferent A B K L]
+        simp
+      _ = J⁻¹ := by rw [hdf]
+  have hDsub : chapter08TraceDualLattice A B K L =
+      ((J⁻¹ : FractionalIdeal B⁰ L) : Submodule B L) := by
+    ext x
+    change x ∈ (chapter08TraceDualLattice A B K L : Set L) ↔
+      x ∈ ((J⁻¹ : FractionalIdeal B⁰ L) : Set L)
+    rw [chapter08_traceDualLattice_coe_eq_traceDual,
+      ← chapter08_codifferent_fractional_coe_eq_traceDual A B K L, hcodiff]
+  have hfracpow :
+      J =
+        FractionalIdeal.spanSingleton B⁰ (algebraMap B L g) := by
+    change ((mB ^ d : Ideal B) : FractionalIdeal B⁰ L) = _
+    rw [hgspan]
+    simp
+  have hfracinv :
+      J⁻¹ =
+        FractionalIdeal.spanSingleton B⁰ (algebraMap B L g)⁻¹ := by
+    rw [hfracpow, FractionalIdeal.spanSingleton_inv]
+  have hquot' : Module.length A (B ⧸ mB ^ d) = (f * d : ℕ∞) := by
+    rw [hmaxB]
+    simpa [hresidue, mul_comm] using hquot
+  change Module.length A
+      ((chapter08TraceDualLattice A B K L).restrictScalars A ⧸
+        ((1 : Submodule B L).restrictScalars A).comap
+          ((chapter08TraceDualLattice A B K L).restrictScalars A).subtype) =
+    (f * d : ℕ∞)
+  rw [hDsub, hfracinv]
+  rw [chapter08_span_inv_quotient_length A B L g hg, ← hgspan, hquot']
 
 /- The norm of a maximal-ideal power records the residue-degree factor. -/
 theorem chapter08_relative_norm_of_power
@@ -235,7 +443,11 @@ theorem chapter08_discriminant_exponent_eq_residue_degree_mul_different
     (hδunique : ∃! n : ℕ,
       chapter08RelativeDiscriminantIdeal A B = mA ^ n) :
     δ = f * d := by
-  sorry
+  have hnormdiff := chapter08_relative_discriminant_ideal_eq_norm_different
+    A B K L
+  have hpow : chapter08RelativeDiscriminantIdeal A B = mA ^ (f * d) := by
+    rw [hnormdiff, hdiff, chapter08_relative_norm_of_power A B mA mB f d hnorm]
+  exact hδunique.unique hdisc hpow
 
 theorem chapter08_discriminant_exponent_eq_different_exponent_of_residue_degree_one
     (δ f d : ℕ) (hδ : δ = f * d) (hf : f = 1) :
