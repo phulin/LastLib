@@ -39,7 +39,83 @@ theorem chapter12_gaussian_unit_values
     (G : Chapter12GaussianFieldData K) :
     Set.range (fun u : (𝓞 K)ˣ =>
       (algebraMap (𝓞 K) K (u : 𝓞 K) : K)) = chapter12GaussianUnitValues G := by
-  sorry
+  have hclass (z : GaussianInt) (hz : IsUnit z) :
+      z = 1 ∨ z = -1 ∨ z = (⟨0, 1⟩ : GaussianInt) ∨
+        z = -(⟨0, 1⟩ : GaussianInt) := by
+    rcases z with ⟨a, b⟩
+    have hn : (⟨a, b⟩ : GaussianInt).norm = 1 :=
+      (Zsqrtd.norm_eq_one_iff' (d := -1) (by norm_num) _).2 hz
+    have hcoord : a * a + b * b = 1 := by
+      simpa [Zsqrtd.norm_def] using hn
+    have ha_lower : -1 ≤ a := by
+      by_contra h
+      have h' : a ≤ -2 := by omega
+      nlinarith [sq_nonneg b]
+    have ha_upper : a ≤ 1 := by
+      by_contra h
+      have h' : 2 ≤ a := by omega
+      nlinarith [sq_nonneg b]
+    have hb_lower : -1 ≤ b := by
+      by_contra h
+      have h' : b ≤ -2 := by omega
+      nlinarith [sq_nonneg a]
+    have hb_upper : b ≤ 1 := by
+      by_contra h
+      have h' : 2 ≤ b := by omega
+      nlinarith [sq_nonneg a]
+    have ha_cases : a = -1 ∨ a = 0 ∨ a = 1 := by omega
+    have hb_cases : b = -1 ∨ b = 0 ∨ b = 1 := by omega
+    rcases ha_cases with rfl | rfl | rfl <;>
+      rcases hb_cases with rfl | rfl | rfl <;>
+      norm_num [Zsqrtd.ext_iff] at hcoord <;>
+      norm_num [Zsqrtd.ext_iff]
+  have hmap_back (u : (𝓞 K)ˣ) :
+      G.ringOfIntegersEquiv.symm
+          ((Units.map G.ringOfIntegersEquiv.toMonoidHom u : GaussianIntˣ) : GaussianInt) =
+        (u : 𝓞 K) := by
+    change G.ringOfIntegersEquiv.symm
+        (G.ringOfIntegersEquiv (u : 𝓞 K)) = (u : 𝓞 K)
+    simp
+  ext x
+  constructor
+  · rintro ⟨u, rfl⟩
+    let z : GaussianIntˣ := Units.map G.ringOfIntegersEquiv.toMonoidHom u
+    have hz : IsUnit (z : GaussianInt) := z.isUnit
+    have hback := hmap_back u
+    rcases hclass (z : GaussianInt) hz with h | h | h | h
+    · have hu : (u : 𝓞 K) = 1 := by
+        rw [← hback, h]
+        simp
+      simp [chapter12GaussianUnitValues, hu]
+    · have hu : (u : 𝓞 K) = -1 := by
+        rw [← hback, h]
+        simp
+      simp [chapter12GaussianUnitValues, hu]
+    · have hu : (u : 𝓞 K) = G.ringOfIntegersEquiv.symm (⟨0, 1⟩ : GaussianInt) := by
+        rw [← hback, h]
+      simp [chapter12GaussianUnitValues, hu, G.ringOfIntegers_i]
+    · have hu : (u : 𝓞 K) = -G.ringOfIntegersEquiv.symm (⟨0, 1⟩ : GaussianInt) := by
+        rw [← hback, h]
+        simp
+      simp [chapter12GaussianUnitValues, hu, G.ringOfIntegers_i]
+  · intro hx
+    simp only [chapter12GaussianUnitValues, mem_insert_iff, mem_singleton_iff] at hx
+    rcases hx with rfl | rfl | rfl | rfl
+    · exact ⟨1, by simp⟩
+    · exact ⟨-1, by simp⟩
+    · let q : GaussianIntˣ := Units.mk (⟨0, 1⟩ : GaussianInt) (⟨0, -1⟩ : GaussianInt) (by
+        norm_num [Zsqrtd.ext_iff]) (by norm_num [Zsqrtd.ext_iff])
+      let u : (𝓞 K)ˣ := Units.map G.ringOfIntegersEquiv.symm.toMonoidHom q
+      refine ⟨u, ?_⟩
+      simp [u, q, G.ringOfIntegers_i]
+    · let q : GaussianIntˣ := Units.mk (⟨0, -1⟩ : GaussianInt) (⟨0, 1⟩ : GaussianInt) (by
+        norm_num [Zsqrtd.ext_iff]) (by norm_num [Zsqrtd.ext_iff])
+      let u : (𝓞 K)ˣ := Units.map G.ringOfIntegersEquiv.symm.toMonoidHom q
+      refine ⟨u, ?_⟩
+      change algebraMap (𝓞 K) K
+        (G.ringOfIntegersEquiv.symm (⟨0, -1⟩ : GaussianInt)) = -G.i
+      rw [show (⟨0, -1⟩ : GaussianInt) = -(⟨0, 1⟩ : GaussianInt) by
+        norm_num [Zsqrtd.ext_iff], map_neg, map_neg, G.ringOfIntegers_i]
 
 /- The one complex place and no real places, together with the resulting
    archimedean product, are recorded in one reusable portrait. -/
@@ -54,7 +130,57 @@ theorem chapter12_gaussian_has_one_complex_place
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
     (G : Chapter12GaussianFieldData K) :
     Nonempty (Chapter12GaussianInfinitePortrait G) := by
-  sorry
+  classical
+  have hno_real_embedding (φ : K →+* ℂ) :
+      ¬ComplexEmbedding.IsReal φ := by
+    intro hφ
+    have hre : hφ.embedding G.i ^ 2 = (-1 : ℝ) := by
+      rw [← map_pow, G.i_sq, map_neg, map_one]
+    nlinarith [sq_nonneg (hφ.embedding G.i)]
+  have hno_real : ∀ v : InfinitePlace K, ¬IsReal v := by
+    intro v hv
+    exact hno_real_embedding v.embedding (isReal_iff.mp hv)
+  have hreal_empty : IsEmpty {v : InfinitePlace K // IsReal v} := by
+    exact ⟨fun v => hno_real v.1 v.2⟩
+  have hreal : nrRealPlaces K = 0 :=
+    Fintype.card_eq_zero_iff.mpr hreal_empty
+  have halg : (‹Algebra ℚ K› : Algebra ℚ K) =
+      (DivisionRing.toRatAlgebra : Algebra ℚ K) :=
+    Subsingleton.elim _ _
+  have hrank := card_add_two_mul_card_eq_rank K
+  have hdegree := G.degree_two
+  have hmodule : (‹Algebra ℚ K› : Algebra ℚ K).toModule =
+      (DivisionRing.toRatAlgebra : Algebra ℚ K).toModule :=
+    congrArg (fun A : Algebra ℚ K => A.toModule) halg
+  rw [hmodule] at hdegree
+  have hrank' : nrRealPlaces K + 2 * nrComplexPlaces K = 2 := by
+    exact hrank.trans hdegree
+  rw [hreal] at hrank'
+  have hcomplex : nrComplexPlaces K = 1 := by omega
+  let v : InfinitePlace K := InfinitePlace.mk G.complexEmbedding
+  have hvcomplex₀ : IsComplex (InfinitePlace.mk G.complexEmbedding) := by
+    apply isComplex_iff.mpr
+    intro hreal
+    rcases embedding_mk_eq G.complexEmbedding with h | h
+    · exact hno_real_embedding G.complexEmbedding (h ▸ hreal)
+    · exact hno_real_embedding G.complexEmbedding
+        (ComplexEmbedding.isReal_conjugate_iff.mp (h ▸ hreal))
+  have hvcomplex : IsComplex v := by
+    simpa [v] using hvcomplex₀
+  have hplaces : Fintype.card (InfinitePlace K) = 1 := by
+    rw [card_eq_nrRealPlaces_add_nrComplexPlaces, hreal, hcomplex]
+  obtain ⟨w, hw⟩ := (Fintype.card_eq_one_iff.mp hplaces)
+  have hv : ∀ w' : InfinitePlace K, w' = v := by
+    intro w'
+    exact (hw w').trans (hw v).symm
+  let _ : Unique (InfinitePlace K) :=
+    { default := v
+      uniq := hv }
+  let e : chapter12InfiniteAdeleRing K ≃+* ℂ :=
+    (RingEquiv.piUnique (fun w : InfinitePlace K => w.Completion)).trans
+      (InfinitePlace.Completion.ringEquivComplexOfIsComplex hvcomplex)
+  exact ⟨{ no_real_place := hno_real, unique_complex_place :=
+    ⟨v, hvcomplex, fun w hw => hv w⟩, equiv := e }⟩
 
 /-- The normalized complex absolute value used by the product formula. -/
 def chapter12GaussianNormalizedAbsoluteValue (z : ℂ) : ℝ :=
@@ -79,7 +205,14 @@ theorem chapter12_gaussian_class_number_one
     {K : Type*} [Field K] [NumberField K] [Algebra ℚ K]
     (G : Chapter12GaussianFieldData K) :
     chapter12GaussianClassNumberOne G := by
-  sorry
+  unfold chapter12GaussianClassNumberOne
+  let _ : IsPrincipalIdealRing (𝓞 K) :=
+    IsPrincipalIdealRing.of_surjective G.ringOfIntegersEquiv.symm.toRingHom
+      G.ringOfIntegersEquiv.symm.surjective
+  have hcard : Fintype.card (ClassGroup (𝓞 K)) = 1 :=
+    (card_classGroup_eq_one_iff).2 inferInstance
+  obtain ⟨c, hc⟩ := (Fintype.card_eq_one_iff).1 hcard
+  exact ⟨fun x y => (hc x).trans (hc y).symm⟩
 
 /-! ## The norm-one class quotient -/
 

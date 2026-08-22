@@ -1,4 +1,6 @@
 import LastLib.Book04AdelesAndIdeles.Chapter12.Core
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section04StructureOfIdeleClassGroup
+import LastLib.Book04AdelesAndIdeles.Chapter09.Section05CompactKernelOverIdealClassGroup
 import LastLib.Book04AdelesAndIdeles.Chapter11.Section07ComputingElementaryRayQuotients
 import LastLib.Book04AdelesAndIdeles.Chapter07.Section03AdditiveAndMultiplicativeInformation
 
@@ -833,7 +835,259 @@ structure Chapter12RationalClassPortrait
 theorem chapter12_rational_idele_class_group_portrait :
     Nonempty (Chapter12RationalClassPortrait
       (chapter12CanonicalIdeleModuleData ℚ)) := by
-  sorry
+  have harch_surj :
+      Function.Surjective (chapter09ArchimedeanUnitEmbedding ℚ) := by
+    intro x
+    let xi : (∀ v : InfinitePlace ℚ, v.Completion)ˣ := x.1
+    let c : (Rat.infinitePlace.Completion)ˣ :=
+      (MulEquiv.piUnits xi) Rat.infinitePlace
+    let r : ℝˣ := Units.map
+      (NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal
+        Rat.isReal_infinitePlace).toMonoidHom c
+    have hxmod : chapter09InfiniteIdeleModule x.1 = 1 :=
+      (chapter09KInfinityOne_mem_iff).1 x.2
+    have hprod : chapter09InfiniteIdeleModule x.1 = chapter09NormUnit c := by
+      change chapter09InfiniteIdeleModule xi = chapter09NormUnit c
+      unfold chapter09InfiniteIdeleModule
+      simpa [c] using
+        (Fintype.prod_subsingleton
+          (fun v : InfinitePlace ℚ =>
+            chapter09NormUnit ((MulEquiv.piUnits xi) v)) Rat.infinitePlace)
+    have hunit : chapter09NormUnit c = 1 := by
+      rw [← hprod, hxmod]
+    have hunit' : (chapter09NormUnit c : ℝ≥0) = 1 :=
+      congrArg Units.val hunit
+    have hc_norm : ‖(c : Rat.infinitePlace.Completion)‖ = 1 := by
+      have hc' : ‖(c : Rat.infinitePlace.Completion)‖₊ = 1 := by
+        simpa [chapter09NormUnit] using hunit'
+      have := congrArg (fun y : ℝ≥0 => (y : ℝ)) hc'
+      simpa using this
+    have hr_norm : ‖(r : ℝ)‖ = 1 := by
+      have hr_nn : ‖(r : ℝ)‖₊ = ‖(c : Rat.infinitePlace.Completion)‖₊ := by
+        have hzero :
+            (NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal
+              Rat.isReal_infinitePlace) 0 = 0 := by
+          change (NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal
+            Rat.isReal_infinitePlace) 0 = 0
+          exact (NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal
+            Rat.isReal_infinitePlace).map_zero
+        have hnorm :=
+          (NumberField.InfinitePlace.Completion.isometryEquivRealOfIsReal
+            Rat.isReal_infinitePlace).isometry.nnnorm_map_of_map_zero hzero
+            (c : Rat.infinitePlace.Completion)
+        change ‖(NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal
+          Rat.isReal_infinitePlace) (c : Rat.infinitePlace.Completion)‖₊ =
+          ‖(c : Rat.infinitePlace.Completion)‖₊
+        exact hnorm
+      have := congrArg (fun y : ℝ≥0 => (y : ℝ)) hr_nn
+      simpa [hc_norm] using this
+    have hr_abs : |(r : ℝ)| = 1 := by
+      simpa [Real.norm_eq_abs] using hr_norm
+    rcases (abs_eq (by norm_num)).1 hr_abs with hr | hr
+    · refine ⟨1, ?_⟩
+      apply Subtype.ext
+      change chapter09InfiniteUnitEmbedding ℚ (1 : (𝓞 ℚ)ˣ) = xi
+      apply (MulEquiv.piUnits).injective
+      funext v
+      have hv : v = Rat.infinitePlace := Subsingleton.elim _ _
+      subst v
+      change (MulEquiv.piUnits
+          (chapter09InfiniteUnitEmbedding ℚ (1 : (𝓞 ℚ)ˣ))) Rat.infinitePlace = c
+      have hc : c = 1 := by
+        apply Units.ext
+        apply (NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal
+          Rat.isReal_infinitePlace).injective
+        simpa [r] using hr
+      rw [hc]
+      exact congrArg (fun f : ∀ v : InfinitePlace ℚ, v.Completionˣ =>
+        f Rat.infinitePlace)
+        ((MulEquiv.piUnits :
+          (∀ v : InfinitePlace ℚ, v.Completion)ˣ ≃*
+            (∀ v : InfinitePlace ℚ, v.Completionˣ)).map_one)
+    · refine ⟨-1, ?_⟩
+      apply Subtype.ext
+      change chapter09InfiniteUnitEmbedding ℚ (-1 : (𝓞 ℚ)ˣ) = xi
+      apply (MulEquiv.piUnits).injective
+      funext v
+      have hv : v = Rat.infinitePlace := Subsingleton.elim _ _
+      subst v
+      change (MulEquiv.piUnits
+          (chapter09InfiniteUnitEmbedding ℚ (-1 : (𝓞 ℚ)ˣ))) Rat.infinitePlace = c
+      have hc : c = (MulEquiv.piUnits
+          (chapter09InfiniteUnitEmbedding ℚ (-1 : (𝓞 ℚ)ˣ))) Rat.infinitePlace := by
+        apply Units.ext
+        apply (NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal
+          Rat.isReal_infinitePlace).injective
+        have hneg :
+            (NumberField.InfinitePlace.Completion.ringEquivRealOfIsReal
+              Rat.isReal_infinitePlace)
+                ((MulEquiv.piUnits
+                  (chapter09InfiniteUnitEmbedding ℚ (-1 : (𝓞 ℚ)ˣ))) Rat.infinitePlace :
+                  Rat.infinitePlace.Completion) = -1 := by
+          have hcoord :
+              ((MulEquiv.piUnits
+                (chapter09InfiniteUnitEmbedding ℚ (-1 : (𝓞 ℚ)ˣ))) Rat.infinitePlace :
+                Rat.infinitePlace.Completion) =
+                ((-1 : ℚ) : Rat.infinitePlace.Completion) := by
+            change algebraMap ℚ Rat.infinitePlace.Completion (-1 : ℚ) =
+              ((-1 : ℚ) : Rat.infinitePlace.Completion)
+            simp
+          rw [hcoord]
+          simp
+        simpa [r, hneg] using hr
+      rw [hc]
+  have harch_inj :
+      Function.Injective (chapter09ArchimedeanUnitEmbedding ℚ) := by
+    have hring : Function.Injective
+        ((algebraMap ℚ (Chapter09InfiniteAdele ℚ)).comp
+          (algebraMap (𝓞 ℚ) ℚ)) := by
+      intro a b hab
+      apply (IsFractionRing.injective (𝓞 ℚ) ℚ)
+      apply RingHom.injective (algebraMap ℚ (Chapter09InfiniteAdele ℚ))
+      exact hab
+    intro a b hab
+    apply Units.map_injective hring
+    simpa [chapter09ArchimedeanUnitEmbedding, chapter09InfiniteUnitEmbedding] using
+      congrArg Subtype.val hab
+  let s₀ : chapter09FiniteUnitIdeles ℚ →*
+      Chapter09ArchFiniteUnitNumerator ℚ := {
+    toFun := fun u => (1, u)
+    map_one' := by simp
+    map_mul' := by intro u v; simp }
+  let s : chapter09FiniteUnitIdeles ℚ →*
+      Chapter09ArchFiniteUnitKernel ℚ :=
+    (QuotientGroup.mk' (chapter09GlobalUnitDiagonal ℚ).range).comp s₀
+  have hs_inj : Function.Injective s := by
+    intro u v huv
+    apply Subtype.ext
+    change QuotientGroup.mk' (chapter09GlobalUnitDiagonal ℚ).range
+        (s₀ u) = QuotientGroup.mk' (chapter09GlobalUnitDiagonal ℚ).range (s₀ v) at huv
+    have huv' := (QuotientGroup.eq_iff_div_mem).1 huv
+    rcases huv' with ⟨a, ha⟩
+    have hfirst := congrArg Prod.fst ha
+    have harch : chapter09ArchimedeanUnitEmbedding ℚ a = 1 := by
+      apply Subtype.ext
+      simpa [s₀, chapter09GlobalUnitDiagonal] using hfirst
+    have ha1 : a = 1 := harch_inj (by simpa using harch)
+    have hsecond := congrArg Prod.snd ha
+    have huv : u = v := by
+      have hmul := congrArg (fun z : chapter09FiniteUnitIdeles ℚ => z * v) hsecond
+      simpa [s₀, chapter09GlobalUnitDiagonal, ha1, div_eq_mul_inv, mul_assoc] using
+        hmul.symm
+    exact congrArg Subtype.val huv
+  have hs_surj : Function.Surjective s := by
+    intro z
+    obtain ⟨w, rfl⟩ :=
+      QuotientGroup.mk'_surjective (chapter09GlobalUnitDiagonal ℚ).range z
+    rcases harch_surj w.1 with ⟨a, ha⟩
+    let u : chapter09FiniteUnitIdeles ℚ :=
+      (chapter09FiniteUnitSubtypeEmbedding ℚ a)⁻¹ * w.2
+    refine ⟨u, ?_⟩
+    change QuotientGroup.mk' (chapter09GlobalUnitDiagonal ℚ).range
+        (s₀ u) = QuotientGroup.mk' (chapter09GlobalUnitDiagonal ℚ).range w
+    apply (QuotientGroup.eq_iff_div_mem).2
+    refine ⟨a⁻¹, ?_⟩
+    apply Prod.ext <;>
+      simp [s₀, u, chapter09GlobalUnitDiagonal, ha, div_eq_mul_inv, mul_assoc]
+  let eAF : Chapter09ArchFiniteUnitKernel ℚ ≃*
+      chapter09FiniteUnitIdeles ℚ :=
+    (MulEquiv.ofBijective s ⟨hs_inj, hs_surj⟩).symm
+  let _ : IsPrincipalIdealRing (𝓞 ℚ) :=
+    IsPrincipalIdealRing.of_surjective
+      (Rat.IsIntegralClosure.intEquiv (𝓞 ℚ)).symm.toRingHom
+      (Rat.IsIntegralClosure.intEquiv (𝓞 ℚ)).symm.surjective
+  have hclass_sub : Subsingleton (ClassGroup (𝓞 ℚ)) := by
+    refine ⟨fun x y => ?_⟩
+    have htriv : ∀ z : ClassGroup (𝓞 ℚ), z = 1 := by
+      intro z
+      refine ClassGroup.induction ℚ ?_ z
+      intro I
+      exact ClassGroup.mk_eq_one_iff.mpr
+        (I : FractionalIdeal (𝓞 ℚ)⁰ ℚ).isPrincipal
+    exact (htriv x).trans (htriv y).symm
+  let fclass : Chapter09ArchFiniteUnitKernel ℚ →*
+      chapter09ClassNormOne ℚ := chapter09ArchFiniteToClassNormOne ℚ
+  have fclass_inj : Function.Injective fclass :=
+    (chapter09CompactKernel_short_exact ℚ).left_injective
+  have fclass_surj : Function.Surjective fclass := by
+    intro z
+    have hz : chapter09NormOneClassIdealClassMap ℚ z = 1 :=
+      @Subsingleton.elim _ hclass_sub _ _
+    exact ((chapter09CompactKernel_short_exact ℚ).exact z).mp hz
+  let eClass : Chapter09ArchFiniteUnitKernel ℚ ≃*
+      chapter09ClassNormOne ℚ :=
+    MulEquiv.ofBijective fclass ⟨fclass_inj, fclass_surj⟩
+  let eNormF : chapter09ClassNormOne ℚ ≃*
+      chapter09FiniteUnitIdeles ℚ := eClass.symm.trans eAF
+  obtain ⟨t, _ht, ht_right⟩ :=
+    chapter09_exists_class_module_section ℚ Rat.infinitePlace
+  have ht_apply (q : Chapter09PositiveReal) :
+      chapter09IdeleClassModule ℚ (t q) = q := by
+    have h := congrArg
+      (fun f : Chapter09PositiveReal →* Chapter09PositiveReal => f q) ht_right
+    simpa using h
+  let p : Chapter09IdeleClassGroup ℚ →*
+      chapter09ClassNormOne ℚ := {
+    toFun := fun x =>
+      ⟨x * (t (chapter09IdeleClassModule ℚ x))⁻¹, by
+        apply (chapter09ClassNormOne_mem_iff).2
+        simpa only [map_mul, map_inv, ht_apply] using
+          mul_inv_cancel (chapter09IdeleClassModule ℚ x)⟩
+    map_one' := by
+      apply Subtype.ext
+      simp
+    map_mul' := by
+      intro x y
+      apply Subtype.ext
+      change x * y * (t (chapter09IdeleClassModule ℚ (x * y)))⁻¹ =
+        (x * (t (chapter09IdeleClassModule ℚ x))⁻¹) *
+          (y * (t (chapter09IdeleClassModule ℚ y))⁻¹)
+      rw [(chapter09IdeleClassModule ℚ).map_mul, t.map_mul, mul_inv_rev]
+      ac_rfl }
+  let eSplit : Chapter09IdeleClassGroup ℚ ≃*
+      chapter09ClassNormOne ℚ × Chapter09PositiveReal := {
+    toFun := fun x => (p x, chapter09IdeleClassModule ℚ x)
+    invFun := fun z => (z.1 : Chapter09IdeleClassGroup ℚ) * t z.2
+    left_inv := by
+      intro x
+      change (p x : Chapter09IdeleClassGroup ℚ) *
+        t (chapter09IdeleClassModule ℚ x) = x
+      change (x * (t (chapter09IdeleClassModule ℚ x))⁻¹) *
+        t (chapter09IdeleClassModule ℚ x) = x
+      rw [mul_assoc, inv_mul_cancel, mul_one]
+    right_inv := by
+      intro z
+      have hz : chapter09IdeleClassModule ℚ
+          (z.1 : Chapter09IdeleClassGroup ℚ) = 1 :=
+        (chapter09ClassNormOne_mem_iff).1 z.1.property
+      apply Prod.ext
+      · apply Subtype.ext
+        change (z.1 : Chapter09IdeleClassGroup ℚ) * t z.2 *
+            (t (chapter09IdeleClassModule ℚ
+              ((z.1 : Chapter09IdeleClassGroup ℚ) * t z.2)))⁻¹ = z.1
+        rw [map_mul, hz, one_mul, ht_apply]
+        simp
+      · change chapter09IdeleClassModule ℚ
+          ((z.1 : Chapter09IdeleClassGroup ℚ) * t z.2) = z.2
+        rw [map_mul, hz, one_mul, ht_apply]
+    map_mul' := by
+      intro x y
+      exact p.map_mul x y |> fun h => by
+        simp [p, t.map_mul, mul_inv_rev]
+        ac_rfl }
+  let eFinal : chapter12IdeleClassGroup (𝓞 ℚ) ℚ ≃*
+      chapter12RationalClassTarget :=
+    (eSplit.trans (MulEquiv.prodCongr eNormF (MulEquiv.refl _))).trans
+      MulEquiv.prodComm
+  refine ⟨{ equivalence := eFinal, first_coordinate_is_module := ?_ }⟩
+  intro x
+  apply Units.ext
+  change ((eFinal (chapter12IdeleClassMk (𝓞 ℚ) ℚ x)).1 : ℝ≥0) =
+    (chapter09IdeleModuleNNRealHom ℚ x : ℝ≥0)
+  change ((chapter09IdeleClassModule ℚ
+      (QuotientGroup.mk (x : Chapter09Idele ℚ)) : Chapter09PositiveReal) : ℝ≥0) =
+    (chapter09IdeleModuleNNRealHom ℚ x : ℝ≥0)
+  rfl
 
 abbrev chapter12RationalNormOneClassCarrier
     (M : Chapter12IdeleModuleData (𝓞 ℚ) ℚ) :=
@@ -843,14 +1097,88 @@ theorem chapter12_rational_norm_one_class_group_portrait :
     Nonempty (chapter12RationalNormOneClassCarrier
       (chapter12CanonicalIdeleModuleData ℚ) ≃*
       chapter12CanonicalFiniteUnitIdeles ℚ) := by
-  sorry
+  obtain ⟨P⟩ := chapter12_rational_idele_class_group_portrait
+  let M := chapter12CanonicalIdeleModuleData ℚ
+  let C := chapter12IdeleClassGroup (𝓞 ℚ) ℚ
+  let N := chapter12RationalNormOneClassCarrier M
+  let F := chapter12CanonicalFiniteUnitIdeles ℚ
+  have hfirst (c : N) : (P.equivalence c.1).1 = 1 := by
+    obtain ⟨x, hx⟩ :=
+      QuotientGroup.mk'_surjective (chapter12PrincipalIdeleSubgroup (𝓞 ℚ) ℚ) c.1
+    have hmodule : M.module x = 1 := by
+      have hc : chapter12IdeleClassModule M c.1 = 1 := c.2
+      rw [← hx] at hc
+      change chapter12IdeleClassModule M (chapter12IdeleClassMk (𝓞 ℚ) ℚ x) = 1 at hc
+      rw [chapter12IdeleClassModule_apply] at hc
+      exact hc
+    have hcoord := P.first_coordinate_is_module x
+    have hcoord' : (P.equivalence c.1).1 = chapter12IdeleModuleUnit M x := by
+      rw [← hx]
+      exact hcoord
+    rw [hcoord']
+    apply Units.ext
+    change M.module x = (1 : ℝ≥0)
+    exact hmodule
+  have hkernel (c : C) (hc : (P.equivalence c).1 = 1) :
+      c ∈ chapter12NormOneIdeleClassSubgroup M := by
+    obtain ⟨x, hx⟩ :=
+      QuotientGroup.mk'_surjective (chapter12PrincipalIdeleSubgroup (𝓞 ℚ) ℚ) c
+    have hcoord := P.first_coordinate_is_module x
+    have hcoord' : (P.equivalence c).1 = chapter12IdeleModuleUnit M x := by
+      rw [← hx]
+      exact hcoord
+    have hu : chapter12IdeleModuleUnit M x = 1 := by
+      rw [← hcoord']
+      exact hc
+    have hmodule : M.module x = 1 := by
+      have hval := congrArg Units.val hu
+      change M.module x = (1 : ℝ≥0) at hval
+      exact hval
+    change c ∈ chapter12NormOneIdeleClassSubgroup M
+    change chapter12IdeleClassModule M c = 1
+    rw [← hx]
+    change chapter12IdeleClassModule M (chapter12IdeleClassMk (𝓞 ℚ) ℚ x) = 1
+    rw [chapter12IdeleClassModule_apply]
+    exact hmodule
+  let e : N ≃* F := {
+    toFun := fun c => (P.equivalence c.1).2
+    invFun := fun f =>
+      ⟨P.equivalence.symm (1, f), hkernel _ (by
+        exact congrArg Prod.fst (P.equivalence.apply_symm_apply (1, f)))⟩
+    left_inv := by
+      intro c
+      apply Subtype.ext
+      apply P.equivalence.injective
+      rw [P.equivalence.apply_symm_apply]
+      apply Prod.ext
+      · exact (hfirst c).symm
+      · rfl
+    right_inv := by
+      intro f
+      change (P.equivalence (P.equivalence.symm (1, f))).2 = f
+      exact congrArg Prod.snd (P.equivalence.apply_symm_apply (1, f))
+    map_mul' := by
+      intro c d
+      change (P.equivalence (c.1 * d.1)).2 =
+        (P.equivalence c.1).2 * (P.equivalence d.1).2
+      rw [P.equivalence.map_mul]
+      rfl }
+  exact ⟨e⟩
 
 def chapter12RationalGlobalUnitValues : Set ℤ :=
   {1, -1}
 
 theorem chapter12_rational_global_units_are_signs :
     Set.range (fun u : ℤˣ => (u : ℤ)) = chapter12RationalGlobalUnitValues := by
-  sorry
+  ext x
+  constructor
+  · rintro ⟨u, rfl⟩
+    rcases Int.units_eq_one_or u with rfl | rfl <;>
+      simp [chapter12RationalGlobalUnitValues]
+  · intro hx
+    rcases hx with rfl | rfl
+    · exact ⟨1, by simp⟩
+    · exact ⟨-1, by simp⟩
 
 /-! ## Rational ray class quotients -/
 
