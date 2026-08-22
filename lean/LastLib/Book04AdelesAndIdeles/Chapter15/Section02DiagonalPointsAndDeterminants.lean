@@ -141,7 +141,24 @@ private theorem chapter15_matrix_identity_neighborhood
         ((chapter15_finite_integral_matrix_mem_entries_and_inverse_iff
           (R := 𝓞 L) (K := L) n v g).mp hg i j).1))
   have hfiniteEntry_cont (i j : Fin n) : Continuous (finiteEntry i j) := by
-    sorry
+    exact RestrictedProduct.mapAlong_continuous
+      (R₁ := fun v : Chapter15FinitePlace (𝓞 L) =>
+        Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))
+      (R₂ := fun v : Chapter15FinitePlace (𝓞 L) => v.adicCompletion L)
+      (A₁ := fun v =>
+        (chapter15FiniteMatrixIntegralSubgroup (R := 𝓞 L) (K := L) n v :
+          Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L))))
+      (A₂ := fun v => (v.adicCompletionIntegers L : Set (v.adicCompletion L)))
+      (f := fun v => v) Filter.tendsto_id
+      (fun v g => g i j)
+      (Filter.Eventually.of_forall (fun v g hg =>
+        ((chapter15_finite_integral_matrix_mem_entries_and_inverse_iff
+          (R := 𝓞 L) (K := L) n v g).mp hg i j).1))
+      (fun v =>
+        (continuous_apply j).comp
+          (Matrix.GeneralLinearGroup.continuous_apply
+            (fun g : Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L) => g)
+            continuous_id i))
   let entry : Chapter15GLnAdeles n (𝓞 L) L → Fin n → Fin n →
       LastLib.Book04AdelesAndIdeles.Chapter05.Chapter05AdeleRing L := fun x i j =>
     (fun v => (x.1 v) i j, finiteEntry i j x.2)
@@ -244,7 +261,51 @@ private theorem chapter15_matrix_identity_neighborhood
 theorem chapter15_principal_matrix_range_is_discrete
     (n : ℕ) {L : Type*} [Field L] [NumberField L] :
     IsDiscrete (Set.range (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n)) := by
-  sorry
+  rw [isDiscrete_iff_forall_mem_exists_isOpen]
+  intro x hx
+  obtain ⟨g, rfl⟩ := hx
+  obtain ⟨W, hWopen, hWone, hWinter⟩ :=
+    chapter15_matrix_identity_neighborhood (L := L) n
+  let : Fact (∀ v : Chapter15FinitePlace (𝓞 L),
+      IsOpen
+        (chapter15FiniteMatrixIntegralSubgroup (R := 𝓞 L) (K := L) n v :
+          Set (Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion L)))) :=
+    ⟨fun v => chapter15_finite_integral_matrix_group_is_open n v⟩
+  let V : Set (Chapter15GLnAdeles n (𝓞 L) L) :=
+    (fun y =>
+      (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g)⁻¹ * y) ⁻¹' W
+  have hVopen : IsOpen V := by
+    exact hWopen.preimage (continuous_const.mul continuous_id)
+  have hVmem : chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g ∈ V := by
+    change (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g)⁻¹ *
+        chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g ∈ W
+    simpa using hWone
+  have hVinter : V ∩ Set.range
+      (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n) =
+      {chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g} := by
+    ext y
+    constructor
+    · rintro ⟨hyV, ⟨h, rfl⟩⟩
+      have hz :
+          (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g)⁻¹ *
+              chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n h ∈ W := hyV
+      have hz' :
+          (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g)⁻¹ *
+              chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n h ∈
+            W ∩ Set.range (chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n) := by
+        refine ⟨hz, ⟨g⁻¹ * h, ?_⟩⟩
+        simp [map_mul]
+      rw [hWinter] at hz'
+      have hz'' := Set.mem_singleton_iff.mp hz'
+      apply Set.mem_singleton_iff.mpr
+      have hz''' := congrArg
+        (fun z => chapter15PrincipalMatrix (R := 𝓞 L) (K := L) n g * z) hz''
+      simpa [mul_assoc] using hz'''
+    · intro hy
+      have hy' := Set.mem_singleton_iff.mp hy
+      subst y
+      exact ⟨hVmem, ⟨g, rfl⟩⟩
+  exact ⟨V, hVopen, hVinter⟩
 
 def chapter15ArchimedeanPrincipalIdele :
     Kˣ →* Chapter15ArchimedeanIdeleGroup K where
@@ -442,7 +503,17 @@ theorem chapter15_adelic_determinant_continuous
     exact ⟨Matrix.GeneralLinearGroup.det h,
       (Matrix.GeneralLinearGroup.map_det (v.adicCompletionIntegers K).subtype h).symm⟩
   have hfin : Continuous (chapter15FiniteMatrixDeterminant (R := R) (K := K) n) := by
-    sorry
+    exact RestrictedProduct.mapAlong_continuous
+      (R₁ := fun v : Chapter15FinitePlace R =>
+        Matrix.GeneralLinearGroup (Fin n) (v.adicCompletion K))
+      (R₂ := fun v : Chapter15FinitePlace R => (v.adicCompletion K)ˣ)
+      (A₁ := fun v =>
+        (chapter15FiniteMatrixIntegralSubgroup (R := R) (K := K) n v : Set _))
+      (A₂ := fun v =>
+        (chapter15FiniteUnitIntegralSubgroup (R := R) (K := K) v : Set _))
+      (f := id) Filter.tendsto_id
+      (φ := fun _ => Matrix.GeneralLinearGroup.det) hφ
+      (fun _ => Matrix.GeneralLinearGroup.continuous_det)
   apply Continuous.prodMk
   · exact continuous_pi fun v =>
       Matrix.GeneralLinearGroup.continuous_det.comp

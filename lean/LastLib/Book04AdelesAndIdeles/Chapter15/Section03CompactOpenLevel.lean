@@ -731,7 +731,7 @@ def chapter15UpperTriangularSubgroup (n : ℕ) (S : Type*) [Ring S] :
 theorem chapter15UpperTriangularSubgroup_mem_iff
     (n : ℕ) (S : Type*) [Ring S]
     (g : Matrix.GeneralLinearGroup (Fin n) S) :
-    g ∈ chapter15UpperTriangularSubgroup n S ↔
+      g ∈ chapter15UpperTriangularSubgroup n S ↔
       ∀ i j : Fin n, j < i → g i j = 0 := by
   sorry
 
