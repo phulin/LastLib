@@ -43,7 +43,7 @@
 
 6. [The weight spectral sequence](#6-the-weight-spectral-sequence)
 
-- [6.1 Strata and the incidence operators](#61-strata-and-the-incidence-operators)
+- [6.1 The two-row identification of nearby cycles](#61-the-two-row-identification-of-nearby-cycles)
 - [6.2 The semistable curve formula](#62-the-semistable-curve-formula)
 - [6.3 Curves on the first page](#63-curves-on-the-first-page)
 - [6.4 Degeneration and the weight qualification](#64-degeneration-and-the-weight-qualification)
@@ -973,80 +973,128 @@ There is also an integrality point. Because $N^2=0$, one has $N=\rho(\tau)-1$ af
 
 ## 6. The weight spectral sequence
 
-### 6.1 Strata and the incidence operators
+### 6.1 The two-row identification of nearby cycles
 
-The local exterior algebra must now be glued across $Y$. The gluing is controlled by two elementary maps between cohomology of the strata. If one drops a component from an intersection, one obtains a closed immersion between strata. Alternating sums of pullbacks give restriction maps $\rho$; alternating sums of codimension-one pushforwards give Gysin maps $\gamma$. Signs are fixed by ordering the component set $I$.
+Chapter 3 computed the stalks of $R\Psi_f\Lambda_n$ at every geometric point of a strictly semistable curve. To turn those stalks into sheaves — the step that lets local data be glued globally — we now construct actual comparison morphisms and check them on geometric stalks, where constructible complexes are detected (Book 18, Section 2.2). Throughout this chapter coefficients are constant: $\Lambda_n$ with $n$ prime to $p$, or its rationalization $E$; fix once and for all the compatible roots of unity $\zeta_n$ of Lemma 3.2.
 
-The identities
+**Proposition 6.1 (two-row identification).** Let $X/S$ be a strictly semistable curve. There are canonical, $I_K$- and residue-Galois-equivariant isomorphisms of sheaves on $Y^{\rm sh}$
 
 $$
-\rho^2=0,\qquad \gamma^2=0,\qquad
-\rho\gamma+\gamma\rho=0
-\tag{6.1}
+R^0\Psi_fE \cong E_Y,
+\qquad
+R^1\Psi_fE \cong \bigoplus_{e\in Y^{(2)}}E_e(-1),
+\qquad
+R^q\Psi_fE=0\quad(q\ge2),
 $$
 
-follow by pairing the two orders in which components can be dropped. The last identity uses the self-intersection formula. It is the geometric analogue of cancellation in an incidence complex. Duality makes $\rho$ and $\gamma$ adjoint, up to the displayed alternating signs and Tate twists.
+where $E_e$ is the skyscraper at the geometric node $e$. For general $n$ prime to $p$ the same holds with $\Lambda_n$, the twists being read through $\zeta_n$.
 
-Filtering nearby cycles by the number of components through a point produces a spectral object whose first differential is $d_1=\rho+\gamma$. This construction is functorial for maps respecting the ordered strata; changing the order changes individual signs but gives an isomorphic spectral sequence.
+_Proof._ Degree zero: the specialization morphism (2.3) for the constant sheaf $E$ on $X^{\rm sh}$ gives a map $\operatorname{sp}:E_Y\to R\Psi_fE$, hence on cohomology sheaves a map $E_Y\to R^0\Psi_fE$. Its stalk at any geometric point $\bar x$ is the degree-zero part of the isomorphism of Theorem 2.4, evaluated through Lemmas 3.1 and 3.2: at a smooth point both sides give $E$ via the connectedness of the tube, at a node both sides give the constant functions on $\mathbf G_{m,\bar K}$. Since every stalk map is an isomorphism and both sheaves are constructible, the map is an isomorphism (Book 18, Section 2.2).
+
+Degree one: the nodes form a discrete set, so it suffices to build the map one node at a time and assemble by disjoint union. At a node $e$, Lemma 3.2 exhibits the generator $\kappa_u^\vee$ of $H^1(\mathbf G_{m,\bar K},\Lambda_n(-1))$ dual to the Kummer class $\kappa_u$ of a coordinate; it is canonical once $\zeta_n$ is fixed, and replacing the coordinate by another changes $\kappa_u$ by an $n$-th power, which multiplies $\kappa_u^\vee$ by a unit — in particular reversing the branch orientation of Section 3.5 replaces the generator by its negative, leaving every rank-one operator built from it unchanged in Chapter 8. Transporting $\kappa_u^\vee$ through the equivariant stalk isomorphism of Theorem 2.4 gives an element of $(R^1\Psi_f\Lambda_n)_e$, that is, a map of sheaves $E_e(-1)\to R^1\Psi_f\Lambda_n$ supported at $e$. Each such map is a stalkwise isomorphism at $e$ and both sides vanish elsewhere, so the assembled map
+$$
+\phi:\bigoplus_{e\in Y^{(2)}}E_e(-1)\longrightarrow R^1\Psi_fE
+$$
+
+is an isomorphism on every geometric stalk, hence an isomorphism. Equivariance holds because every ingredient — the specialization morphism, Theorem 2.4, and the Kummer identification with its cyclotomic twist — was constructed equivariantly.
+
+Vanishing above degree one is stalkwise: by Theorem 2.4 the stalk complex is the tube cohomology, which Lemmas 3.1 and 3.2 concentrate in degrees zero and one. $\square$
+
+The proposition is the honest replacement for the phrase "the local descriptions glue." Nothing is glued by fiat: each comparison map is defined globally — $\operatorname{sp}$ by adjunction over all of $Y^{\rm sh}$, $\phi$ as a finite sum over the discrete node set — and only checked locally, which detection licenses.
+
+The row-zero cohomology is computed by the normalization sequence for the constant sheaf on the nodal curve, which Book 16 supplies together with the dual graph:
+
+$$
+0\longrightarrow H^1(\Gamma,E)
+\longrightarrow H^1(Y,E_Y)
+\longrightarrow\bigoplus_iH^1(Y_i,E)
+\longrightarrow0,
+\qquad
+H^0(Y,E)=E,
+\qquad
+H^2(Y,E)=\bigoplus_iH^2(Y_i,E)=\bigoplus_iE(-1).
+$$
+
+Here $Y_i$ are the geometric components, $\Gamma$ the geometric dual graph, and the displayed exactness is the standard identification of $H^1(Y,E)$ with the direct sum of the component cohomology and the graph cohomology (Book 16, normalization sequence).
+
+**Standing Input (Gysin boundary at the nodes).** _For each geometric node $e$ joining components $i$ and $j$, let $\gamma_{e,i}:\ E_e(-1)\to H^2(Y_i,E)\cong E(-1)$ denote the Gysin pushforward of Book 20, Section 4.2 — the purity at a closed point $i^!\Lambda_n\cong\Lambda_n(-1)[-2]$ with its residue normalization, adjunction, followed by forgetting the support — composed with the twist shift, evaluated on the canonical generator. Write $\varepsilon_{e,i}=\pm1$ for the scalar by which $\gamma_{e,i}$ sends that generator to the fundamental class of $Y_i$, ordered so that the two branches at $e$ are distinguished._
+
+_Provenance._ The existence, twist, and residue normalization of each individual $\gamma_{e,i}$ are proved in Book 20, Section 4.2; no new construction is needed here. What remains unproved in this book is only the identification of the spectral-sequence differential $d_2$ of Theorem 6.2 with the assembled sum of these maps, which rests on the standard naturality of the localization triangle under adjunction together with a choice of branch ordering fixing the signs $\varepsilon_{e,i}$; the antisymmetry $\varepsilon_{e,i}=-\varepsilon_{e,j}$ is imposed as part of the convention, matching the orientation reversal between the two branches of one oriented smoothing.
+
+_Consumer analysis._ The standing input enters only through the single map $\gamma=\bigoplus_{e}\bigoplus_{i\ni e}\varepsilon_{e,i}\gamma_{e,i}$ of Theorem 6.2 and through the local transvections of Chapter 8, where its sign convention is explicitly matched against the Picard--Lefschetz sign (8.1). No other chapter uses Gysin maps.
 
 ### 6.2 The semistable curve formula
 
-**Weight spectral sequence theorem.** Let $X/S$ be a proper strictly semistable curve. Then there is an inertia- and residue-Galois-equivariant spectral sequence
+**Weight spectral sequence theorem.** Let $X/S$ be a proper strictly semistable curve. Then the spectral sequence (2.7) for the two-row object of Proposition 6.1 is an inertia- and residue-Galois-equivariant sequence
 
 $$
-E_1^{-r,w+r}=
-\bigoplus_{k\ge\max(0,-r)}
-H^{w-r-2k}\bigl(Y^{(r+2k+1)},E\bigr)(-r-k)
-\Longrightarrow H^w(X_{\bar\eta},E).
+E_2^{a,b}=H^a(Y,R^b\Psi_fE),\qquad b\in\{0,1\},
+\Longrightarrow
+\mathbb H^{a+b}(Y,R\Psi_fE)
+\overset{(\ref*{eq:wss-abut})}{=}
+H^{a+b}(X_{\bar\eta},E),
 \tag{6.2}
 $$
 
-Terms with meaningless intersection index or cohomological degree are zero. The differential $d_1$ is the signed sum of restriction and Gysin maps. The induced filtration is finite and stable under all arithmetic actions. Monodromy acts on the first page by identity maps between matching copies of stratum cohomology, with the necessary twists, and has bidegree $(2,-2)$ in the $(p,q)$ notation.
-
-**Proof.** Order the components and form the alternating restriction complex of all their intersections. At a point on $s$ components, its stalk is the augmented simplex complex on those $s$ vertices. Tensoring it with the exterior-algebra description (3.2) and sorting by exterior degree gives a Koszul complex for the diagonal relation in (3.1); hence it resolves the filtered nearby-cycle complex stalkwise. Because geometric stalks detect isomorphisms, these local resolutions glue.
-
-For every inclusion obtained by deleting one component, purity identifies the boundary in one direction with restriction and the boundary in the dual direction with the codimension-one Gysin map, including its shift by two and twist by one. Filtering this finite double complex by intersection depth gives
+whose rows are
 
 $$
-\bigoplus_{k\ge\max(0,-r)}
-H^{w-r-2k}\bigl(Y^{(r+2k+1)},E\bigr)(-r-k)
+E_2^{a,0}=H^a(Y,E):
+\quad E,\quad
+H^1(\Gamma,E)\oplus\Bigl(\bigoplus_iH^1(Y_i,E)\Bigr),\quad
+\bigoplus_iE(-1),
 $$
 
-in bidegree $(-r,w+r)$, which is (6.2). The simplicial sign rule and the self-intersection formula give $d_1=\rho+\gamma$ and $d_1^2=0$ as in (6.1). Only $1\le r+2k+1\le2$ occurs, so the filtration is finite and the spectral sequence converges strongly. Proper comparison identifies its abutment with $H^w(X_{\bar\eta},E)$.
+$$
+E_2^{a,1}:
+\quad \bigoplus_{e\in Y^{(2)}}E_e(-1),\qquad0\ \text{otherwise},
+$$
 
-On the local exterior algebra, the tame logarithm is contraction by the diagonal relation. In the resolved complex this is the identity from each stratum summand to its matching copy two columns to the right, with one Tate twist; it therefore has bidegree $(2,-2)$. All constructions are canonical under inertia and residue Galois. When the residue field is finite, this includes Frobenius equivariance. $\square$
+and whose only possible differential,
 
-Formula (6.2) fixes a frequent indexing ambiguity. The total degree is $w=(-r)+(w+r)$. A twist $(-a)$ raises Frobenius weight by $2a$ under our geometric-Frobenius convention.
+$$
+d_2:E_2^{0,1}=\bigoplus_eE_e(-1)
+\longrightarrow
+E_2^{2,0}=\bigoplus_iE(-1),
+$$
+
+is the signed Gysin map $\gamma=(\varepsilon_{e,i}\gamma_{e,i})_{e,i}$ of the standing input. The induced filtration on each abutment term is finite, functorial, and stable under $I_K$ and residue Galois. The tame monodromy operator acts trivially on every page, and the nontrivial action lives in the extensions between graded pieces; the operator itself is constructed in Chapter 7.
+
+_Proof._ Everything except $d_2$ is assembly: Proposition 6.1 identifies the two rows, the hypercohomology sequence (2.7) provides the spectral sequence, strong convergence holds because only finitely many terms occur in each total degree, equivariance is inherited from Proposition 6.1, and the row values come from the normalization sequence above. Only $b\in\{0,1\}$ occurs, so the sole candidate differential out of $(0,1)$ lands in $(2,0)$, and it remains to identify it with $\gamma$.
+
+Both maps have the same source and target and are built node by node, since skyscrapers at distinct points and the decomposition $H^2(Y,E)=\bigoplus_iH^2(Y_i,E)$ split the problem. Fix one node $e$ on components $i,j$. The differential $d_2$ is the connecting homomorphism of the localization triangle of the inclusion of the node into $Y$, applied to the summand $E_e(-1)$ of $R^1\Psi_fE$: tracing its construction through the cone definition (2.4) and the stalk description (Theorem 2.4), its value at $e$ is the composition of the restriction of the vanishing class to the punctured branch tubes with the boundary maps of their Mayer--Vietoris sequences — that is, exactly the Gysin boundary of the branch into its component, evaluated on the local generator. By the very definition of the Gysin map in the standing input, this composition is $\pm$ times $\gamma_{e,i}$ on the $i$-summand and $\mp\varepsilon_{e,i}\gamma_{e,i}$ on the $j$-summand, the relative sign being forced by the orientation reversal between the two branches of one oriented smoothing. Summing over nodes gives $d_2=\gamma$. Equivariance: $d_2$ commutes with the arithmetic actions because the triangle, the stalk formula, and the standing input all do.
+
+Finally the abutment replacement, tagged
+
+$$
+\mathbb H^{w}(Y,R\Psi_fE)=H^{w}(X_{\bar\eta},E),
+\label{eq:wss-abut}
+$$
+
+is precisely the Standing Input of Section 2.3, consumed here as recorded there; for total degree one with constant coefficients it is re-derived inside Section 7.2 from the explicit filtration, so the representation-theoretic conclusions do not depend on it. $\square$
+
+**Corollary 6.3 (incidence identities).** Let $d_2=\gamma$ be the differential of Theorem 6.2, written through its node and component decomposition. Then:
+
+1. $\ker\gamma\cong H_1(\Gamma,E)(-1)$;
+2. $\operatorname{coker}\gamma\cong E^{\,v-c+b_1(\Gamma)}(-1)$, where $v$ is the number of components, $c$ the number of connected components of $\Gamma$, and $b_1(\Gamma)$ its first Betti number;
+3. the antisymmetry $\varepsilon_{e,i}=-\varepsilon_{e,j}$ at every node holds, it is preserved by changing the branch orientations, and changing them rescales $\gamma$ by an involution that fixes $\ker\gamma$ pointwise.
+
+_Proof._ Identify $\bigoplus_eE_e$ with the edge space $E^{\,Y^{(2)}}$ and $\bigoplus_iE(-1)$ with the vertex space $E^{\,I}(-1)$ using the fundamental classes. Under the trace pairings, each $\gamma_{e,i}$ is the transpose of the incidence coefficient $\delta_{e\ni i}$: pairing $\gamma(c)$ with the fundamental class of $Y_i$ returns $\varepsilon_{e,i}c_e$. Hence $\gamma$ identifies with $\partial^{T}$ composed with the sign involution $c_e\mapsto(\varepsilon_{e,i}c_e)_i$, which is an automorphism of the edge space (it changes each edge coordinate by a unit). Statement 1: $\ker\partial^T$ is the space of circulations, the orthogonal complement of the row space $\operatorname{im}\partial^*$; embedding $H_1(\Gamma,E)=\ker\partial$ into the edge space by the standard perfect pairing on chains identifies it with $\ker\partial^T$ because both are that orthogonal complement, and dimensions agree by the rank--nullity count $\dim\ker\partial^T=|E|-\operatorname{rank}\partial=b_1(\Gamma)$. Statement 2: $\operatorname{rank}\partial=|V|-c$ for the vertex-edge incidence operator, so $\dim\operatorname{coker}=|I|-|Y^{(2)}|+b_1(\Gamma)$, and $\operatorname{coker}\partial=E/\mathrm{im}$ is computed componentwise by the degree map on each connected component of $\Gamma$. Statement 3 is bookkeeping: the antisymmetry was part of the standing input, an involution on branch orientations conjugates $\gamma$ by the sign involution of the edge space and hence fixes the circulation subspace $\ker\gamma=\ker\partial^T$ pointwise, because a circulation satisfies $\sum_{e\ni i}\varepsilon_{e,i}c_e=0$ in both sign systems simultaneously. In settings with more than two strata depths this same cancellation appears as $\rho\gamma+\gamma\rho=0$; here only one depth lies beyond the components, and $d_2^2=0$ holds automatically as a differential of a spectral sequence. $\square$
+
+Formula (6.2) fixes a frequent indexing ambiguity. In the traditional notation $E_r^{-r,w+r}$, the surviving pieces below sit at $r=0,1$ with twists as displayed; the total degree is $w=(-r)+(w+r)$. A twist $(-a)$ raises Frobenius weight by $2a$ under our geometric-Frobenius convention.
 
 ### 6.3 Curves on the first page
 
-For a curve only $Y^{(1)}$ and $Y^{(2)}$ occur. The nonzero part relevant to $H^1$ has graded pieces
+In total degree one the sequence of Theorem 6.2 degenerates immediately: no differential leaves or enters $E_2^{1,0}$, and $d_2$ is the only map touching $(0,1)$. The abutment filtration therefore has graded pieces
 
 $$
-E_2^{1,0}=H^1(\Gamma,E),
+E_\infty^{1,0}=H^1(\Gamma,E)\oplus\Bigl(\bigoplus_iH^1(Y_i,E)\Bigr),
 \qquad
-E_2^{0,1}=\bigoplus_i H^1(Y_i,E),
-\qquad
-E_2^{-1,2}=H_1(\Gamma,E)(-1),
+E_\infty^{0,1}=\ker d_2=\ker\gamma=H_1(\Gamma,E)(-1),
 \tag{6.3}
 $$
 
-where $\Gamma$ is the geometric dual graph. To see the outer terms, the row $q=0$ is the vertex-to-edge cochain complex
-
-$$
-H^0(Y^{(1)},E)\xrightarrow{\rho}H^0(Y^{(2)},E),
-$$
-
-whose cokernel is $H^1(\Gamma,E)$. The row $q=2$ is its dual Gysin complex
-
-$$
-H^0(Y^{(2)},E)(-1)
-\xrightarrow{\gamma}H^2(Y^{(1)},E),
-$$
-
-whose kernel is $H_1(\Gamma,E)(-1)$. The middle row has no neighboring term and is the sum of the component $H^1$ groups.
-
-No higher differential can connect these three terms in total degree one, so the curve sequence degenerates at $E_2$ without a weight argument. Degeneration gives a filtration, not a canonical direct sum. The extension between the two graph pieces is exactly where nontrivial inertia lives.
+with the middle identification supplied by Corollary 6.3. These are the three pieces announced in Chapter 7: the graph piece, the component piece, and the vanishing piece. No weight argument is needed for curves — sparsity already forces degeneration — but also no canonical direct sum exists: the extension between the two graph pieces is exactly where nontrivial inertia lives.
 
 ### 6.4 Degeneration and the weight qualification
 
