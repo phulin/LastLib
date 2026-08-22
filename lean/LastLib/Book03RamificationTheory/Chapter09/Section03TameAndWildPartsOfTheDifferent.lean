@@ -258,7 +258,17 @@ theorem chapter09_quadratic_two_adic_different_exponent
     (hprofile : chapter09QuadraticTwoAdicProfile D)
     (hformula : d = chapter09GroupCountSum D) :
     d = 3 := by
-  sorry
+  have hsingle : chapter09SingleBreakProfile D 2 2 := by
+    refine ⟨by norm_num, hprofile.1, ?_, hprofile.2.2.2⟩
+    intro i hi
+    interval_cases i
+    · exact hprofile.1
+    · exact hprofile.2.1
+    · exact hprofile.2.2.1
+  have h := chapter09_single_break_profile_different_exponent D 2 2 d
+    hsingle hformula
+  norm_num at h
+  exact h
 
 def chapter09WildKummerProfile
     {G : Type*} [Group G] [Finite G] [Fintype G]
@@ -273,7 +283,21 @@ theorem chapter09_wild_kummer_different_exponent
     (hprofile : chapter09WildKummerProfile D p)
     (hformula : d = chapter09GroupCountSum D) :
     d = p ^ 2 - 1 := by
-  sorry
+  have hsingle : chapter09SingleBreakProfile D p p := by
+    refine ⟨hprofile.1, ?_, hprofile.2.1, hprofile.2.2⟩
+    exact hprofile.2.1 0 (by omega)
+  have h := chapter09_single_break_profile_different_exponent D p p d
+    hsingle hformula
+  calc
+    d = (p + 1) * (p - 1) := h
+    _ = p ^ 2 - 1 := by
+      have hpone : 1 ≤ p := hprofile.1.one_le
+      have hmul : p * p = p * (p - 1) + p := by
+        calc
+          p * p = p * ((p - 1) + 1) := by rw [Nat.sub_add_cancel hpone]
+          _ = p * (p - 1) + p := by simp [Nat.mul_add]
+      rw [Nat.add_mul, one_mul, pow_two]
+      omega
 
 theorem chapter09_wild_kummer_derivative_value
     (p : ℕ) (hp : Nat.Prime p)
@@ -284,7 +308,33 @@ theorem chapter09_wild_kummer_derivative_value
     (hvalpha : vL α = (1 : WithTop ℤ)) :
     vL (algebraMap K L (p : K) * α ^ (p - 1)) =
       (p ^ 2 - 1 : WithTop ℤ) := by
-  sorry
+  rw [AddValuation.map_mul, AddValuation.map_pow, hvalp, hvalpha]
+  have hcast : ((p - 1 : ℕ) : WithTop ℤ) = (p : WithTop ℤ) - 1 := by
+    calc
+      ((p - 1 : ℕ) : WithTop ℤ) = (((p - 1 : ℕ) : ℤ) : WithTop ℤ) := by norm_num
+      _ = (((p : ℤ) - 1 : ℤ) : WithTop ℤ) := by
+        congr 1
+        rw [Nat.cast_sub hp.one_le]
+        norm_num
+      _ = ((p : ℤ) : WithTop ℤ) - ((1 : ℤ) : WithTop ℤ) :=
+        (WithTop.LinearOrderedAddCommGroup.coe_sub (p : ℤ) (1 : ℤ)).symm
+      _ = (p : WithTop ℤ) - 1 := by norm_num
+  change ↑p * (↑p - 1) + (p - 1) • ((1 : ℤ) : WithTop ℤ) = ↑p ^ 2 - 1
+  rw [← WithTop.coe_nsmul]
+  norm_num [nsmul_eq_mul]
+  rw [hcast]
+  have hpcast : (p : WithTop ℤ) = ((p : ℤ) : WithTop ℤ) := by norm_num
+  have hone : (1 : WithTop ℤ) = ((1 : ℤ) : WithTop ℤ) := by norm_num
+  rw [hpcast, hone]
+  change (((p : ℤ) : WithTop ℤ) *
+      (((p : ℤ) : WithTop ℤ) - ((1 : ℤ) : WithTop ℤ)) +
+        (((p : ℤ) : WithTop ℤ) - ((1 : ℤ) : WithTop ℤ))) =
+    (((p : ℤ) : WithTop ℤ) ^ 2 - ((1 : ℤ) : WithTop ℤ))
+  rw [← WithTop.LinearOrderedAddCommGroup.coe_sub,
+    ← WithTop.coe_mul, ← WithTop.coe_add, ← WithTop.coe_pow,
+    ← WithTop.LinearOrderedAddCommGroup.coe_sub]
+  congr 1
+  ring
 
 end
 
