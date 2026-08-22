@@ -228,14 +228,36 @@ theorem chapter07_tame_different_exponent_eq_e_sub_one
     (he : (e : K) ≠ 0) (heunit : vK (e : K) = 0)
     (hderivative_leading : z = chapter07DerivativeTerm K L e 1 π) :
     d = e - 1 := by
-  sorry
+  rw [hderivative_leading] at hvalue
+  change vL (chapter07DerivativeTerm K L e 1 π) = (d : WithTop ℤ) at hvalue
+  rw [chapter07_tame_leading_term_has_value_e_sub_one K L vK vL e π he heunit hscale hπ]
+    at hvalue
+  have he0 : e ≠ 0 := by
+    intro he0
+    subst e
+    simp at he
+  have he1 : 1 ≤ e := Nat.one_le_iff_ne_zero.mpr he0
+  have hecast : (e : WithTop ℤ) = ((e : ℤ) : WithTop ℤ) := by norm_num
+  have hone : (1 : WithTop ℤ) = ((1 : ℤ) : WithTop ℤ) := by norm_num
+  have hvalue' : (e : WithTop ℤ) - 1 = (d : WithTop ℤ) := hvalue
+  rw [hecast, hone, ← WithTop.LinearOrderedAddCommGroup.coe_sub] at hvalue'
+  have hZ : (e : ℤ) - 1 = (d : ℤ) := WithTop.coe_eq_coe.mp hvalue'
+  apply Nat.cast_injective (R := ℤ)
+  rw [Nat.cast_sub he1]
+  exact hZ.symm
 
 theorem chapter07_tame_iff_different_baseline
     (e p d : ℕ) [Fact (Nat.Prime p)] (he : 0 < e)
     (htame : chapter07TameAtResidueCharacteristic e p → d = e - 1)
-    (hwild : p ∣ e → e ≤ d) (hbaseline : e - 1 ≤ d) :
+    (hwild : p ∣ e → e ≤ d) (_hbaseline : e - 1 ≤ d) :
     chapter07TameAtResidueCharacteristic e p ↔ d = e - 1 := by
-  sorry
+  constructor
+  · exact htame
+  · intro hd
+    by_contra hntame
+    have hpdiv : p ∣ e := (chapter07_wild_iff_prime_dvd e p).mp hntame
+    have hed : e ≤ d := hwild hpdiv
+    omega
 
 /- In equal characteristic p, the leading derivative term disappears when
    p divides the ramification degree. -/
@@ -244,7 +266,7 @@ theorem chapter07_equal_characteristic_wild_leading_term_zero
     (p e : ℕ) [CharP K p] [Fact (Nat.Prime p)]
     (hdiv : p ∣ e) (π : L) :
     chapter07DerivativeTerm K L e 1 π = 0 := by
-  sorry
+  simp [chapter07DerivativeTerm, (CharP.cast_eq_zero_iff K p e).mpr hdiv]
 
 /- In mixed characteristic the leading term is at least `2e - 1` after the
    normalized valuation is transferred upstairs. -/
@@ -252,14 +274,38 @@ theorem chapter07_mixed_characteristic_wild_leading_term_lower_bound
     (K L : Type*) [Field K] [Field L] [Algebra K L]
     [CharZero K] (vK : AddValuation K (WithTop ℤ))
     (vL : AddValuation L (WithTop ℤ)) (p e : ℕ) [Fact (Nat.Prime p)] (π : L)
-    (hdiv : p ∣ e)
+    (_hdiv : p ∣ e)
     (hscale : ∀ x : K, x ≠ 0 →
       vL (algebraMap K L x) = (e : WithTop ℤ) * vK x)
     (hπ : vL π = (1 : WithTop ℤ))
     (he : (e : K) ≠ 0) (hevalue : vK (e : K) ≥ (1 : WithTop ℤ)) :
     vL (chapter07DerivativeTerm K L e 1 π) ≥
       2 * (e : WithTop ℤ) - 1 := by
-  sorry
+  rw [chapter07_leading_derivative_term_value K L vK vL e π he hscale hπ]
+  have he0 : e ≠ 0 := Nat.cast_ne_zero.mp he
+  have heW : (e : WithTop ℤ) ≠ 0 := by exact_mod_cast he0
+  by_cases htop : vK (e : K) = ⊤
+  · rw [htop, WithTop.mul_top heW]
+    simp
+  · obtain ⟨z, hz⟩ := WithTop.ne_top_iff_exists.mp htop
+    have hzlower : (1 : ℤ) ≤ z := by
+      apply WithTop.coe_le_coe.mp
+      rw [← hz] at hevalue
+      exact hevalue
+    have hecast : (e : WithTop ℤ) = ((e : ℤ) : WithTop ℤ) := by norm_num
+    have htwo : (2 : WithTop ℤ) = ((2 : ℤ) : WithTop ℤ) := by norm_num
+    have hone : (1 : WithTop ℤ) = ((1 : ℤ) : WithTop ℤ) := by norm_num
+    have hmain : (e : ℤ) * z + (e : ℤ) - 1 ≥ 2 * (e : ℤ) - 1 := by
+      have heZ : (0 : ℤ) ≤ (e : ℤ) := Nat.cast_nonneg e
+      have hprod : (e : ℤ) ≤ (e : ℤ) * z := by
+        calc
+          (e : ℤ) = (e : ℤ) * 1 := by ring
+          _ ≤ (e : ℤ) * z := mul_le_mul_of_nonneg_left hzlower heZ
+      linarith
+    rw [← hz, hecast, htwo, hone, ← WithTop.coe_mul, ← WithTop.coe_mul,
+      ← WithTop.coe_add, ← WithTop.LinearOrderedAddCommGroup.coe_sub,
+      ← WithTop.LinearOrderedAddCommGroup.coe_sub]
+    exact WithTop.coe_le_coe.mpr hmain
 
 theorem chapter07_wild_nonleading_derivative_terms_ge_e
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -272,7 +318,18 @@ theorem chapter07_wild_nonleading_derivative_terms_ge_e
       vL (algebraMap K L x) = (e : WithTop ℤ) * vK x)
     (hπ : vL π = (1 : WithTop ℤ)) :
     vL (chapter07DerivativeTerm K L j a π) ≥ (e : WithTop ℤ) := by
-  sorry
+  have hbound := chapter07_other_derivative_term_value_lower_bound
+    K L vK vL e j a π hj hjdegree ha hjvalue hscale hπ
+  have hbase : (e : WithTop ℤ) ≤
+      (e : WithTop ℤ) + (j : WithTop ℤ) - 1 := by
+    have hecast : (e : WithTop ℤ) = ((e : ℤ) : WithTop ℤ) := by norm_num
+    have hjcast : (j : WithTop ℤ) = ((j : ℤ) : WithTop ℤ) := by norm_num
+    have hone : (1 : WithTop ℤ) = ((1 : ℤ) : WithTop ℤ) := by norm_num
+    rw [hecast, hjcast, hone, ← WithTop.coe_add,
+      ← WithTop.LinearOrderedAddCommGroup.coe_sub]
+    apply WithTop.coe_le_coe.mpr
+    omega
+  exact hbase.trans hbound
 
 theorem chapter07_wild_different_exponent_ge_e
     (K L : Type*) [Field K] [Field L] [Algebra K L]
@@ -280,7 +337,8 @@ theorem chapter07_wild_different_exponent_ge_e
     (hvalue : chapter07DifferentExponentValuation vL z d)
     (hwild_terms : vL z ≥ (e : WithTop ℤ)) :
     e ≤ d := by
-  sorry
+  rw [hvalue] at hwild_terms
+  exact_mod_cast hwild_terms
 
 end
 
