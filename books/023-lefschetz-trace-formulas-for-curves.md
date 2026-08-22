@@ -286,21 +286,33 @@ The proof also establishes associativity and symmetry because those identities h
 
 ### 3.3 Integral and rational coefficients
 
-Arithmetic representations use $\mathbf Z_\ell$-lattices and $\mathbf Q_\ell$-vector spaces, so a finite-level product is not the endpoint. The issue is to pass through the coefficient tower without losing a derived-limit term; uniform finiteness and perfectness are what make that passage legitimate.
+Arithmetic representations use $\mathbf Z_\ell$-lattices and $\mathbf Q_\ell$-vector spaces, so a finite-level product is not the endpoint. The issue is to pass through the coefficient tower without losing a derived-limit term; uniform finiteness and perfectness are what make that passage legitimate. This subsection is stated for curves only: the perfectness of the integral cohomology complexes that the argument consumes is proved in Books 18 and 20 precisely in dimension at most one, and no integral Künneth theorem for higher-dimensional schemes is claimed here.
 
-At level $m$, Theorem 3.1 is compatible with reduction $\Lambda_{m+1}\to\Lambda_m$. For curves the complexes have a uniform bounded range and finite cohomology. Their fixed-degree cohomology towers are therefore Mittag--Leffler. For the normalized constant coefficient systems, finite-level reduction identifies the derived inverse limits modulo every $\ell^m$, and the natural integral external-product map is
+The passage uses three earlier results, each proved rather than assumed. Book 18, Section 14.4 proves that for a normalized bounded constructible adic system on a finite-type curve, on a common finite stratification, the continuous cohomology complex $R\Gamma_{\mathrm{cont}}(C,\mathcal F)$ is perfect over $\mathbf Z_\ell$, by reduction to finite level (equation (7.1) there) and the complete-DVR lemma of its Section 7.3. Book 18, Sections 8.3 and 8.4 prove that fixed-degree cohomology towers of finite groups are Mittag--Leffler, so that $\varprojlim^1$ vanishes and ordinary inverse limits compute derived ones; Section 9.1 there proves that a bounded complex of finite free modules yields a normalized system whose derived limit recovers it. Finally, Book 20, Section 11.2 proves the detection principle used below: a morphism between derived-complete perfect complexes is an isomorphism once all of its reductions modulo $\ell^m$ are, together with the compatibility of reduction with derived Hom and tensor for perfect complexes.
+
+At level $m$, Theorem 3.1 is compatible with reduction $\Lambda_{m+1}\to\Lambda_m$: the external-product morphism is built from functors that commute with exact coefficient change at bounded Tor-amplitude, so reducing both sides of Theorem 3.1 gives the finite-level statement at level $m$. Let now $\mathcal F=(\mathcal F_n)$ and $\mathcal G=(\mathcal G_n)$ be normalized systems on curves $X$ and $Y$ satisfying the hypotheses of Book 18, Section 14.4. Each fixed-degree compact-support cohomology group is finite at every level (Book 18, Section 7), so the towers are Mittag--Leffler and derived limits agree with ordinary ones degree by degree. By perfectness, $R\Gamma_c(X,\mathcal F):=R\varprojlim_nR\Gamma_c(X,\mathcal F_n)$ has a representative by a bounded complex of finite free $\mathbf Z_\ell$-modules, and likewise for $Y$; the tower of such a representative is normalized by Book 18, Section 9.1, and the derived completion map of Book 18, Section 10.3 identifies the complex with its own completion.
+
+Define the integral external-product morphism as the derived-limit image of the compatible family of finite-level morphisms. Its source
 
 $$
-R\Gamma_c(X,\mathbf Z_\ell)
+R\Gamma_c(X,\mathcal F)
 \otimes^L_{\mathbf Z_\ell}
-R\Gamma_c(Y,\mathbf Z_\ell)
-\xrightarrow{\sim}
-R\Gamma_c(X\times Y,\mathbf Z_\ell).
+R\Gamma_c(Y,\mathcal G)
 $$
 
-Here perfectness is decisive. Represent the two factor complexes by bounded complexes of finite free $\mathbf Z_\ell$-modules; their derived tensor product is again perfect and derived complete. The cone of the displayed map reduces to the zero cone by finite-level Künneth for every $m$. Derived completeness then forces the integral cone to vanish. This argument uses normalization as well as Mittag--Leffler: finiteness of the cohomology groups alone would not identify reduction of an ordinary inverse limit with the finite levels.
+is perfect, being the derived tensor product of two perfect complexes, and it is derived complete because bounded complexes with finitely generated cohomology over the complete DVR $\mathbf Z_\ell$ are classically complete (Book 18, Section 10.3). Its target is perfect for the product curve $X\times Y$ by the same Book 18, Section 14.4 result. Reducing the morphism modulo $\ell^m$ recovers the finite-level Künneth isomorphism of Theorem 3.1 — the reduction of a derived tensor product of perfect complexes is the derived tensor product of the reductions, by the bridge calculation of Book 20, Section 11.2. The cone of the integral morphism is therefore a derived-complete complex all of whose reductions vanish; by the detection principle just cited, the cone vanishes, and the displayed morphism extends to the isomorphism
 
-Tensoring afterward with $E$ yields rational Künneth. Because $E$ is a field, the spectral sequence degenerates to the direct-sum formula. Nothing in this passage says that the integral cohomology groups themselves are free; it is the complexes that are perfect.
+$$
+R\Gamma_c(X,\mathcal F)
+\otimes^L_{\mathbf Z_\ell}
+R\Gamma_c(Y,\mathcal G)
+\xrightarrow{\sim}
+R\Gamma_c(X\times Y,\mathcal F\boxtimes\mathcal G).
+$$
+
+This argument uses normalization as well as Mittag--Leffler: finiteness of the cohomology groups alone would not identify reduction of an ordinary inverse limit with the finite levels, and the cone-vanishing step needs a perfect representative, which is exactly what Book 18, Section 14.4 supplies on curves and does not supply in general.
+
+Tensoring afterward with $E$ yields rational Künneth, using the lattice-independence of rationalization of Book 18, Section 10.4. Because $E$ is a field, the Künneth spectral sequence degenerates to the direct-sum formula. Nothing in this passage says that the integral cohomology groups themselves are free; it is the complexes that are perfect.
 
 ### 3.4 Compatibility with trace and Frobenius
 
