@@ -820,20 +820,14 @@ $$
 \to\operatorname{Br}(C)[n]\to0.
 $$
 
-The curve trace theorem of Book 20 gives a normalized isomorphism
+The Brauer group vanishes: the multiplicative theorem of Book 18, Sections 6.6--6.7, gives $H^2(C,\mathbf G_m)=0$ and identifies it with $\operatorname{Br}(C)$, so the Kummer map identifies the middle group, and division of divisor classes through the degree map—$\operatorname{Pic}^0(C)$ is $n$-divisible by Book 18, Section 6.8—gives the normalized isomorphism
 
 $$
-\operatorname{Tr}_C:H^2(C,\mu_n)\xrightarrow{\sim}\mathbf Z/n\mathbf Z. \tag{9.2}
+\operatorname{Tr}_C:H^2(C,\mu_n)\xrightarrow{\sim}
+\operatorname{Pic}(C)/n\cong\mathbf Z/n\mathbf Z. \tag{9.2}
 $$
 
-Its normalization says that the Kummer cycle class of a closed point is sent to its degree. Thus the composite
-
-$$
-\operatorname{Pic}(C)/n\longrightarrow H^2(C,\mu_n)
-\xrightarrow{\operatorname{Tr}_C}\mathbf Z/n\mathbf Z
-$$
-
-is degree modulo $n$. A point supplies a degree-one class, so this composite is surjective. Since the trace is an isomorphism and the Kummer map is injective, every degree-zero line bundle is divisible by $n$ in $\operatorname{Pic}(C)$; equivalently $\operatorname{Pic}^0(C)/n=0$. The point class also makes the Kummer map onto, and the displayed Kummer sequence then gives $\operatorname{Br}(C)[n]=0$. This proves exactly the prime-to-characteristic Brauer vanishing used here, without importing a residue theorem for the function field.
+Its normalization says that the Kummer cycle class of a closed point is sent to its degree: under the Kummer identification a point maps to its line-bundle class, and the degree of that class is the degree of the point. Over an algebraically closed field every closed point has degree one, so geometric points supply generators on both sides. This is exactly the prime-to-characteristic trace normalization used throughout; no residue theorem for the function field is imported.
 
 Equation (9.2) is the finite-level curve trace in concrete form. A closed point has cycle class equal to its degree in $\mathbf Z/n\mathbf Z$; over an algebraically closed field every closed point has degree one. The full dimension of $H^1(C,\Lambda)$ will follow from the genus calculation below.
 
@@ -1765,7 +1759,7 @@ noncanonically as modules and canonically through (18.4). Its rank is $2g_1+2g_2
 
 For a smooth proper connected curve, the dualizing complex is $\Lambda(1)[2]$ and the trace makes $H^1$ self-dual up to twist. At a node this identification fails. The irreducible nodal rational curve has rank-one $H^1$; over odd coefficients no alternating form on a rank-one free module can be perfect. The failure is not a defect of cohomology. It says that the constant sheaf is not the orientation object of the singular curve.
 
-Book 20 supplies the correct dualizing complex $\omega_C^\bullet$. Dualizing (18.1) gives a triangle
+Book 20 supplies the correct dualizing complex $\omega_C^\bullet$, and this is an imported statement rather than a derivation: its node-level input is the computation of cohomology with support at a double point, which belongs to Book 20's purity analysis and is carried out nowhere above. What this chapter contributes is the identification of the visible pieces of the general statement—the component traces and the vertex-edge incidence map—with the graph complexes of Section 18.1. Dualizing (18.1) gives a triangle
 
 $$
 \bigoplus_{e\in E}i_{e*}\Lambda
