@@ -23,7 +23,7 @@ theorem chapter06_additive_lattice_iff
     (ι : G →+ H) :
     Chapter06AdditiveLattice ι ↔
       Chapter06DiscreteEmbedding ι ∧
-        CompactSpace (H ⧸ chapter06ImageSubgroup ι) := Iff.rfl
+        CompactSpace (H ⧸ ι.range) := Iff.rfl
 
 theorem chapter06_adelic_diagonal_injective
     (P : Chapter06AdeleData K O KInf Af Ohat) :
@@ -35,7 +35,7 @@ theorem chapter06_additive_lattice_of_discrete_and_cocompact
     [TopologicalSpace H] [IsTopologicalAddGroup H] [T2Space H]
     (ι : G →+ H)
     (hdiscrete : Chapter06DiscreteEmbedding ι)
-    (hcocompact : CompactSpace (H ⧸ chapter06ImageSubgroup ι)) :
+    (hcocompact : CompactSpace (H ⧸ ι.range)) :
     Chapter06AdditiveLattice ι := by
   exact ⟨hdiscrete, hcocompact⟩
 

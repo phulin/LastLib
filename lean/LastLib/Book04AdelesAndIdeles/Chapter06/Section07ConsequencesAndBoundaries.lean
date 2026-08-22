@@ -38,15 +38,15 @@ finite-adelic quotient cannot be Hausdorff. -/
 theorem chapter06_finite_adelic_quotient_not_hausdorff
     (P : Chapter06AdeleData K O KInf Af Ohat)
     [IsTopologicalAddGroup Af] [T2Space Af] :
-    ¬ T2Space (Af ⧸ chapter06ImageSubgroup P.globalToFinite) := by
+    ¬ T2Space (Af ⧸ P.globalToFinite.range) := by
   intro hT2
-  let _ : T2Space (Af ⧸ chapter06ImageSubgroup P.globalToFinite) := hT2
+  let _ : T2Space (Af ⧸ P.globalToFinite.range) := hT2
   have hclosed : IsClosed
-      (chapter06ImageSubgroup P.globalToFinite : Set Af) :=
+      (P.globalToFinite.range : Set Af) :=
     (QuotientAddGroup.t1Space_iff).1
-      (inferInstance : T1Space (Af ⧸ chapter06ImageSubgroup P.globalToFinite))
+      (inferInstance : T1Space (Af ⧸ P.globalToFinite.range))
   have hclosed_range : IsClosed (Set.range P.globalToFinite) := by
-    simpa [chapter06ImageSubgroup] using hclosed
+    simpa using hclosed
   apply P.finite_diagonal_not_surjective
   calc
     Set.range P.globalToFinite = closure (Set.range P.globalToFinite) :=

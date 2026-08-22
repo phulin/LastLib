@@ -26,8 +26,9 @@ theorem chapter06_integral_gluing_kernel
     change chapter06IntegralGluingMap P x = 0
     have hglobal : chapter06IntegralGluingToAdele P x ∈
         chapter06GlobalSubgroup P := by
-      refine (mem_chapter06ImageSubgroup (chapter06Diagonal P)
-        (chapter06IntegralGluingToAdele P x)).2 ⟨P.integerToGlobal a, ?_⟩
+      refine (AddMonoidHom.mem_range (f := chapter06Diagonal P)
+        (y := chapter06IntegralGluingToAdele P x)).2
+        ⟨P.integerToGlobal a, ?_⟩
       rw [← ha]
       simp
     rw [← chapter06AdeleQuotientMap_ker P] at hglobal

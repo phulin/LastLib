@@ -69,12 +69,12 @@ theorem chapter06_compact_quotient_of_compact_cover
     [TopologicalSpace H] (ι : G →+ H) (C : Set H)
     (hC : IsCompact C)
     (hcover : ∀ x : H, ∃ g : G, x - ι g ∈ C) :
-    CompactSpace (H ⧸ chapter06ImageSubgroup ι) := by
-  let q : H → H ⧸ chapter06ImageSubgroup ι :=
-    QuotientAddGroup.mk' (chapter06ImageSubgroup ι)
+    CompactSpace (H ⧸ ι.range) := by
+  let q : H → H ⧸ ι.range :=
+    QuotientAddGroup.mk' ι.range
   have hqcont : Continuous q := QuotientAddGroup.continuous_mk
   have hsurj : Function.Surjective q :=
-    QuotientAddGroup.mk'_surjective (chapter06ImageSubgroup ι)
+    QuotientAddGroup.mk'_surjective ι.range
   have himage : q '' C = Set.univ := by
     apply Set.eq_univ_of_forall
     intro y
@@ -106,7 +106,7 @@ theorem chapter06_adelic_quotient_hausdorff
     (hclosed : IsClosed (Set.range (chapter06Diagonal P))) :
     T2Space (Chapter06AdeleQuotient P) := by
   let _ : IsClosed (chapter06GlobalSubgroup P : Set (Chapter06FullAdele KInf Af)) := by
-    simpa [chapter06GlobalSubgroup, chapter06ImageSubgroup] using hclosed
+    simpa [chapter06GlobalSubgroup] using hclosed
   infer_instance
 
 theorem chapter06_adelic_quotient_hausdorff_of_data

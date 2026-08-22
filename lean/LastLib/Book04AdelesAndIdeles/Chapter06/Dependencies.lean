@@ -120,19 +120,6 @@ abbrev Chapter06FiniteAdele (Af : Type uFin) := Af
 
 abbrev Chapter06FullAdele (KInf : Type uInf) (Af : Type uFin) := KInf × Af
 
-/-- The additive image of an additive homomorphism, bundled as a subgroup. -/
-def chapter06ImageSubgroup
-    {G : Type uG} {H : Type uVA} [AddCommGroup G] [AddCommGroup H]
-    (f : G →+ H) : AddSubgroup H :=
-  AddMonoidHom.range f
-
-@[simp] theorem mem_chapter06ImageSubgroup
-    {G : Type uG} {H : Type uVA} [AddCommGroup G] [AddCommGroup H]
-    (f : G →+ H) (x : H) :
-    x ∈ chapter06ImageSubgroup f ↔ ∃ y, f y = x := by
-  simpa only [chapter06ImageSubgroup] using
-    (AddMonoidHom.mem_range (f := f) (y := x))
-
 section AdeleData
 
 variable {K : Type uK} {O : Type uO} {KInf : Type uInf} {Af : Type uFin}
@@ -157,7 +144,7 @@ def chapter06Diagonal
 def chapter06GlobalSubgroup
     (P : Chapter06AdeleData K O KInf Af Ohat) :
     AddSubgroup (Chapter06FullAdele KInf Af) :=
-  chapter06ImageSubgroup (chapter06Diagonal P)
+  (chapter06Diagonal P).range
 
 /-- The integral diagonal inside `K∞ × Ohat`. -/
 def chapter06IntegralDiagonal
@@ -175,7 +162,7 @@ def chapter06IntegralDiagonal
 def chapter06IntegralGluingSubgroup
     (P : Chapter06AdeleData K O KInf Af Ohat) :
     AddSubgroup (KInf × Ohat) :=
-  chapter06ImageSubgroup (chapter06IntegralDiagonal P)
+  (chapter06IntegralDiagonal P).range
 
 /-- The quotient `A_K / K`, with the quotient topology supplied by Mathlib. -/
 abbrev Chapter06AdeleQuotient
@@ -349,7 +336,7 @@ def Chapter06AdditiveLattice
     [TopologicalSpace H] [IsTopologicalAddGroup H] [T2Space H]
     (ι : G →+ H) : Prop :=
   Chapter06DiscreteEmbedding ι ∧
-    CompactSpace (H ⧸ chapter06ImageSubgroup ι)
+    CompactSpace (H ⧸ ι.range)
 
 /-- The module-theoretic lattice notion used for comparison in §6.8.
 

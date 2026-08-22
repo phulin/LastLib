@@ -118,7 +118,8 @@ theorem chapter06_rational_adelic_quotient_not_finite_or_discrete
     have hmem :
         (x, (0 : Af)) - (y, (0 : Af)) ∈ chapter06GlobalSubgroup P :=
       (chapter06AdeleQuotientMap_eq_iff P _ _).1 hxy
-    rcases (mem_chapter06ImageSubgroup (chapter06Diagonal P) _).1 hmem with
+    rcases (AddMonoidHom.mem_range (f := chapter06Diagonal P)
+      (y := (x, (0 : Af)) - (y, (0 : Af)))).1 hmem with
       ⟨a, ha⟩
     have hfin : P.globalToFinite a = 0 := by
       simpa using congrArg Prod.snd ha
