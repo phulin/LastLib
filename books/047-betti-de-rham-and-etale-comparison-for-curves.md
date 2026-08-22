@@ -188,33 +188,65 @@ $$
 
 Identifying $\mathbf Z_\ell(1)$ with $\mathbf Z_\ell$ requires a compatible choice of ℓ-power roots of unity. We will state canonical comparisons with twisted coefficients and state untwisted matrix formulas only after naming such a choice. These conventions prevent the most common sign and scalar errors later.
 
-## 2. Singular chains, cochains, and products
+## 2. Simplicial chains, cochains, and products
 
-Singular theory is the common topological measuring device. Its chain-level construction matters because compatibility with integration, products, and transfers is proved before passing to cohomology. This chapter fixes those constructions and records exactly where freeness of the surface groups removes coefficient corrections.
+Singular theory defines homology for every space, but for the curves of this book nothing of that generality is ever used: after one triangulation, every group, product, and duality statement we need becomes a finite combinatorial computation that can be carried out completely, with no appeal to unproved comparison machinery. This chapter therefore develops chains, cochains, products, duality, and relative groups on finite simplicial complexes. The universal coefficient theorem, excision, Poincaré duality, and the existence of the fundamental class all become finite combinatorial theorems proved below from first principles. Singular chains are retained for exactly one purpose—integration of differential forms in Chapter 4—and Section 2.1 compares them with simplicial chains once and for all.
 
-### 2.1 Chains and homotopy
+**Standing triangulation hypothesis (T).** _Every Riemann surface occurring in this book admits a homeomorphism from the geometric realization of a finite abstract simplicial complex; moreover, whenever two such surfaces are related by a holomorphic map that is an unbranched covering, the homeomorphisms can be chosen so that the covering map pulls each triangle of the source triangulation linearly onto a simplex of a subdivision of the target triangulation._
 
-For a space $T$, let $C_n(T,\mathbf Z)$ be the free abelian group on continuous maps $\sigma:\Delta^n\to T$. If $\delta_i:\Delta^{n-1}\to\Delta^n$ is the $i$th face inclusion, define
+The status of (T) must be stated plainly. Classically it follows from the theorem of Radó, which identifies Riemann surfaces among all topological surfaces by second countability, together with the theorem that every compact second-countable surface admits a finite triangulation. Neither theorem belongs to algebraic geometry, is proved in any earlier book of this series, or follows from the local analytic constructions used elsewhere in this volume; pretending otherwise would be dishonest. We therefore carry (T) as an explicit standing geometric hypothesis. It enters exactly once as an input, at the definition of the simplicial model in Section 2.1, and every later statement about Betti groups is derived combinatorially from the model rather than from (T). Hypothesis (T), its role, and its boundary are recorded again in the audit of Section 15.2. For open curves obtained by deleting finitely many points from a compact surface, the compatible version of (T) is automatic once the deleted points are made vertices of the compact triangulation.
+
+### 2.1 Finite simplicial complexes, chains, and homology
+
+A finite abstract simplicial complex consists of a finite set $V$ of vertices and a collection $K$ of nonempty subsets of $V$, called simplices, such that every nonempty subset of a simplex is again a simplex. A simplex with $n+1$ vertices has dimension $n$; the dimension of $K$ is the largest simplex dimension. The star of a vertex $v$ is the union of the interiors of the simplices containing $v$. The geometric realization $|K|$ embeds in $\mathbf R^{V}$ as the union of the convex hulls of the simplices; it is a compact polyhedron when $K$ is finite, and each point of $|K|$ lies in the interior of a unique smallest simplex, its carrier.
+
+Because $V$ is finite, we may fix once and for all a total order on $V$. An ordered $n$-simplex is then an $(n+1)$-tuple $(v_0,\ldots,v_n)$ of distinct vertices whose underlying set is a simplex; since the order is fixed, every simplex has exactly one increasing representative, and we use increasing tuples as the standard generators. Let $C_n(K,\mathbf Z)$ be the free abelian group they span, and let $C_n(K,\mathbf Z)=0$ for $n<0$ or $n>\dim K$. The boundary operator is
 
 $$
-\partial\sigma=\sum_{i=0}^n(-1)^i\sigma\circ\delta_i.
+\partial[v_0,\ldots,v_n]=\sum_{i=0}^n(-1)^i\,[v_0,\ldots,\widehat{v_i},\ldots,v_n].
 $$
 
-Every codimension-two face appears twice with opposite signs, so $\partial^2=0$. For an abelian group $A$ put $C_n(T,A)=C_n(T,\mathbf Z)\otimes A$ and
+A direct expansion shows $\partial^2=0$: for fixed $i<j$ the term $v_j$ survives in the $i$th summand and $v_i$ in none of the later ones, so each ordered $(n-2)$-face arises exactly twice, from the pairs $(i,j)$ and $(j,i)$, with opposite signs $(-1)^{i+j}$ and $(-1)^{j+i}$. No cancellation argument over a geometric picture is required—the sign count is literal. A simplicial map $f:K\to L$, that is, a map $V(K)\to V(L)$ carrying simplices to simplices, induces chain maps $f_\#=\sum f(v_i)$ entrywise, and functoriality $(gf)_\#=g_\#f_\#$ holds because both sides reindex tuples identically.
+
+For an abelian group $A$ put $C_n(K,A)=C_n(K,\mathbf Z)\otimes A$ and define
 
 $$
-H_n(T,A)=H_n(C_\bullet(T,A)).
+H_n(K,A)=\ker(\partial:C_n\to C_{n-1})\,/\,\operatorname{im}(\partial:C_{n+1}\to C_n).
 $$
 
-A continuous map $f:T\to U$ sends $\sigma$ to $f\circ\sigma$ and therefore gives $f_*:H_n(T,A)\to H_n(U,A)$. If $F:T\times[0,1]\to U$ is a homotopy from $f_0$ to $f_1$, subdividing the prism $\Delta^n\times[0,1]$ into $(n+1)$ oriented simplices defines maps $P_n:C_n(T)\to C_{n+1}(U)$ satisfying
+Since $K$ has finitely many simplices, each $C_n(K,\mathbf Z)$ is a finitely generated free abelian group; kernels and quotients of finitely generated groups are finitely generated, so every $H_n(K,\mathbf Z)$ is a finitely generated abelian group, without any appeal to general structure theorems for manifolds. If $\dim K=d$ then $H_n(K,A)=0$ for $n>d$ because there are no chains above degree $d$. This single sentence will later explain why a curve has no Betti groups above degree two.
+
+It remains to connect this finite model to singular chains on $|K|$, both to justify writing $H_n(X^{\mathrm{an}},A)$ without naming a triangulation and to prepare the integration of Chapter 4. The increasing tuple $(v_0,\ldots,v_n)$ determines an affine map $|\sigma|:\Delta^n\to|K|$, and extending linearly gives an injective chain map
+$\iota:C_\bullet^{\triangle}(K)\to C_\bullet(|K|,\mathbf Z)$
+from simplicial to singular chains. We claim that $\iota$ induces an isomorphism on homology. The proof uses barycentric subdivision twice, once inside the complex and once inside the singular chains.
+
+First, the barycentric subdivision $\operatorname{sd}K$ of an abstract complex has as vertices the simplices of $K$ and as simplices the strictly increasing chains of simplices of $K$ ordered by inclusion; its realization is naturally homeomorphic to $|K|$ by sending the barycenter of each simplex accordingly. Iterating subdivision makes every simplex of $K$ contain no simplex of $\operatorname{sd}^mK$ larger than a fraction $(m/(m+1))^d$ of its diameter, so meshes tend uniformly to zero.
+
+Second, for singular chains define the subdivision operator $Sd$ inductively: the barycentric subdivision of the standard simplex is a specific linear combination of affine simplices $\Delta^n\to\Delta^n$, and for arbitrary $\sigma:\Delta^n\to T$ one sets $Sd(\sigma)=\sigma_{\#}(Sd(\operatorname{id}))$. Coning over the difference between a chain and its subdivision produces a natural homomorphism $T:C_n(T)\to C_{n+1}(T)$ satisfying the identity dual to the prism identity,
+
+$$
+Sd-\operatorname{id}=\partial T-T\partial,
+$$
+
+so $Sd$ induces the identity on homology.
+
+Third, the simplicial approximation step. Let $f:|K|\to|L|$ be continuous. The stars of the vertices of $L$ form an open cover of $|L|$, so their preimages cover the compact metric space $|K|$. By the uniform Lebesgue number property, some iterated subdivision $\operatorname{sd}^mK$ has all its stars mapping into stars of $L$; choosing for each vertex $w$ of $\operatorname{sd}^mK$ a vertex $g(w)$ of $L$ with $f(\operatorname{star}(w))\subseteq\operatorname{star}(g(w))$ yields a simplicial map $g:\operatorname{sd}^mK\to L$, defined on a simplex because the images of its vertices span a common simplex of $L$. The straight-line homotopy inside each target star joins $f$ to $|g|$, so by the prism identity (2.1) below, $g_* = f_*$ on homology.
+
+Combining the three steps: given a singular cycle $z$ on $|K|$, apply the approximation to the identity of $|K|$ to obtain, after subdivision, a simplicial chain homotopic to and hence homologous with $z$; conversely, if a simplicial cycle bounds by a singular chain, subdividing the bounding chain until it lies in the image of $\iota$ exhibits a simplicial bounding chain. Therefore $\iota_*:H_n^{\triangle}(K,A)\to H_n(|K|,A)$ is an isomorphism for every coefficient group $A$, natural in simplicial maps.
+
+Two consequences fix notation for the rest of the book. First, under Hypothesis (T), a choice of triangulation identifies $X^{\mathrm{an}}$ with $|K_X|$, and we _define_
+
+$$
+H_n(X^{\mathrm{an}},A):=H_n(K_X,A),
+$$
+
+the preceding isomorphism showing the result independent of the choice and equal to singular homology; cohomology $H^\bullet_B(X,A)$ will be defined from the same complex in Section 2.2, which justifies the subscript used throughout. Second, if $X^{\mathrm{an}}$ and $Y^{\mathrm{an}}$ carry triangulations $K_X,K_Y$ and $h:|K_X|\to|K_Y|$ is a homeomorphism or more generally any continuous map, applying approximation to $h$ and to a homotopy inverse expresses $H_n(K_X,A)\cong H_n(K_Y,A)$ compatibly with induced maps; in particular homology is a homotopy invariant of the surface. Finally, the prism construction itself belongs to the singular side: for a homotopy $F$ from $f_0$ to $f_1$, subdividing $\Delta^n\times[0,1]$ into $(n+1)$ oriented simplices defines $P_n:C_n(T)\to C_{n+1}(U)$ with
 
 $$
 \partial P+P\partial=(f_1)_*-(f_0)_*. \tag{2.1}
 $$
 
-Thus homotopic maps induce the same map on homology. This prism identity also proves homotopy invariance of every construction below, rather than merely its group ranks.
-
-Compact Riemann surfaces admit finite triangulations. On a triangulated space, barycentric subdivision and the usual simplicial approximation argument show that the inclusion of simplicial chains into singular chains is a chain-homotopy equivalence. Consequently their homology is finitely generated and may be calculated from a finite cellular complex.
+We shall need (2.1) only through the two uses above—the smooth approximation of Chapter 4 and the homotopies in the approximation argument—and everything else in this chapter is proved purely inside the finite complex $K_X$.
 
 ### 2.2 Cochains and the universal coefficient theorem
 
