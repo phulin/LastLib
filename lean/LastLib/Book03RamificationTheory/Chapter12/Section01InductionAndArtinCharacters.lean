@@ -102,7 +102,7 @@ theorem chapter12_artin_character_difference_is_scalar_regular
 
 /- Frobenius reciprocity at the character-pairing level. -/
 theorem chapter12_frobenius_reciprocity_for_character_pairing
-    {E G H V : Type*} [Field E] [Group G] [Fintype G] [Group H] [Fintype H]
+    {E G H V : Type*} [Field E] [CharZero E] [Group G] [Fintype G] [Group H] [Fintype H]
     [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (ι : H →* G) (hι : Function.Injective ι)
     (AG : G → E) (hconj : chapter12IsClassFunction AG)
@@ -114,7 +114,7 @@ theorem chapter12_frobenius_reciprocity_for_character_pairing
   sorry
 
 theorem chapter12_regular_character_pairing
-    {E H V : Type*} [Field E] [Group H] [Fintype H]
+    {E H V : Type*} [Field E] [CharZero E] [Group H] [Fintype H]
     [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (ρ : Representation E H V) :
     chapter12CharacterPairing (chapter12RegularCharacter H) ρ.character =
@@ -122,7 +122,7 @@ theorem chapter12_regular_character_pairing
   sorry
 
 theorem chapter12_induction_pairing_expansion
-    {E H V : Type*} [Field E] [Group H] [Fintype H]
+    {E H V : Type*} [Field E] [CharZero E] [Group H] [Fintype H]
     [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (AH : H → E) (p : Chapter12LocalExtensionNumbers)
     (ρ : Representation E H V) :

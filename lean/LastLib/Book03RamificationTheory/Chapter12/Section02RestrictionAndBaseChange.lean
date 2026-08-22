@@ -39,7 +39,7 @@ theorem chapter12_intersected_lower_group_coe
   sorry
 
 def chapter12RestrictionConductorSum
-    {E G V : Type*} [Field E] [Group G] [Fintype G]
+    {E G V : Type*} [Field E] [CharZero E] [Group G] [Fintype G]
     [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (P : Chapter12RamificationProfile G) (H : Subgroup G)
     (ρ : Representation E G V) : E :=
@@ -75,7 +75,7 @@ theorem chapter12_lower_subgroup_restriction_formula
 upstairs conductor is represented by the explicit intersection/fixed-space
 ledger on the right-hand side. -/
 theorem chapter12_restriction_uses_intersection_fixed_spaces
-    {E G V : Type u} [Field E] [Group G] [Fintype G]
+    {E G V : Type u} [Field E] [CharZero E] [Group G] [Fintype G]
     [AddCommGroup V] [Module E V] [FiniteDimensional E V]
     (pG : Chapter12ConductorProfile G) (Hsub : Subgroup G)
     (ρ : Representation E G V) :
@@ -96,7 +96,8 @@ structure Chapter12UnramifiedUpperComparison
   baseUpper : ℝ → Subgroup G
   extensionUpper : ℝ → Subgroup H
   inertia_eq : extensionInertia = baseInertia.comap H.subtype
-  upper_eq : ∀ u, extensionUpper u = (baseUpper u).comap H.subtype
+  upper_eq : ∀ u, (-1 : ℝ) ≤ u →
+    extensionUpper u = (baseUpper u).comap H.subtype
 
 structure Chapter12TameUpperComparison
     (G : Type*) [Group G] [Fintype G] (H : Subgroup G) where
@@ -156,9 +157,9 @@ structure Chapter12TameSwanAreaCompatibility
 
 theorem chapter12_unramified_upper_groups_agree
     {G : Type*} [Group G] [Fintype G] {H : Subgroup G}
-    (U : Chapter12UnramifiedUpperComparison G H) (u : ℝ) :
+    (U : Chapter12UnramifiedUpperComparison G H) (u : ℝ) (hu : (-1 : ℝ) ≤ u) :
     U.extensionUpper u = (U.baseUpper u).comap H.subtype :=
-  U.upper_eq u
+  U.upper_eq u hu
 
 theorem chapter12_unramified_inertia_groups_agree
     {G : Type*} [Group G] [Fintype G] {H : Subgroup G}

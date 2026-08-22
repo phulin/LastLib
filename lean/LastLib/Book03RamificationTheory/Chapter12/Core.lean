@@ -21,10 +21,6 @@ universe u
 
 open scoped BigOperators
 
-noncomputable instance chapter12SubgroupFintype
-    {G : Type*} [Group G] [Fintype G] (H : Subgroup G) : Fintype H :=
-  Fintype.ofFinite H
-
 /-!
 ## Shared interfaces for Chapter 12
 
@@ -202,7 +198,7 @@ theorem chapter12_mem_fixed_space_iff
   rfl
 
 def chapter12ArtinConductorSum
-    {E G V : Type*} [Field E] [Group G] [Fintype G] [AddCommGroup V]
+    {E G V : Type*} [Field E] [CharZero E] [Group G] [Fintype G] [AddCommGroup V]
     [Module E V] [FiniteDimensional E V] (P : Chapter12RamificationProfile G)
     (ρ : Representation E G V) : E :=
   Finset.sum (Finset.range (P.bound + 1)) (fun i =>
@@ -210,7 +206,7 @@ def chapter12ArtinConductorSum
       (chapter12FixedSpaceCodimension (P.lower i) ρ : E))
 
 def chapter12SwanConductorSum
-    {E G V : Type*} [Field E] [Group G] [Fintype G] [AddCommGroup V]
+    {E G V : Type*} [Field E] [CharZero E] [Group G] [Fintype G] [AddCommGroup V]
     [Module E V] [FiniteDimensional E V] (P : Chapter12RamificationProfile G)
     (ρ : Representation E G V) : E :=
   Finset.sum (Finset.Icc 1 P.bound) (fun i =>
@@ -218,7 +214,7 @@ def chapter12SwanConductorSum
       (chapter12FixedSpaceCodimension (P.lower i) ρ : E))
 
 def chapter12CharacterPairing
-    {G R : Type*} [Group G] [Fintype G] [Field R]
+    {G R : Type*} [Group G] [Fintype G] [Field R] [CharZero R]
     (A B : G → R) : R :=
   (Nat.card G : R)⁻¹ * ∑ g : G, A g * B (g⁻¹)
 
