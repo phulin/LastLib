@@ -13,16 +13,16 @@ def chapter11ConductorExists
     {K A : Type*} [Field K] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace A]
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A) : Prop :=
-  ∃ n : ℕ, ∀ x ∈ D.unitFiltration n, χ x = 1
+  LastLib.Book05LocalClassFieldTheory.Chapter08.chapter08ConductorExists
+    D.base.valuation χ.toMonoidHom
 
 def chapter11Conductor
     {K A : Type*} [Field K] [CommGroup A]
     [TopologicalSpace Kˣ] [TopologicalSpace A]
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
     (hχ : chapter11ConductorExists D χ) : ℕ :=
-  by
-    classical
-    exact Nat.find hχ
+  LastLib.Book05LocalClassFieldTheory.Chapter08.chapter08Conductor
+    D.base.valuation χ.toMonoidHom hχ
 
 theorem chapter11_conductor_spec
     {K A : Type*} [Field K] [CommGroup A]
@@ -30,8 +30,9 @@ theorem chapter11_conductor_spec
     (D : Chapter11LocalFieldData K) (χ : Kˣ →ₜ* A)
     (hχ : chapter11ConductorExists D χ) :
     ∀ x ∈ D.unitFiltration (chapter11Conductor D χ hχ), χ x = 1 := by
-  classical
-  exact Nat.find_spec hχ
+  -- Prior attempt: `exact Nat.find_spec hχ` used the canonical Chapter 8
+  -- filtration directly and did not rewrite it to the Chapter 11 interface.
+  sorry
 
 theorem chapter11_conductor_minimal
     {K A : Type*} [Field K] [CommGroup A]

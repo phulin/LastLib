@@ -116,8 +116,7 @@ def chapter11CompactProcyclicClosure
 
 theorem chapter11_profinite_parameter_has_compact_procyclic_closure
     {A : Type*} [CommGroup A] [TopologicalSpace A]
-    [IsTopologicalGroup A] [T2Space A] [CompactSpace A]
-    [TotallyDisconnectedSpace A]
+    [CompactSpace A]
     (α : A) :
     IsCompact (chapter11CompactProcyclicClosure α) := by
   sorry

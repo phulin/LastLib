@@ -13,7 +13,7 @@ open scoped Topology
 def chapter11IsProfiniteAbelianTarget
     (A : Type*) [CommGroup A] [TopologicalSpace A] [IsTopologicalGroup A]
     [T2Space A] : Prop :=
-  Nonempty (CompactSpace A) ∧ Nonempty (TotallyDisconnectedSpace A)
+  CompactSpace A ∧ TotallyDisconnectedSpace A
 
 def chapter11FactorsThroughAbelianization
     {G A : Type*} [Group G] [CommGroup A]
