@@ -100,7 +100,7 @@ theorem chapter05UnramifiedCapNormalization.artin_uniformizer
      as `N.quotient_uniformizer`; it was circular because it was the desired
      conclusion of the sign check. -/
   apply_fun Additive.ofMul
-  letI : CategoryTheory.IsIso
+  let : CategoryTheory.IsIso
       (D.capProduct.cap (⊤ : Subgroup (Gal(L / K))) (-2)) :=
     chapter05_class_formation_top_isomorphism D (-2)
   let topToNorm :

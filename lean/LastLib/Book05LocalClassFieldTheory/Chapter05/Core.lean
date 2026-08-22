@@ -12,6 +12,7 @@ import Mathlib.RepresentationTheory.Homological.GroupHomology.LowDegree
 import Mathlib.RepresentationTheory.Homological.Resolution
 import Mathlib.RepresentationTheory.Homological.TateCohomology.Basic
 import Mathlib.RingTheory.Norm.Defs
+import LastLib.Book05LocalClassFieldTheory.Chapter03.Core
 import LastLib.Book05LocalClassFieldTheory.Chapter04.Core
 
 namespace LastLib.Book05LocalClassFieldTheory.Chapter05
