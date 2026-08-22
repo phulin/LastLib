@@ -1,6 +1,7 @@
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13.Section04TheTamePositiveCharacteristicRange
 import LastLib.Book02FiniteExtensionsOfLocalFields.Chapter03.Section05MixedAndEqualCharacteristic
 import Mathlib.Algebra.Module.ZMod
+import Mathlib.FieldTheory.PrimeField
 import Mathlib.RingTheory.LaurentSeries
 
 namespace LastLib.Book02FiniteExtensionsOfLocalFields.Chapter13
@@ -772,7 +773,372 @@ theorem chapter13_laurent_series_has_wild_artin_schreier_family
     (k : Type*) [Field k]
     (p : ℕ) [Fact p.Prime] [CharP k p] :
     Nonempty (Chapter13WildArtinSchreierFamily k p) := by
-  sorry
+  classical
+  let v : AddValuation (LaurentSeries k) (WithTop ℤ) :=
+    HahnSeries.addVal ℤ k
+  have hv : v (chapter13LaurentSeriesUniformizer k) = 1 := by
+    dsimp [v, chapter13LaurentSeriesUniformizer]
+    rw [HahnSeries.addVal_apply]
+    change (HahnSeries.ofPowerSeries (Γ := ℤ) (R := k) PowerSeries.X).orderTop = 1
+    rw [HahnSeries.ofPowerSeries_X, HahnSeries.orderTop_single one_ne_zero]
+    norm_num
+  let ext : ∀ m : Chapter13PositiveNonPIndex p,
+      Chapter13ArtinSchreierExtensionData k m.1
+        (chapter13ArtinSchreierRightHandSide k m.1) := fun m =>
+    Classical.choice (chapter13_artin_schreier_extension_exists k v hv
+      m.2.1 m.2.2)
+  refine ⟨{
+    extension := ext
+    pairwise_nonisomorphic := ?_ }⟩
+  intro m n hmn
+  dsimp
+  intro hiso
+  have hcast_val (c : ZMod p) (hc : c ≠ 0) :
+      v (ZMod.cast c : LaurentSeries k) = 0 := by
+    letI : Algebra (ZMod p) (LaurentSeries k) := ZMod.algebra _ _
+    letI : Algebra (ZMod p) k := ZMod.algebra _ _
+    have hcast : (ZMod.cast c : LaurentSeries k) =
+        HahnSeries.C (ZMod.cast c : k) := by
+      obtain ⟨z, rfl⟩ := ZMod.intCast_surjective c
+      simp [HahnSeries.C_eq_algebraMap]
+    have hc_k : (ZMod.cast c : k) ≠ 0 := by
+      intro hc0
+      apply hc
+      apply (RingHom.injective (ZMod.castHom (dvd_refl p) k))
+      simpa using hc0
+    dsimp [v]
+    rw [hcast, HahnSeries.addVal_apply_of_ne (HahnSeries.C_ne_zero hc_k),
+      HahnSeries.order_C]
+    norm_num
+  have hno (q : ℕ) (hq : 0 < q) (hqp : ¬p ∣ q)
+      (a : LaurentSeries k)
+      (ha : v a = (-(q : ℤ) : WithTop ℤ)) :
+      ¬∃ x : LaurentSeries k, a = x ^ p - x := by
+    rintro ⟨x, hx⟩
+    have hvx := congrArg v hx
+    rw [ha] at hvx
+    by_cases hx0 : 0 ≤ v x
+    · have hnonneg := chapter13_artin_schreier_no_pole_from_integral_input
+        v x hx0
+      rw [← hvx] at hnonneg
+      have hqZ : (0 : ℤ) < (q : ℤ) := by exact_mod_cast hq
+      have hneg : (-(q : ℤ) : WithTop ℤ) < 0 := by
+        exact_mod_cast (neg_lt_zero.mpr hqZ)
+      exact (not_le_of_gt hneg) hnonneg
+    · have hxneg : v x < 0 := lt_of_not_ge hx0
+      have hpole := chapter13_artin_schreier_pole_order_multiple_of_p v x hxneg
+      have heq : p • v x = (-(q : ℤ) : WithTop ℤ) :=
+        hpole.symm.trans hvx.symm
+      have hxtop : v x ≠ (⊤ : WithTop ℤ) := ne_top_of_lt hxneg
+      let zq : ℤ := (v x).untop hxtop
+      have hzq : (zq : WithTop ℤ) = v x := by
+        exact WithTop.coe_untop (v x) hxtop
+      have heqInt : p • zq = -(q : ℤ) := by
+        apply WithTop.coe_eq_coe.mp
+        calc
+          ((p • zq : ℤ) : WithTop ℤ) = p • (zq : WithTop ℤ) :=
+            (WithTop.coe_nsmul zq p).symm
+          _ = p • v x := by rw [hzq]
+          _ = (-(q : ℤ) : WithTop ℤ) := heq
+      have hdvdZ : (p : ℤ) ∣ (q : ℤ) := by
+        refine ⟨-zq, ?_⟩
+        have heqInt' : (p : ℤ) * zq = -(q : ℤ) := by
+          simpa [nsmul_eq_mul] using heqInt
+        calc
+          (q : ℤ) = -(-(q : ℤ)) := by ring
+          _ = -((p : ℤ) * zq) := by rw [heqInt']
+          _ = (p : ℤ) * (-zq) := by ring
+      have hdvd : p ∣ q := Int.natCast_dvd_natCast.mp hdvdZ
+      exact hqp hdvd
+  rcases chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation
+      k m.2.1 n.2.1 m.2.2 n.2.2 (ext m) (ext n) hiso with
+    ⟨c, hc, x, hx⟩
+  have hval_m := chapter13_laurent_series_rhs_has_pole_order
+    k v hv m.2.1
+  have hval_n := chapter13_laurent_series_rhs_has_pole_order
+    k v hv n.2.1
+  have hmul_val :
+      v ((ZMod.cast c : LaurentSeries k) *
+        chapter13ArtinSchreierRightHandSide k m.1) =
+        (-(m.1 : ℤ) : WithTop ℤ) := by
+    rw [v.map_mul, hcast_val c hc, hval_m]
+    simp
+  have hmn' : m.1 ≠ n.1 := by
+    intro h
+    apply hmn
+    exact Subtype.ext h
+  rcases lt_or_gt_of_ne hmn' with hmnlt | hnm
+  · have hlt :
+        v (chapter13ArtinSchreierRightHandSide k n.1) <
+          v ((ZMod.cast c : LaurentSeries k) *
+            chapter13ArtinSchreierRightHandSide k m.1) := by
+      rw [hval_n, hmul_val]
+      have hmnZ : (m.1 : ℤ) < (n.1 : ℤ) := by exact_mod_cast hmnlt
+      exact_mod_cast (neg_lt_neg hmnZ)
+    have hdiff :
+        v (chapter13ArtinSchreierRightHandSide k n.1 -
+          (ZMod.cast c : LaurentSeries k) *
+            chapter13ArtinSchreierRightHandSide k m.1) =
+          (-(n.1 : ℤ) : WithTop ℤ) := by
+      rw [v.map_sub_eq_of_lt_left hlt, hval_n]
+    exact hno n.1 n.2.1 n.2.2 _ hdiff ⟨x, hx⟩
+  · have hlt :
+        v ((ZMod.cast c : LaurentSeries k) *
+            chapter13ArtinSchreierRightHandSide k m.1) <
+          v (chapter13ArtinSchreierRightHandSide k n.1) := by
+      rw [hmul_val, hval_n]
+      have hnmZ : (n.1 : ℤ) < (m.1 : ℤ) := by exact_mod_cast hnm
+      exact_mod_cast (neg_lt_neg hnmZ)
+    have hdiff :
+        v (chapter13ArtinSchreierRightHandSide k n.1 -
+          (ZMod.cast c : LaurentSeries k) *
+            chapter13ArtinSchreierRightHandSide k m.1) =
+          (-(m.1 : ℤ) : WithTop ℤ) := by
+      rw [v.map_sub_eq_of_lt_right hlt, hmul_val]
+    exact hno m.1 m.2.1 m.2.2 _ hdiff ⟨x, hx⟩
+
+private theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation_aux
+    (k : Type*) [Field k]
+    {p m n : ℕ} [Fact p.Prime] [CharP k p]
+    (hm : 0 < m) (hn : 0 < n)
+    (hmp : ¬p ∣ m) (hnp : ¬p ∣ n)
+    (Dm : Chapter13ArtinSchreierExtensionData k p m
+      (chapter13ArtinSchreierRightHandSide k m))
+    (Dn : Chapter13ArtinSchreierExtensionData k p n
+      (chapter13ArtinSchreierRightHandSide k n))
+    (hiso :
+      letI := Dm.carrierField
+      letI := Dn.carrierField
+      letI := Dm.carrierAlgebra
+      letI := Dn.carrierAlgebra
+      Nonempty (Dm.carrier ≃ₐ[LaurentSeries k] Dn.carrier)) :
+    chapter13ArtinSchreierEquivalent (LaurentSeries k) p
+      (chapter13ArtinSchreierRightHandSide k m)
+      (chapter13ArtinSchreierRightHandSide k n) := by
+  letI : Field Dm.carrier := Dm.carrierField
+  letI : Field Dn.carrier := Dn.carrierField
+  letI : Algebra (LaurentSeries k) Dm.carrier := Dm.carrierAlgebra
+  letI : Algebra (LaurentSeries k) Dn.carrier := Dn.carrierAlgebra
+  let _ : FiniteDimensional (LaurentSeries k) Dn.carrier := Dn.carrierFinite
+  let _ : IsGalois (LaurentSeries k) Dn.carrier := Dn.galois
+  let _ : IsCyclic (Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) := Dn.cyclic
+  let _ : CharP Dn.carrier p :=
+    charP_of_injective_algebraMap (algebraMap (LaurentSeries k) Dn.carrier).injective p
+  letI : Algebra (ZMod p) (LaurentSeries k) := ZMod.algebra _ _
+  letI : Algebra (ZMod p) Dn.carrier := ZMod.algebra _ _
+  rcases hiso with ⟨e⟩
+  have hroot_m : (e Dm.root) ^ p - e Dm.root =
+      algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k m) := by
+    have h := Dm.root_equation
+    have h' : Dm.root ^ p - Dm.root =
+        algebraMap (LaurentSeries k) Dm.carrier
+          (chapter13ArtinSchreierRightHandSide k m) := by
+      simpa [Polynomial.aeval_def] using h
+    calc
+      (e Dm.root) ^ p - e Dm.root =
+          e (Dm.root ^ p - Dm.root) := by simp
+      _ = e (algebraMap (LaurentSeries k) Dm.carrier
+          (chapter13ArtinSchreierRightHandSide k m)) := by rw [h']
+      _ = algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k m) := by
+        rw [e.commutes]
+  have hroot_n : Dn.root ^ p - Dn.root =
+      algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k n) := by
+    simpa [Polynomial.aeval_def] using Dn.root_equation
+  have hcoeff (y : Dn.carrier) (hy : y ^ p - y = 0) :
+      ∃ c : ZMod p, algebraMap (ZMod p) Dn.carrier c = y := by
+    have hy' : y ^ p = y := sub_eq_zero.mp hy
+    have hybot : y ∈ (⊥ : Subfield Dn.carrier) :=
+      (Subfield.mem_bot_iff_pow_eq_self Dn.carrier p).2 hy'
+    rw [Subfield.bot_eq_of_zMod_algebra p] at hybot
+    exact hybot
+  obtain ⟨σ, hσ⟩ :=
+    IsCyclic.exists_generator (α := Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier)
+  have hcard : Nat.card (Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) = p := by
+    rw [IsGalois.card_aut_eq_finrank]
+    exact Dn.degree
+  have hσne : σ ≠ (1 : Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) := by
+    intro hσ1
+    have hcardne : Nat.card (Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) ≠ 1 := by
+      rw [hcard]
+      exact (Fact.out : Nat.Prime p).ne_one
+    apply hcardne
+    apply Nat.card_eq_one_iff_exists.mpr
+    refine ⟨1, ?_⟩
+    intro f
+    rcases Subgroup.mem_zpowers_iff.mp (hσ f) with ⟨z, hz⟩
+    rw [← hz, hσ1]
+    simp
+  have h_eq_one_of_fix (r : Dn.carrier)
+      (hr : Algebra.adjoin (LaurentSeries k) ({r} : Set Dn.carrier) = ⊤)
+      (hfix : σ r = r) : σ = 1 := by
+    have hhom : σ.toAlgHom =
+        (1 : Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier).toAlgHom := by
+      apply AlgHom.ext_of_adjoin_eq_top hr
+      intro y hy
+      rw [Set.mem_singleton_iff.mp hy]
+      simpa using hfix
+    apply AlgEquiv.ext
+    intro y
+    exact congrArg (fun f : Dn.carrier →ₐ[LaurentSeries k] Dn.carrier => f y) hhom
+  have hdiff_m : (σ (e Dm.root) - e Dm.root) ^ p -
+      (σ (e Dm.root) - e Dm.root) = 0 := by
+    have hσroot : (σ (e Dm.root)) ^ p - σ (e Dm.root) =
+        algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k m) := by
+      calc
+        (σ (e Dm.root)) ^ p - σ (e Dm.root) =
+            σ ((e Dm.root) ^ p - e Dm.root) := by simp
+        _ = σ (algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k m)) := by rw [hroot_m]
+        _ = algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k m) := by rw [σ.commutes]
+    calc
+      (σ (e Dm.root) - e Dm.root) ^ p -
+          (σ (e Dm.root) - e Dm.root) =
+          ((σ (e Dm.root)) ^ p - σ (e Dm.root)) -
+            ((e Dm.root) ^ p - e Dm.root) := by
+              rw [sub_pow_char]
+              ring
+      _ = 0 := by rw [hσroot, hroot_m]; ring
+  have hdiff_n : (σ Dn.root - Dn.root) ^ p -
+      (σ Dn.root - Dn.root) = 0 := by
+    have hσroot : (σ Dn.root) ^ p - σ Dn.root =
+        algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k n) := by
+      calc
+        (σ Dn.root) ^ p - σ Dn.root =
+            σ (Dn.root ^ p - Dn.root) := by simp
+        _ = σ (algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k n)) := by rw [hroot_n]
+        _ = algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k n) := by rw [σ.commutes]
+    calc
+      (σ Dn.root - Dn.root) ^ p - (σ Dn.root - Dn.root) =
+          ((σ Dn.root) ^ p - σ Dn.root) -
+            (Dn.root ^ p - Dn.root) := by
+              rw [sub_pow_char]
+              ring
+      _ = 0 := by rw [hσroot, hroot_n]; ring
+  obtain ⟨cm, hcm⟩ := hcoeff _ hdiff_m
+  obtain ⟨cn, hcn⟩ := hcoeff _ hdiff_n
+  have hcm_ne : cm ≠ 0 := by
+    intro hcm0
+    have hfix : σ (e Dm.root) = e Dm.root := by
+      apply sub_eq_zero.mp
+      rw [← hcm, hcm0]
+      simp
+    exact hσne (h_eq_one_of_fix (e Dm.root) (by
+      have hmap :
+          (Algebra.adjoin (LaurentSeries k) ({Dm.root} : Set Dm.carrier)).map
+              e.toAlgHom =
+            Algebra.adjoin (LaurentSeries k) ({e Dm.root} : Set Dn.carrier) := by
+        rw [AlgHom.map_adjoin]
+        simp
+      rw [← hmap, Dm.generates, Algebra.map_top]
+      exact (AlgHom.range_eq_top _).2 e.surjective) hfix)
+  have hcn_ne : cn ≠ 0 := by
+    intro hcn0
+    have hfix : σ Dn.root = Dn.root := by
+      apply sub_eq_zero.mp
+      rw [← hcn, hcn0]
+      simp
+    exact hσne (h_eq_one_of_fix Dn.root Dn.generates hfix)
+  let c : ZMod p := cn * cm⁻¹
+  have hc_ne : c ≠ 0 := by
+    dsimp [c]
+    exact mul_ne_zero hcn_ne (inv_ne_zero hcm_ne)
+  let z : Dn.carrier := Dn.root -
+      (algebraMap (ZMod p) Dn.carrier c) * e Dm.root
+  have hscale : (algebraMap (ZMod p) Dn.carrier c) *
+      (σ (e Dm.root) - e Dm.root) = σ Dn.root - Dn.root := by
+    have hdiff_ne : σ (e Dm.root) - e Dm.root ≠ 0 := by
+      rw [← hcm]
+      exact (map_ne_zero_iff _ (algebraMap (ZMod p) Dn.carrier).injective).mpr hcm_ne
+    simp [c, hcn, hcm, hdiff_ne, mul_assoc]
+  have hσc : σ (algebraMap (ZMod p) Dn.carrier c) =
+      algebraMap (ZMod p) Dn.carrier c := by
+    obtain ⟨z, hz⟩ := ZMod.intCast_surjective c
+    rw [← hz]
+    have hzmap : algebraMap (ZMod p) Dn.carrier (z : ZMod p) =
+        (z : Dn.carrier) := by
+      change ZMod.cast (z : ZMod p) = (z : Dn.carrier)
+      exact ZMod.cast_intCast' z
+    rw [hzmap]
+    simp
+  have hzfixed : σ z = z := by
+    dsimp [z]
+    rw [map_sub, map_mul, hσc]
+    calc
+      σ Dn.root - algebraMap (ZMod p) Dn.carrier c * σ (e Dm.root) =
+          Dn.root - algebraMap (ZMod p) Dn.carrier c * e Dm.root +
+            ((σ Dn.root - Dn.root) -
+              algebraMap (ZMod p) Dn.carrier c *
+                (σ (e Dm.root) - e Dm.root)) := by ring
+      _ = Dn.root - algebraMap (ZMod p) Dn.carrier c * e Dm.root := by
+        rw [hscale]
+        ring
+  have hzfixed_all : ∀ f : Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier,
+      f z = z := by
+    intro f
+    have hf : f ∈ Subgroup.zpowers σ := hσ f
+    have hs : σ • z = z := by simpa [AlgEquiv.smul_def] using hzfixed
+    have hf' := smul_eq_self_of_mem_zpowers hf hs
+    simpa [AlgEquiv.smul_def] using hf'
+  obtain ⟨x, hx⟩ :=
+    (IsGalois.mem_range_algebraMap_iff_fixed z).2 hzfixed_all
+  have hmap_c : algebraMap (LaurentSeries k) Dn.carrier
+      (ZMod.cast c : LaurentSeries k) = algebraMap (ZMod p) Dn.carrier c := by
+    obtain ⟨z, hz⟩ := ZMod.intCast_surjective c
+    rw [← hz]
+    have hzmapK : (ZMod.cast (z : ZMod p) : LaurentSeries k) =
+        (z : LaurentSeries k) := ZMod.cast_intCast' z
+    have hzmapE : algebraMap (ZMod p) Dn.carrier (z : ZMod p) =
+        (z : Dn.carrier) := by
+      change ZMod.cast (z : ZMod p) = (z : Dn.carrier)
+      exact ZMod.cast_intCast' z
+    rw [hzmapK, hzmapE]
+    simp
+  have hzpow : z ^ p - z =
+      algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k n -
+          (ZMod.cast c : LaurentSeries k) *
+            chapter13ArtinSchreierRightHandSide k m) := by
+    have hc_pow : (algebraMap (ZMod p) Dn.carrier c) ^ p =
+        algebraMap (ZMod p) Dn.carrier c := by
+      rw [← map_pow, ZMod.pow_card]
+    calc
+      z ^ p - z =
+          (Dn.root ^ p - Dn.root) -
+            (algebraMap (ZMod p) Dn.carrier c) *
+              ((e Dm.root) ^ p - e Dm.root) := by
+                dsimp [z]
+                rw [sub_pow_char, mul_pow, hc_pow]
+                ring
+      _ = algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k n) -
+          (algebraMap (ZMod p) Dn.carrier c) *
+            algebraMap (LaurentSeries k) Dn.carrier
+              (chapter13ArtinSchreierRightHandSide k m) := by
+                rw [hroot_n, hroot_m]
+      _ = algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k n -
+            (ZMod.cast c : LaurentSeries k) *
+              chapter13ArtinSchreierRightHandSide k m) := by
+                simp only [map_sub, map_mul]
+                rw [hmap_c]
+  have hxeq : algebraMap (LaurentSeries k) Dn.carrier (x ^ p - x) =
+      z ^ p - z := by
+    rw [map_sub, map_pow, hx]
+  apply (algebraMap (LaurentSeries k) Dn.carrier).injective
+  calc
+    algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k n -
+          (ZMod.cast c : LaurentSeries k) *
+            chapter13ArtinSchreierRightHandSide k m) = z ^ p - z := hzpow.symm
+    _ = algebraMap (LaurentSeries k) Dn.carrier (x ^ p - x) := hxeq.symm
 
 theorem chapter13_artin_schreier_same_field_implies_same_line
     (k : Type*) [Field k]
@@ -793,7 +1159,11 @@ theorem chapter13_artin_schreier_same_field_implies_same_line
         (chapter13ArtinSchreierRightHandSide k m) =
       chapter13ArtinSchreierLine (LaurentSeries k) p
         (chapter13ArtinSchreierRightHandSide k n) := by
-  sorry
+  apply (chapter13_artin_schreier_line_equality_iff (LaurentSeries k) p
+    (chapter13ArtinSchreierRightHandSide k m)
+    (chapter13ArtinSchreierRightHandSide k n)).2
+  exact chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation_aux
+    k hm hn hmp hnp Dm Dn hiso
 
 theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation
     (k : Type*) [Field k]
@@ -813,7 +1183,230 @@ theorem chapter13_artin_schreier_same_field_gives_scalar_coboundary_relation
     chapter13ArtinSchreierEquivalent (LaurentSeries k) p
       (chapter13ArtinSchreierRightHandSide k m)
       (chapter13ArtinSchreierRightHandSide k n) := by
-  sorry
+  letI : Field Dm.carrier := Dm.carrierField
+  letI : Field Dn.carrier := Dn.carrierField
+  letI : Algebra (LaurentSeries k) Dm.carrier := Dm.carrierAlgebra
+  letI : Algebra (LaurentSeries k) Dn.carrier := Dn.carrierAlgebra
+  let _ : FiniteDimensional (LaurentSeries k) Dn.carrier := Dn.carrierFinite
+  let _ : IsGalois (LaurentSeries k) Dn.carrier := Dn.galois
+  let _ : IsCyclic (Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) := Dn.cyclic
+  let _ : CharP Dn.carrier p :=
+    charP_of_injective_algebraMap (algebraMap (LaurentSeries k) Dn.carrier).injective p
+  letI : Algebra (ZMod p) (LaurentSeries k) := ZMod.algebra _ _
+  letI : Algebra (ZMod p) Dn.carrier := ZMod.algebra _ _
+  rcases hiso with ⟨e⟩
+  have hroot_m : (e Dm.root) ^ p - e Dm.root =
+      algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k m) := by
+    have h := Dm.root_equation
+    have h' : Dm.root ^ p - Dm.root =
+        algebraMap (LaurentSeries k) Dm.carrier
+          (chapter13ArtinSchreierRightHandSide k m) := by
+      simpa [Polynomial.aeval_def] using h
+    calc
+      (e Dm.root) ^ p - e Dm.root =
+          e (Dm.root ^ p - Dm.root) := by simp
+      _ = e (algebraMap (LaurentSeries k) Dm.carrier
+          (chapter13ArtinSchreierRightHandSide k m)) := by rw [h']
+      _ = algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k m) := by
+        rw [e.commutes]
+  have hroot_n : Dn.root ^ p - Dn.root =
+      algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k n) := by
+    simpa [Polynomial.aeval_def] using Dn.root_equation
+  have hcoeff (y : Dn.carrier) (hy : y ^ p - y = 0) :
+      ∃ c : ZMod p, algebraMap (ZMod p) Dn.carrier c = y := by
+    have hy' : y ^ p = y := sub_eq_zero.mp hy
+    have hybot : y ∈ (⊥ : Subfield Dn.carrier) :=
+      (Subfield.mem_bot_iff_pow_eq_self Dn.carrier p).2 hy'
+    rw [Subfield.bot_eq_of_zMod_algebra p] at hybot
+    exact hybot
+  obtain ⟨σ, hσ⟩ :=
+    IsCyclic.exists_generator (α := Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier)
+  have hcard : Nat.card (Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) = p := by
+    rw [IsGalois.card_aut_eq_finrank]
+    exact Dn.degree
+  have hσne : σ ≠ (1 : Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) := by
+    intro hσ1
+    have hcardne : Nat.card (Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier) ≠ 1 := by
+      rw [hcard]
+      exact (Fact.out : Nat.Prime p).ne_one
+    apply hcardne
+    apply Nat.card_eq_one_iff_exists.mpr
+    refine ⟨1, ?_⟩
+    intro f
+    rcases Subgroup.mem_zpowers_iff.mp (hσ f) with ⟨z, hz⟩
+    rw [← hz, hσ1]
+    simp
+  have h_eq_one_of_fix (r : Dn.carrier)
+      (hr : Algebra.adjoin (LaurentSeries k) ({r} : Set Dn.carrier) = ⊤)
+      (hfix : σ r = r) : σ = 1 := by
+    have hhom : σ.toAlgHom =
+        (1 : Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier).toAlgHom := by
+      apply AlgHom.ext_of_adjoin_eq_top hr
+      intro y hy
+      rw [Set.mem_singleton_iff.mp hy]
+      simpa using hfix
+    apply AlgEquiv.ext
+    intro y
+    exact congrArg (fun f : Dn.carrier →ₐ[LaurentSeries k] Dn.carrier => f y) hhom
+  have hdiff_m : (σ (e Dm.root) - e Dm.root) ^ p -
+      (σ (e Dm.root) - e Dm.root) = 0 := by
+    have hσroot : (σ (e Dm.root)) ^ p - σ (e Dm.root) =
+        algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k m) := by
+      calc
+        (σ (e Dm.root)) ^ p - σ (e Dm.root) =
+            σ ((e Dm.root) ^ p - e Dm.root) := by simp
+        _ = σ (algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k m)) := by rw [hroot_m]
+        _ = algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k m) := by rw [σ.commutes]
+    calc
+      (σ (e Dm.root) - e Dm.root) ^ p -
+          (σ (e Dm.root) - e Dm.root) =
+          ((σ (e Dm.root)) ^ p - σ (e Dm.root)) -
+            ((e Dm.root) ^ p - e Dm.root) := by
+              rw [sub_pow_char]
+              ring
+      _ = 0 := by rw [hσroot, hroot_m]; ring
+  have hdiff_n : (σ Dn.root - Dn.root) ^ p -
+      (σ Dn.root - Dn.root) = 0 := by
+    have hσroot : (σ Dn.root) ^ p - σ Dn.root =
+        algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k n) := by
+      calc
+        (σ Dn.root) ^ p - σ Dn.root =
+            σ (Dn.root ^ p - Dn.root) := by simp
+        _ = σ (algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k n)) := by rw [hroot_n]
+        _ = algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k n) := by rw [σ.commutes]
+    calc
+      (σ Dn.root - Dn.root) ^ p - (σ Dn.root - Dn.root) =
+          ((σ Dn.root) ^ p - σ Dn.root) -
+            (Dn.root ^ p - Dn.root) := by
+              rw [sub_pow_char]
+              ring
+      _ = 0 := by rw [hσroot, hroot_n]; ring
+  obtain ⟨cm, hcm⟩ := hcoeff _ hdiff_m
+  obtain ⟨cn, hcn⟩ := hcoeff _ hdiff_n
+  have hcm_ne : cm ≠ 0 := by
+    intro hcm0
+    have hfix : σ (e Dm.root) = e Dm.root := by
+      apply sub_eq_zero.mp
+      rw [← hcm, hcm0]
+      simp
+    exact hσne (h_eq_one_of_fix (e Dm.root) (by
+      have hmap :
+          (Algebra.adjoin (LaurentSeries k) ({Dm.root} : Set Dm.carrier)).map
+              e.toAlgHom =
+            Algebra.adjoin (LaurentSeries k) ({e Dm.root} : Set Dn.carrier) := by
+        rw [AlgHom.map_adjoin]
+        simp
+      rw [← hmap, Dm.generates, Algebra.map_top]
+      exact (AlgHom.range_eq_top _).2 e.surjective) hfix)
+  have hcn_ne : cn ≠ 0 := by
+    intro hcn0
+    have hfix : σ Dn.root = Dn.root := by
+      apply sub_eq_zero.mp
+      rw [← hcn, hcn0]
+      simp
+    exact hσne (h_eq_one_of_fix Dn.root Dn.generates hfix)
+  let c : ZMod p := cn * cm⁻¹
+  have hc_ne : c ≠ 0 := by
+    dsimp [c]
+    exact mul_ne_zero hcn_ne (inv_ne_zero hcm_ne)
+  let z : Dn.carrier := Dn.root -
+      (algebraMap (ZMod p) Dn.carrier c) * e Dm.root
+  have hscale : (algebraMap (ZMod p) Dn.carrier c) *
+      (σ (e Dm.root) - e Dm.root) = σ Dn.root - Dn.root := by
+    have hdiff_ne : σ (e Dm.root) - e Dm.root ≠ 0 := by
+      rw [← hcm]
+      exact (map_ne_zero_iff _ (algebraMap (ZMod p) Dn.carrier).injective).mpr hcm_ne
+    simp [c, hcn, hcm, hdiff_ne, mul_assoc]
+  have hσc : σ (algebraMap (ZMod p) Dn.carrier c) =
+      algebraMap (ZMod p) Dn.carrier c := by
+    obtain ⟨z, hz⟩ := ZMod.intCast_surjective c
+    rw [← hz]
+    have hzmap : algebraMap (ZMod p) Dn.carrier (z : ZMod p) =
+        (z : Dn.carrier) := by
+      change ZMod.cast (z : ZMod p) = (z : Dn.carrier)
+      exact ZMod.cast_intCast' z
+    rw [hzmap]
+    simp
+  have hzfixed : σ z = z := by
+    dsimp [z]
+    rw [map_sub, map_mul, hσc]
+    calc
+      σ Dn.root - algebraMap (ZMod p) Dn.carrier c * σ (e Dm.root) =
+          Dn.root - algebraMap (ZMod p) Dn.carrier c * e Dm.root +
+            ((σ Dn.root - Dn.root) -
+              algebraMap (ZMod p) Dn.carrier c *
+                (σ (e Dm.root) - e Dm.root)) := by ring
+      _ = Dn.root - algebraMap (ZMod p) Dn.carrier c * e Dm.root := by
+        rw [hscale]
+        ring
+  have hzfixed_all : ∀ f : Dn.carrier ≃ₐ[LaurentSeries k] Dn.carrier,
+      f z = z := by
+    intro f
+    have hf : f ∈ Subgroup.zpowers σ := hσ f
+    have hs : σ • z = z := by simpa [AlgEquiv.smul_def] using hzfixed
+    have hf' := smul_eq_self_of_mem_zpowers hf hs
+    simpa [AlgEquiv.smul_def] using hf'
+  obtain ⟨x, hx⟩ :=
+    (IsGalois.mem_range_algebraMap_iff_fixed z).2 hzfixed_all
+  have hmap_c : algebraMap (LaurentSeries k) Dn.carrier
+      (ZMod.cast c : LaurentSeries k) = algebraMap (ZMod p) Dn.carrier c := by
+    obtain ⟨z, hz⟩ := ZMod.intCast_surjective c
+    rw [← hz]
+    have hzmapK : (ZMod.cast (z : ZMod p) : LaurentSeries k) =
+        (z : LaurentSeries k) := ZMod.cast_intCast' z
+    have hzmapE : algebraMap (ZMod p) Dn.carrier (z : ZMod p) =
+        (z : Dn.carrier) := by
+      change ZMod.cast (z : ZMod p) = (z : Dn.carrier)
+      exact ZMod.cast_intCast' z
+    rw [hzmapK, hzmapE]
+    simp
+  have hzpow : z ^ p - z =
+      algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k n -
+          (ZMod.cast c : LaurentSeries k) *
+            chapter13ArtinSchreierRightHandSide k m) := by
+    have hc_pow : (algebraMap (ZMod p) Dn.carrier c) ^ p =
+        algebraMap (ZMod p) Dn.carrier c := by
+      rw [← map_pow, ZMod.pow_card]
+    calc
+      z ^ p - z =
+          (Dn.root ^ p - Dn.root) -
+            (algebraMap (ZMod p) Dn.carrier c) *
+              ((e Dm.root) ^ p - e Dm.root) := by
+                dsimp [z]
+                rw [sub_pow_char, mul_pow, hc_pow]
+                ring
+      _ = algebraMap (LaurentSeries k) Dn.carrier
+            (chapter13ArtinSchreierRightHandSide k n) -
+          (algebraMap (ZMod p) Dn.carrier c) *
+            algebraMap (LaurentSeries k) Dn.carrier
+              (chapter13ArtinSchreierRightHandSide k m) := by
+                rw [hroot_n, hroot_m]
+      _ = algebraMap (LaurentSeries k) Dn.carrier
+          (chapter13ArtinSchreierRightHandSide k n -
+            (ZMod.cast c : LaurentSeries k) *
+              chapter13ArtinSchreierRightHandSide k m) := by
+                simp only [map_sub, map_mul]
+                rw [hmap_c]
+  have hxeq : algebraMap (LaurentSeries k) Dn.carrier (x ^ p - x) =
+      z ^ p - z := by
+    rw [map_sub, map_pow, hx]
+  apply (algebraMap (LaurentSeries k) Dn.carrier).injective
+  calc
+    algebraMap (LaurentSeries k) Dn.carrier
+        (chapter13ArtinSchreierRightHandSide k n -
+          (ZMod.cast c : LaurentSeries k) *
+            chapter13ArtinSchreierRightHandSide k m) = z ^ p - z := hzpow.symm
+    _ = algebraMap (LaurentSeries k) Dn.carrier (x ^ p - x) := hxeq.symm
 
 theorem chapter13_artin_schreier_isomorphism_iff_same_line
     (k : Type*) [Field k]
