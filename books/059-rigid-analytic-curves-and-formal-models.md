@@ -262,23 +262,59 @@ Points of an affine algebraic variety correspond to maximal ideals with finite r
 
 **Theorem 2.2 (analytic nullstellensatz).** If $A$ is a quotient of a Tate algebra and $\mathfrak m\subset A$ is maximal, then $A/\mathfrak m$ is a finite field extension of $K$.
 
-**Proof.** It is enough to treat
-$A=K\langle T_1,\ldots,T_n\rangle/\mathfrak m$. Put $L=A/\mathfrak m$. The analytic
-form of Zariski's lemma says that if a field $F$ is finite over a Tate algebra
-$K\langle S_1,\ldots,S_r\rangle$, then $r=0$ and $F/K$ is finite. To prove it, make a
-nonzero relation distinguished in the last variable. Preparation makes that coordinate
-integral over the preceding Tate algebra, and iteration reduces to the assertion that no field
-can be finite over $K\langle S\rangle$ when at least one variable remains. In that case the
-inverses of $S_r-a$ in the finite module would have denominators bounded by finitely many
-coefficient norms. Choosing coefficients recursively with strictly decreasing norms produces
-a restricted series whose successive division remainders require unbounded denominators, a
-contradiction. The division estimates from Section 2.5 ensure that this is an equality of
-convergent series rather than a merely formal construction.
+**Lemma 2.3 (field descent under integral extensions).** Let $B\to C$ be an injective
+integral ring homomorphism into a field $C$. Then $B$ is a field.
 
-Now use the same triangular changes of variables as in Section 2.5 to make $L$ finite over a
-Tate algebra on a maximal algebraically independent family among the coordinate images. The
-analytic lemma says that this family is empty. Thus all coordinate images are algebraic over
-$K$, and the finitely many of them generate a finite extension. $\square$
+**Proof.** Identify $B$ with its image. Take $b\in B$, $b\neq0$. Its inverse $b^{-1}\in C$
+is integral over $B$, so for some $d\geq1$ there are $c_1,\ldots,c_d\in B$ with
+
+$$
+(b^{-1})^{d}+c_1(b^{-1})^{d-1}+\cdots+c_d=0.
+$$
+
+Multiplying by $b^{d-1}$ turns the leading term into $b^{-1}$ and every other term into an
+element of $B$, so $b^{-1}=-(c_1+c_2b+\cdots+c_db^{d-1})\in B$. $\square$
+
+**Proof (of Theorem 2.2).** We argue by induction on $n$ for
+$A_n=K\langle T_1,\ldots,T_n\rangle$; the case $n=0$ gives $A_0/\mathfrak m=K$.
+
+Let $n\geq1$ and let $\mathfrak m\subset A_n$ be a maximal ideal. The zero ideal is not maximal because
+$A_n$ is not a field: indeed $T_1$ has no inverse, since $T_1g=1$ with $g=\sum_J b_JT^J$
+would force the constant coefficient of the left side, namely $0$, to equal the constant
+coefficient $1$ of the right side. So we may choose $g\in\mathfrak m$, $g\neq0$. As a
+convergent series, $g$ involves at least one variable: if all coefficients of nonconstant
+monomials vanished, then $g$ would be a nonzero scalar, hence a unit of $K$ embedded in
+$A_n$, forcing $\mathfrak m=A_n$. Permute the variables so that $T_n$ occurs among
+them; this permutation is an automorphism of $A_n$, and it carries maximal ideals to maximal
+ideals with isomorphic residue fields, so the induction step may be performed after it.
+
+Scale $g$ to Gauss norm one. Its reduction modulo topologically nilpotent coefficients is a
+nonzero polynomial involving $T_n$, so by the triangular substitution and preparation theorem
+of Section 2.5 there is a $K$-algebra automorphism $\sigma$ of $A_n$ such that $\sigma(g)$
+factors as a unit of $A_n$ times a monic polynomial
+
+$$
+P=T_n^{d}+p_{d-1}T_n^{d-1}+\cdots+p_0,\qquad p_j\in A_{n-1}.
+$$
+
+Replacing $\mathfrak m$ by $\sigma(\mathfrak m)$ changes nothing: $\sigma$ induces a
+$K$-isomorphism $A_n/\mathfrak m\cong A_n/\sigma(\mathfrak m)$ of the residue fields, so we
+may assume from the start that $\mathfrak m$ contains such a monic polynomial $P$.
+
+Division by $P$ (Section 2.5) expresses every element of $A_n$ as
+$qP+r$ with $\deg_{T_n}r<d$, hence every element of $L:=A_n/\mathfrak m$ as a polynomial in
+$t_n:=T_n\bmod\mathfrak m$ of degree less than $d$ with coefficients in
+$B:=A_{n-1}/\mathfrak m'$, where $\mathfrak m'=\mathfrak m\cap A_{n-1}$. Thus $L$ is
+generated as a $B$-algebra by the single element $t_n$, and $P(t_n)=0$ exhibits $t_n$ as
+integral over $B$. In particular $B\to L$ is injective and integral, so $L$ a field forces
+$B$ to be a field by Lemma 2.3; therefore $\mathfrak m'$ is a maximal ideal of $A_{n-1}$.
+The induction hypothesis makes $B/K$ a finite extension, and $L$ is generated over $B$ by one
+integral element, so $[L:B]<\infty$ and finally $L/K$ is finite.
+
+For a general affinoid algebra $A=K\langle T_1,\ldots,T_n\rangle/I$, a maximal ideal
+$\mathfrak m\subset A$ pulls back to a maximal ideal $M\supset I$ of the Tate algebra,
+because the surjection $T_n/I\twoheadrightarrow A/\mathfrak m$ exhibits the target as a
+field. Then $A/\mathfrak m\cong A_n/M$, already treated. $\square$
 
 The theorem implies that maximal ideals are closed and that evaluation at a point always
 lands in a complete valued field. It does not say every point is $K$-rational.
