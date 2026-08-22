@@ -264,7 +264,6 @@ theorem chapter05_tame_herbrand_formula
     {G : Type*} [Group G] [Fintype G]
     (D : Chapter05RamificationFiltration G) (e : ℕ) (he : 0 < e)
     (hcard : Nat.card (D.lowerGroup 0) = e)
-    (_htotal : Nat.card G = e)
     (htrivial : ∀ u : ℝ, 0 < u → D.lowerGroup u = ⊥)
     (u : ℝ) :
     chapter05HerbrandFunction D u = chapter05TameHerbrand e u := by
@@ -283,12 +282,12 @@ theorem chapter05_tame_herbrand_formula
 /-- Positive upper groups vanish immediately after zero in the tame case. -/
 theorem chapter05_tame_upper_groups_drop_after_zero
     {G : Type*} [Group G] [Fintype G]
-    (D : Chapter05RamificationFiltration G) (e : ℕ) (_he : 0 < e)
-    (_hcard : Nat.card (D.lowerGroup 0) = e)
-    (_htotal : Nat.card G = e)
+    (D : Chapter05RamificationFiltration G)
     (htrivial : ∀ u : ℝ, 0 < u → D.lowerGroup u = ⊥)
-    (hbij : Function.Bijective (chapter05HerbrandFunction D)) :
+    :
     ∀ v : ℝ, 0 < v → chapter05UpperRamificationGroup D v = ⊥ := by
+  have hbij : Function.Bijective (chapter05HerbrandFunction D) :=
+    chapter05_herbrand_bijective_of_filtration D
   intro v hv
   have hvinv := chapter05_herbrand_inverse_spec D hbij v
   have hinv_pos : 0 < chapter05HerbrandInverse D v := by
@@ -316,7 +315,7 @@ theorem chapter05_tame_has_only_zero_break
   have htame : ∀ x : ℝ,
       chapter05HerbrandFunction D x = chapter05TameHerbrand e x := by
     intro x
-    exact chapter05_tame_herbrand_formula D e (by omega) hcard htotal
+    exact chapter05_tame_herbrand_formula D e (by omega) hcard
       htrivial x
   have hupper_neg : ∀ {v : ℝ}, (-1 : ℝ) ≤ v → v < 0 →
       chapter05UpperRamificationGroup D v = ⊤ := by
@@ -345,8 +344,7 @@ theorem chapter05_tame_has_only_zero_break
     · apply sSup_le
       intro K hK
       rcases hK with ⟨w, hw, rfl⟩
-      rw [chapter05_tame_upper_groups_drop_after_zero D e (by omega)
-        hcard htotal htrivial hbij w hw]
+      rw [chapter05_tame_upper_groups_drop_after_zero D htrivial w hw]
     · exact bot_le
   have hRight_pos : ∀ {v : ℝ}, 0 < v →
       chapter05UpperRightLimit D v = (⊥ : Subgroup G) := by
@@ -356,8 +354,8 @@ theorem chapter05_tame_has_only_zero_break
     · apply sSup_le
       intro K hK
       rcases hK with ⟨w, hw, rfl⟩
-      rw [chapter05_tame_upper_groups_drop_after_zero D e (by omega)
-        hcard htotal htrivial hbij w (lt_trans hv hw)]
+      rw [chapter05_tame_upper_groups_drop_after_zero D htrivial w
+        (lt_trans hv hw)]
     · exact bot_le
   have hRight_neg : ∀ {v : ℝ}, (-1 : ℝ) ≤ v → v < 0 →
       chapter05UpperRightLimit D v = (⊤ : Subgroup G) := by
@@ -393,8 +391,8 @@ theorem chapter05_tame_has_only_zero_break
   by_cases hvpos : 0 < v
   · exfalso
     apply hvcond'
-    rw [chapter05_tame_upper_groups_drop_after_zero D e (by omega)
-      hcard htotal htrivial hbij v hvpos, hRight_pos hvpos]
+    rw [chapter05_tame_upper_groups_drop_after_zero D htrivial v hvpos,
+      hRight_pos hvpos]
   · have hvneg' : v < 0 := by
       have hvle : v ≤ 0 := le_of_not_gt hvpos
       exact lt_of_le_of_ne hvle hvne

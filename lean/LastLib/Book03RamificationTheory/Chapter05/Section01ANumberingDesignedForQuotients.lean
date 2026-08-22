@@ -836,9 +836,7 @@ theorem chapter05_herbrand_slope_eq_reciprocal_index
 /-- Bijectivity of the Herbrand function under an explicit integrability input. -/
 theorem chapter05_herbrand_bijective
     {G : Type*} [Group G] [Finite G]
-    (D : Chapter05RamificationFiltration G)
-    (_hintegrable : ∀ a b : ℝ,
-      IntervalIntegrable (chapter05HerbrandSlope D) volume a b) :
+    (D : Chapter05RamificationFiltration G) :
     Function.Bijective (chapter05HerbrandFunction D) := by
   exact chapter05_herbrand_bijective_of_filtration D
 
@@ -867,11 +865,9 @@ theorem chapter05_herbrand_inverse_left_inverse
 theorem chapter05_upper_group_eq_lower_at_inverse
     {G : Type*} [Group G] [Finite G]
     (D : Chapter05RamificationFiltration G)
-    (_hbij : Function.Bijective (chapter05HerbrandFunction D))
     {v : ℝ} (hv : (-1 : ℝ) ≤ v) :
     chapter05UpperRamificationGroup D v =
       D.lowerGroup (chapter05HerbrandInverse D v) := by
-  clear _hbij
   simp [chapter05UpperRamificationGroup, hv]
 
 theorem chapter05_upper_group_neg_one_eq_top
@@ -1040,7 +1036,7 @@ theorem chapter05_upper_filtration_left_continuous_on_positive
     exact hu
   have hUu : chapter05UpperRamificationGroup D u =
       D.lowerGroup (chapter05HerbrandInverse D u) :=
-    chapter05_upper_group_eq_lower_at_inverse D hbij (by linarith)
+    chapter05_upper_group_eq_lower_at_inverse D (by linarith)
   apply le_antisymm
   · apply le_sInf
     rintro K ⟨v, hv, rfl⟩
@@ -1048,7 +1044,7 @@ theorem chapter05_upper_filtration_left_continuous_on_positive
     have hψ := hinv_mono hv_domain (by linarith) hv.2.le
     have hUv : chapter05UpperRamificationGroup D v =
         D.lowerGroup (chapter05HerbrandInverse D v) :=
-      chapter05_upper_group_eq_lower_at_inverse D hbij hv_domain
+      chapter05_upper_group_eq_lower_at_inverse D hv_domain
     rw [hUu, hUv]
     exact D.lower_antitone hψ
   · obtain ⟨x, hx_pos, hx_lt, hx_group⟩ := hsame hψ_pos
@@ -1109,9 +1105,8 @@ theorem chapter05_upper_filtration_antitone
 theorem chapter05_upper_group_normal
     {G : Type*} [Group G] [Finite G]
     (D : Chapter05RamificationFiltration G)
-    (_hbij : Function.Bijective (chapter05HerbrandFunction D)) (v : ℝ) :
+    (v : ℝ) :
     (chapter05UpperRamificationGroup D v).Normal := by
-  clear _hbij
   by_cases hv : (-1 : ℝ) ≤ v <;>
     simp [chapter05UpperRamificationGroup, hv, D.lower_normal]
 

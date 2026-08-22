@@ -272,8 +272,6 @@ theorem chapter05_herbrand_tower_transitivity
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (T : Chapter05HerbrandTowerSetup G H)
-    (hLM : Function.Bijective
-      (chapter05HerbrandFunction T.subextension))
     {u : ℝ} :
     chapter05HerbrandFunction T.quotientSetup.upstairs u =
       chapter05HerbrandFunction T.quotientSetup.downstairs
@@ -625,8 +623,9 @@ theorem chapter05_herbrand_tower_transitivity
       · exact ht.le
     have hne : chapter05HerbrandFunction T.subextension 0 ≠
         chapter05HerbrandFunction T.subextension t := by
-      intro hEq
-      exact (ne_of_gt ht) (hLM.1 hEq.symm)
+      exact ne_of_lt ((chapter05_herbrand_function_is_continuous_increasing_piecewise_linear
+        T.subextension).2.1 (by norm_num)
+        (by change (-1 : ℝ) ≤ t; linarith) ht)
     have hstrict := lt_of_le_of_ne hle hne
     simpa [chapter05_herbrand_function_zero T.subextension] using hstrict
   have hslope_comp {t : ℝ} (ht : 0 < t) :
@@ -871,16 +870,19 @@ theorem chapter05_herbrand_inverse_tower_transitivity
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (T : Chapter05HerbrandTowerSetup G H)
-    (hLK : Function.Bijective
-      (chapter05HerbrandFunction T.quotientSetup.upstairs))
-    (hLM : Function.Bijective
-      (chapter05HerbrandFunction T.subextension))
-    (hMK : Function.Bijective
-      (chapter05HerbrandFunction T.quotientSetup.downstairs))
     {v : ℝ} (hv : (-1 : ℝ) ≤ v) :
     chapter05HerbrandInverse T.quotientSetup.upstairs v =
       chapter05HerbrandInverse T.subextension
         (chapter05HerbrandInverse T.quotientSetup.downstairs v) := by
+  have hLK : Function.Bijective
+      (chapter05HerbrandFunction T.quotientSetup.upstairs) :=
+    chapter05_herbrand_bijective_of_filtration T.quotientSetup.upstairs
+  have hLM : Function.Bijective
+      (chapter05HerbrandFunction T.subextension) :=
+    chapter05_herbrand_bijective_of_filtration T.subextension
+  have hMK : Function.Bijective
+      (chapter05HerbrandFunction T.quotientSetup.downstairs) :=
+    chapter05_herbrand_bijective_of_filtration T.quotientSetup.downstairs
   have hdown_inv_ge : (-1 : ℝ) ≤
       chapter05HerbrandInverse T.quotientSetup.downstairs v := by
     by_contra hnot
@@ -925,7 +927,7 @@ theorem chapter05_herbrand_inverse_tower_transitivity
     _ = chapter05HerbrandFunction T.quotientSetup.upstairs
         (chapter05HerbrandInverse T.subextension
           (chapter05HerbrandInverse T.quotientSetup.downstairs v)) :=
-      (chapter05_herbrand_tower_transitivity H T hLM).symm
+      (chapter05_herbrand_tower_transitivity H T).symm
 
 /-- A closure-independent invariant is the formal interface for descent from a Galois closure. -/
 structure Chapter05ClosureIndependentInvariant (C X : Type*) where

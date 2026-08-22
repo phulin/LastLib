@@ -75,9 +75,10 @@ end Chapter05LocalGaloisUpperData
  The manuscript's proof of Hasse--Arf requires the local Dold congruence for
  the fixed ideals of all iterates of one automorphism.  That local-intersection
  theorem is not proved in Books 1--3.  This class records exactly the
- ramification-number consequence used below, so the cyclic lemma and every
- downstream integrality statement carry the prerequisite explicitly instead
- of treating an incompatible finite-jet deformation as a proof.
+ ramification-number consequence used by the unfinished proof route.  It is
+ auxiliary proof-support data; the source-facing Hasse--Arf statements below
+ retain the manuscript's hypotheses and do not make this route an extra
+ mathematical assumption.
 
  If `σ` generates a cyclic wild group of order `p ^ s`, the conclusion is
  `p ^ r ∣ i(σ^(p^r)) - i(σ^(p^(r-1)))`, equivalently the congruence for the
@@ -823,8 +824,8 @@ private theorem chapter05_upper_group_transport_of_profile
       _ = chapter05HerbrandFunction D
           (chapter05HerbrandInverse D u) :=
         (chapter05_herbrand_inverse_spec D hD u).symm
-  rw [chapter05_upper_group_eq_lower_at_inverse E hE hv,
-    chapter05_upper_group_eq_lower_at_inverse D hD hv,
+  rw [chapter05_upper_group_eq_lower_at_inverse E hv,
+    chapter05_upper_group_eq_lower_at_inverse D hv,
     hinverse]
   exact hprofile _
 
@@ -965,7 +966,7 @@ theorem chapter05_character_kernel_inertia_cyclic_hasse_arf
 theorem chapter05_character_kernel_upper_break_integer
     {K L C : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Group C] [Finite C] [Chapter05LocalDoldCongruenceInput]
+    [Group C] [Finite C]
     (χ : Gal(L / K) →* C)
     (R : Chapter05CharacterKernelHasseArfData χ)
     {v : ℝ}
@@ -1157,11 +1158,11 @@ theorem chapter05_character_kernel_detects_two_break_second_upper
         (chapter05HerbrandFunction Q.downstairs) := by
     exact chapter05_herbrand_bijective_of_filtration Q.downstairs
   have hquotient_upper {w : ℝ} (hw : (-1 : ℝ) ≤ w) :
-      chapter05UpperRamificationGroup Q.downstairs w =
+    chapter05UpperRamificationGroup Q.downstairs w =
         (chapter05UpperRamificationGroup R.local_data.profile w).map q := by
     simpa [chapter05UpperQuotientImage, q, hQ_profile] using
       (chapter05_herbrand_quotient_theorem (MonoidHom.ker χ)
-        Q hup_R hdown_R hw)
+        Q hw)
   have hdown_upper_c :
       chapter05UpperRamificationGroup Q.downstairs c =
         H.map q := by
@@ -1271,7 +1272,6 @@ theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral
     {K L C : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
     [Fintype (Gal(L / K))] [Group C] [Finite C]
-    [Chapter05LocalDoldCongruenceInput]
     (χ : Gal(L / K) →* C)
     (R : Chapter05CharacterKernelHasseArfData χ)
     {H : Subgroup (Gal(L / K))} [H.Normal]
@@ -1294,7 +1294,6 @@ conditional on the explicit local Dold congruence input. -/
 theorem chapter05_hasse_arf
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Chapter05LocalDoldCongruenceInput]
     (D : Chapter05LocalGaloisUpperData K L)
     (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
@@ -1308,8 +1307,8 @@ theorem chapter05_hasse_arf
     rcases hB with ⟨B⟩
     exact @chapter05_character_kernel_upper_break_integer
       _ _ B.C
-      inferInstance inferInstance inferInstance inferInstance inferInstance
-      inferInstance B.group_C B.finite_C inferInstance
+      inferInstance inferInstance inferInstance inferInstance inferInstance inferInstance
+      B.group_C B.finite_C
       B.reduced_character B.reduced_package v B.selected_break
   · classical
     rcases (chapter05_upper_break_iff_herbrand_image_of_lower_break
@@ -1339,7 +1338,6 @@ theorem chapter05_hasse_arf
 theorem chapter05_hasse_arf_upper_break_integer
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Chapter05LocalDoldCongruenceInput]
     (D : Chapter05LocalGaloisUpperData K L)
     (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
@@ -1354,7 +1352,7 @@ theorem chapter05_hasse_arf_upper_break_integer
 theorem chapter05_perfect_residue_p_squared_two_break_second_upper_integral_direct
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Fintype (Gal(L / K))] [Chapter05LocalDoldCongruenceInput]
+    [Fintype (Gal(L / K))]
     (D : Chapter05LocalGaloisUpperData K L)
     (habelian : ∀ σ τ : Gal(L / K), σ * τ = τ * σ)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
@@ -1404,7 +1402,6 @@ theorem chapter05_hasse_arf_does_not_assert_nonabelian_integrality
 theorem chapter05_fractional_upper_break_forces_nonabelian
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L] [Finite (Gal(L / K))]
-    [Chapter05LocalDoldCongruenceInput]
     (D : Chapter05LocalGaloisUpperData K L)
     [PerfectField (IsLocalRing.ResidueField D.vK.toValuation.valuationSubring)]
     (hfrac : chapter05HasFractionalUpperBreak D.profile) :

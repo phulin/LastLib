@@ -862,13 +862,11 @@ theorem chapter05_two_break_tower_function_composition
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (T : Chapter05TwoBreakTowerData G H)
-    (hLM : Function.Bijective
-      (chapter05HerbrandFunction T.tower.subextension))
     {u : ℝ} :
     chapter05HerbrandFunction T.tower.quotientSetup.upstairs u =
       chapter05HerbrandFunction T.tower.quotientSetup.downstairs
         (chapter05HerbrandFunction T.tower.subextension u) := by
-  exact chapter05_herbrand_tower_transitivity H T.tower hLM
+  exact chapter05_herbrand_tower_transitivity H T.tower
 
 theorem chapter05_two_break_integral_second_label_implies_dvd
     (p a b : ℕ) (hp : 0 < p) (hab : a < b)

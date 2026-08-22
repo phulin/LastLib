@@ -1596,12 +1596,14 @@ theorem chapter05_herbrand_quotient_theorem
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (S : Chapter05QuotientRamificationSetup G H)
-    (hup : Function.Bijective (chapter05HerbrandFunction S.upstairs))
-    (hdown : Function.Bijective (chapter05HerbrandFunction S.downstairs))
     {v : ℝ} (hv : (-1 : ℝ) ≤ v) :
     chapter05UpperRamificationGroup S.downstairs v =
       chapter05UpperQuotientImage H S.upstairs v := by
   classical
+  have hup : Function.Bijective (chapter05HerbrandFunction S.upstairs) :=
+    chapter05_herbrand_bijective_of_filtration S.upstairs
+  have hdown : Function.Bijective (chapter05HerbrandFunction S.downstairs) :=
+    chapter05_herbrand_bijective_of_filtration S.downstairs
   let Dsub : Chapter05RamificationFiltration H :=
     chapter05SubgroupRamificationFiltration H S.upstairs
   have hsub_card (m : ℕ) :
@@ -1955,9 +1957,9 @@ theorem chapter05_herbrand_quotient_theorem
       _ = chapter05HerbrandFunction S.upstairs u := hu_spec.symm
       _ = chapter05HerbrandFunction S.downstairs
           (chapter05HerbrandFunction Dsub u) := hclock u
-  rw [chapter05_upper_group_eq_lower_at_inverse S.downstairs hdown hv,
+  rw [chapter05_upper_group_eq_lower_at_inverse S.downstairs hv,
     chapter05UpperQuotientImage,
-    chapter05_upper_group_eq_lower_at_inverse S.upstairs hup hv,
+    chapter05_upper_group_eq_lower_at_inverse S.upstairs hv,
     hdown_inv]
   change S.downstairs.lowerGroup (chapter05HerbrandFunction Dsub u) =
     (S.upstairs.lowerGroup u).map (chapter05QuotientMap H)
@@ -1967,14 +1969,12 @@ theorem chapter05_herbrand_quotient_membership_iff
     {G : Type*} [Group G] [Fintype G]
     (H : Subgroup G) [H.Normal]
     (S : Chapter05QuotientRamificationSetup G H)
-    (hup : Function.Bijective (chapter05HerbrandFunction S.upstairs))
-    (hdown : Function.Bijective (chapter05HerbrandFunction S.downstairs))
     {v : ℝ} (hv : (-1 : ℝ) ≤ v) (σ : G) :
     chapter05QuotientMap H σ ∈
         chapter05UpperRamificationGroup S.downstairs v ↔
       ∃ τ : H, σ * (τ : G) ∈
         chapter05UpperRamificationGroup S.upstairs v := by
-  rw [chapter05_herbrand_quotient_theorem H S hup hdown hv]
+  rw [chapter05_herbrand_quotient_theorem H S hv]
   rw [chapter05UpperQuotientImage, Subgroup.mem_map]
   constructor
   · rintro ⟨g, hg, hq⟩
@@ -2639,8 +2639,6 @@ theorem chapter05_herbrand_fixed_field_quotient_theorem
     [Fintype (Gal(L / K))]
     (H : Subgroup (Gal(L / K))) [H.Normal]
     (S : Chapter05QuotientRamificationSetup (Gal(L / K)) H)
-    (hup : Function.Bijective (chapter05HerbrandFunction S.upstairs))
-    (hdown : Function.Bijective (chapter05HerbrandFunction S.downstairs))
     {v : ℝ} (hv : (-1 : ℝ) ≤ v) :
     Nonempty
         ((Gal(L / K) ⧸ H) ≃* Gal(
@@ -2648,7 +2646,7 @@ theorem chapter05_herbrand_fixed_field_quotient_theorem
       chapter05UpperRamificationGroup S.downstairs v =
         chapter05UpperQuotientImage H S.upstairs v := by
   refine ⟨chapter05_fixed_field_quotient_galois_equiv H,
-    chapter05_herbrand_quotient_theorem H S hup hdown hv⟩
+    chapter05_herbrand_quotient_theorem H S hv⟩
 
 end
 end LastLib.Book03RamificationTheory.Chapter05
