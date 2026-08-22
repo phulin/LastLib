@@ -344,7 +344,17 @@ theorem chapter08_character_correspondence_is_finite_order
     (D : Chapter08FiniteReciprocityData K L)
     (C : Chapter08CharacterCorrespondence (A := A) D) :
     chapter08FiniteOrderCharacter C.multiplicative := by
-  sorry
+  change (Set.range C.multiplicative).Finite
+  have hrecip :
+      (Set.range (chapter08FiniteReciprocityMap D)).Finite := by
+    exact Set.finite_univ.subset (Set.range_subset_iff.mpr (fun _ => Set.mem_univ _))
+  have hcomp :
+      (Set.range (C.galois.comp (chapter08FiniteReciprocityMap D))).Finite := by
+    change (Set.range (C.galois ∘ chapter08FiniteReciprocityMap D)).Finite
+    rw [Set.range_comp]
+    exact hrecip.image C.galois
+  rw [← C.compatibility]
+  exact hcomp
 
 theorem chapter08_character_conductor_spec
     {K A : Type*} [Field K] [CommGroup A]
@@ -376,9 +386,48 @@ theorem chapter08_character_conductor_matches_galois_character_conductor
     (C : Chapter08CharacterCorrespondence (A := A) D)
     (hχ : chapter08ConductorExists X.base.valuation C.multiplicative)
     (hρ : chapter08GaloisConductorExists F C.galois) :
-    chapter08Conductor X.base.valuation C.multiplicative hχ =
+      chapter08Conductor X.base.valuation C.multiplicative hχ =
       chapter08GaloisConductor F C.galois hρ := by
-  sorry
+  classical
+  let d : DecidablePred (fun n : ℕ =>
+      ∀ g ∈ chapter08UpperGroup F n, C.galois g = 1) :=
+    fun n => Classical.propDecidable _
+  apply Nat.le_antisymm
+  · apply chapter08_character_conductor_minimal X.base.valuation C.multiplicative hχ
+      (chapter08GaloisConductor F C.galois hρ)
+    intro x hx
+    have hxupper :
+        chapter08FiniteReciprocityMap D x ∈
+          chapter08UpperGroup F
+            (chapter08GaloisConductor F C.galois hρ) := by
+      rw [← chapter08_unit_and_upper_ramification X D F P _]
+      exact ⟨x, hx, rfl⟩
+    have hgalois :
+        C.galois (chapter08FiniteReciprocityMap D x) = 1 :=
+      (show ∀ g ∈ chapter08UpperGroup F
+          (chapter08GaloisConductor F C.galois hρ), C.galois g = 1 from by
+        simpa [d, chapter08GaloisConductor] using
+          (@Nat.find_spec _ d hρ))
+        _ hxupper
+    have hcompat :
+        C.galois (chapter08FiniteReciprocityMap D x) = C.multiplicative x := by
+      simpa [MonoidHom.comp_apply] using
+        congrArg (fun f : Kˣ →* A => f x) C.compatibility
+    exact hcompat.symm.trans hgalois
+  · have hmin : Nat.find hρ ≤
+        chapter08Conductor X.base.valuation C.multiplicative hχ := by
+      apply @Nat.find_min' _ d hρ
+      intro g hg
+      rw [← chapter08_unit_and_upper_ramification X D F P _] at hg
+      rcases hg with ⟨x, hx, rfl⟩
+      have hspec := chapter08_character_conductor_spec
+        X.base.valuation C.multiplicative hχ x hx
+      have hcompat :
+          C.galois (chapter08FiniteReciprocityMap D x) = C.multiplicative x := by
+        simpa [MonoidHom.comp_apply] using
+          congrArg (fun f : Kˣ →* A => f x) C.compatibility
+      exact hcompat.trans hspec
+    simpa [d, chapter08GaloisConductor] using hmin
 
 theorem chapter08_character_unramified_iff_conductor_zero
     {K L : Type} {A : Type*} [Field K] [Field L] [Algebra K L]
@@ -393,7 +442,35 @@ theorem chapter08_character_unramified_iff_conductor_zero
     (hχ : chapter08ConductorExists X.base.valuation C.multiplicative) :
     chapter08Conductor X.base.valuation C.multiplicative hχ = 0 ↔
       ∀ g ∈ chapter08FiniteInertia X, C.galois g = 1 := by
-  sorry
+  have _hP := P
+  constructor
+  · intro hzero g hg
+    rw [← chapter08_finite_reciprocity_units_eq_inertia X D] at hg
+    rcases hg with ⟨x, hx, rfl⟩
+    have hx' : x ∈ chapter08UnitFiltration X.base.valuation
+        (chapter08Conductor X.base.valuation C.multiplicative hχ) := by
+      simpa [hzero] using hx
+    have hspec := chapter08_character_conductor_spec
+      X.base.valuation C.multiplicative hχ x hx'
+    have hcompat :
+        C.galois (chapter08FiniteReciprocityMap D x) = C.multiplicative x := by
+      simpa [MonoidHom.comp_apply] using
+        congrArg (fun f : Kˣ →* A => f x) C.compatibility
+    exact hcompat.trans hspec
+  · intro htrivial
+    apply Nat.eq_zero_of_le_zero
+    apply chapter08_character_conductor_minimal X.base.valuation C.multiplicative hχ
+      0
+    intro x hx
+    have hg :
+        chapter08FiniteReciprocityMap D x ∈ chapter08FiniteInertia X := by
+      rw [← chapter08_finite_reciprocity_units_eq_inertia X D]
+      exact ⟨x, hx, rfl⟩
+    have hcompat :
+        C.galois (chapter08FiniteReciprocityMap D x) = C.multiplicative x := by
+      simpa [MonoidHom.comp_apply] using
+        congrArg (fun f : Kˣ →* A => f x) C.compatibility
+    exact hcompat.symm.trans (htrivial _ hg)
 
 end
 

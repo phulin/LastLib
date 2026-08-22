@@ -30,7 +30,8 @@ theorem chapter08_residue_unit_quotient_is_cyclic
     (v : AddValuation K (WithTop ℤ))
     [Finite (Chapter08ResidueField v)] :
     IsCyclic (chapter08ResidueUnitQuotient v) := by
-  sorry
+  exact (chapter08_residue_unit_quotient_equiv_residue_units v).some.isCyclic.mpr
+    (by infer_instance)
 
 theorem chapter08_residue_unit_quotient_card
     {K : Type*} [Field K]
