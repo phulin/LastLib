@@ -1176,7 +1176,59 @@ $$
 \Phi_J(k^s)\simeq\Lambda/M(\mathbf Z^I). \tag{10.5}
 $$
 
-**Proof.** A generic-degree-zero line bundle has multidegree $d$ with $\sum m_id_i=0$, by intersecting its divisor with the principal whole fiber. Conversely every $d\in\Lambda$ occurs. Work over the strict henselization. Choose a smooth $k^s$-point $x_i$ on each $\Gamma_i$ away from all other components. In the two-dimensional regular local ring at $x_i$, lift a uniformizer of the regular curve $\Gamma_i$; its zero locus is a horizontal Cartier germ meeting $\Gamma_i$ once. The relative moving lemma for a regular projective surface globalizes this germ to a horizontal divisor $H_i$ with no other special-fiber intersection. Its generic degree is therefore $m_i$. Then the signed divisor $\sum_i d_iH_i$ has intersection vector $d$ and generic degree $\sum_i m_id_i=0$. This proves realization; descent replaces a point by its finite Galois-orbit sum when necessary.
+**Lemma 10.2A (moving a germ to a horizontal divisor).** Let $\mathcal X$ be a regular projective flat $R^{\mathrm{sh}}$-scheme of relative dimension one with special fiber $\sum_im_i\Gamma_i$, and let $x_i\in\Gamma_i(k^s)$ be a point at which $\mathcal X$ is regular and which lies on no component other than $\Gamma_i$. Then there is an effective horizontal Cartier divisor $H_i$ on $\mathcal X$ whose support passes through $x_i$, meets the special fiber only in smooth points lying on single components, and satisfies
+
+$$
+(H_i\cdot\Gamma_j)=
+\begin{cases}
+1 & j=i,\\
+0 & j\neq i.
+\end{cases}
+$$
+
+**Proof.** The point $x_i$ is a regular point of the two-dimensional local scheme $\mathcal X$, and $\Gamma_i$ is cut out near $x_i$ by one element $t$ of a regular system of parameters $(t,u)$, with
+
+$$
+\pi=t^{m_i}\cdot\bar u(t,u)
+$$
+
+in the complete local ring $\widehat{\mathcal O}_{\mathcal X,x_i}\cong k^s[[t,u]]$, where $\bar u(0,0)\neq0$ because the coefficient of $\Gamma_i$ in the special fiber is exactly $m_i$. Choose a finite totally ramified extension $R'/R^{\mathrm{sh}}$ of degree $m_i$ with uniformizer $\Pi$, $\Pi^{m_i}=\pi$; such extensions exist over the strict henselization for every degree, separably. Define a local homomorphism
+
+$$
+k^s[[t,u]]\longrightarrow R'
+\qquad\text{by}\qquad
+t\mapsto\Pi,
+\qquad
+u\mapsto b,
+$$
+
+where $b\in R'$ is chosen by Hensel's lemma so that $\bar u(\Pi,b)=1$: this is possible because $\bar u(0,0)\neq0$, so $\bar u(\Pi,b)$ is invertible and congruent to it modulo $\Pi$. Under this map $\pi$ maps to $\Pi^{m_i}$, so the map descends to a local morphism
+
+$$
+\sigma:\operatorname{Spec}R'\longrightarrow\mathcal X
+$$
+
+whose special point is $x_i$ and whose generic point is a closed point $P_i$ of the generic fiber curve $C_{K^{\mathrm{sh}}}$ of degree
+
+$$
+[\text{residue field of }P_i:K^{\mathrm{sh}}]=m_i.
+$$
+
+Let $H_i$ be the schematic closure of $P_i$ in $\mathcal X$. Because $\mathcal X$ is regular, the closure of an effective Cartier divisor of the generic fiber is an effective Cartier divisor; $H_i$ is horizontal, meeting the special fiber only along its reduction, which is supported at $x_i$. The standard identity for horizontal Cartier divisors on a flat regular model,
+
+$$
+(H_i\cdot\mathcal X_k)=\deg(P_i),
+$$
+
+follows from computing the divisor of $\pi$ restricted to the curve $H_i$, which has degree equal to the generic degree. Since the reduction meets no component other than $\Gamma_i$,
+
+$$
+m_i(H_i\cdot\Gamma_i)=\sum_jm_j(H_i\cdot\Gamma_j)=\deg(P_i)=m_i,
+$$
+
+and hence $(H_i\cdot\Gamma_j)=\delta_{ij}$. $\square$
+
+**Proof of Theorem 10.2.** A generic-degree-zero line bundle has multidegree $d$ with $\sum m_id_i=0$, by intersecting its divisor with the principal whole fiber. Conversely every $d\in\Lambda$ occurs. Work over the strict henselization and choose for each $i$ a point $x_i$ of $\Gamma_i$ that is regular in the total space and lies on no other component; such points exist because $\Gamma_i$ has finitely many crossings. Lemma 10.2A supplies an effective horizontal Cartier divisor $H_i$ meeting $\Gamma_i$ once, at $x_i$, and no other component. Its generic degree is therefore $m_i$. Then the signed divisor $\sum_i d_iH_i$ has intersection vector $d$ and generic degree $\sum_i m_id_i=0$. This proves realization; descent replaces a point by its finite Galois-orbit sum when necessary.
 
 Twisting by $\sum a_j\Gamma_j$ changes multidegree by $M(a)$. Lemma 9.1 shows that these, and only these, are the generically trivial twists killed in the Raynaud quotient. Each fixed multidegree chart has the same connected identity group after smoothening, so the remaining connected components are exactly $\Lambda/M(\mathbf Z^I)$. Lemma 10.1 makes the quotient finite, and the construction is invariant under the residue Galois action. $\square$
 
