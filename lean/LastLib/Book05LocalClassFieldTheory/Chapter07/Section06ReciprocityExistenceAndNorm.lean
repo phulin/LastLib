@@ -20,7 +20,7 @@ theorem chapter07_maximal_abelian_subextension_is_galois
     [FiniteDimensional K E] [IsGalois K E] :
     IsGalois K
       (chapter07MaximalAbelianSubextension (K := K) (E := E)) := by
-  sorry
+  exact inferInstance
 
 /- LOCAL_DEPENDENCY_GUESS: the quotient of Gal(E/K) by its commutator is
 abelian, and the fixed-field quotient API supplies the corresponding
@@ -30,7 +30,7 @@ theorem chapter07_maximal_abelian_subextension_is_abelian
     [FiniteDimensional K E] [IsGalois K E] :
     IsAbelianGalois K
       (chapter07MaximalAbelianSubextension (K := K) (E := E)) := by
-  sorry
+  exact inferInstance
 
 /-- Every abelian intermediate field of E/K lies in the commutator fixed
 field. -/
@@ -39,7 +39,24 @@ theorem chapter07_maximal_abelian_subextension_is_maximal
     [FiniteDimensional K E] [IsGalois K E]
     (L : IntermediateField K E) [IsAbelianGalois K L] :
     L ≤ chapter07MaximalAbelianSubextension (K := K) (E := E) := by
-  sorry
+  change L ≤ IntermediateField.fixedField (commutator (Gal(E / K)))
+  rw [IntermediateField.le_iff_le]
+  let f : Gal(E / K) →* Gal(L / K) :=
+    { toFun := AlgEquiv.restrictNormalHom L
+      map_one' := map_one _
+      map_mul' := map_mul _ }
+  have hcomm : commutator (Gal(E / K)) ≤ f.ker := by
+    rw [commutator_eq_closure, Subgroup.closure_le]
+    rintro x ⟨p, q, rfl⟩
+    change f (p * q * p⁻¹ * q⁻¹) = 1
+    simp only [map_mul, map_inv]
+    rw [IsMulCommutative.is_comm.comm (f p) (f q)]
+    simp
+  have hfker : f.ker = L.fixingSubgroup := by
+    change (AlgEquiv.restrictNormalHom L).ker = L.fixingSubgroup
+    exact IntermediateField.restrictNormalHom_ker L
+  rw [← hfker]
+  exact hcomm
 
 /-- The fixing subgroup of the maximal abelian subextension is the
 commutator subgroup. -/
@@ -48,7 +65,9 @@ theorem chapter07_maximal_abelian_subextension_fixing_subgroup
     [FiniteDimensional K E] [IsGalois K E] :
     (chapter07MaximalAbelianSubextension (K := K) (E := E)).fixingSubgroup =
       commutator (Gal(E / K)) := by
-  sorry
+  change (IntermediateField.fixedField (commutator (Gal(E / K)))).fixingSubgroup =
+    commutator (Gal(E / K))
+  exact IntermediateField.fixingSubgroup_fixedField _
 
 /-! The explicit construction in Chapter 6 is the existence input used by
 Chapter 7.  Keep its finite-precision realization visible here rather than
