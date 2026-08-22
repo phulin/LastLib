@@ -51,7 +51,50 @@ theorem chapter10_formal_torsion_precision_unit_equiv
     Nonempty
       (Chapter10UnitQuotient D.valuation n ≃*
         (Chapter10PrecisionQuotient D.valuation n)ˣ) := by
-  sorry
+  classical
+  let A := Chapter10ValuationRing D.valuation
+  have hmax : IsLocalRing.maximalIdeal A ≠ (⊤ : Ideal A) :=
+    (inferInstance : (IsLocalRing.maximalIdeal A).IsMaximal).ne_top
+  have hpow_ne : (IsLocalRing.maximalIdeal A) ^ n ≠ (⊤ : Ideal A) := by
+    intro hpow
+    apply hmax
+    exact (Ideal.pow_eq_top_iff.mp hpow).resolve_right (Nat.ne_of_gt hn)
+  let _ : Nontrivial (A ⧸ (IsLocalRing.maximalIdeal A) ^ n) :=
+    Ideal.Quotient.nontrivial_iff.mpr hpow_ne
+  let _ : IsLocalRing (A ⧸ (IsLocalRing.maximalIdeal A) ^ n) :=
+    IsLocalRing.of_surjective' _ Ideal.Quotient.mk_surjective
+  let _ : IsLocalHom
+      (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n)) :=
+    IsLocalHom.of_surjective _ Ideal.Quotient.mk_surjective
+  let f : Aˣ →* (Chapter10PrecisionQuotient D.valuation n)ˣ :=
+    Units.map
+      (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n)).toMonoidHom
+  have hsurj : Function.Surjective f := by
+    exact IsLocalRing.surjective_units_map_of_local_ringHom
+      (Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n))
+      Ideal.Quotient.mk_surjective inferInstance
+  have hker : f.ker = Chapter10UnitFiltration D.valuation n := by
+    ext u
+    constructor
+    · intro hu
+      change f u = 1 at hu
+      have hv := congrArg Units.val hu
+      change Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n)
+          (u : A) = 1 at hv
+      change (u : A) - 1 ∈ (IsLocalRing.maximalIdeal A) ^ n
+      apply Ideal.Quotient.eq_zero_iff_mem.mp
+      rw [map_sub]
+      exact sub_eq_zero.mpr hv
+    · intro hu
+      apply MonoidHom.mem_ker.mpr
+      apply Units.ext
+      change Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n) (u : A) = 1
+      rw [← sub_eq_zero]
+      change Ideal.Quotient.mk ((IsLocalRing.maximalIdeal A) ^ n)
+          ((u : A) - 1) = 0
+      exact Ideal.Quotient.eq_zero_iff_mem.mpr hu
+  exact ⟨QuotientGroup.liftEquiv
+    (Chapter10UnitFiltration D.valuation n) hsurj hker.symm⟩
 
 theorem chapter10_formal_torsion_extension_degree
     {K : Type*} [Field K] (D : Chapter10LocalFieldProfile K)
